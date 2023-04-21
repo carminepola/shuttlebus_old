@@ -1,0 +1,224 @@
+<div class="bg-secondary text-white form-group d-flex flex-column   justify-content-center" style="min-height: 200px;">
+    <div class="container-pintour">
+        <div class="row">
+            <div class="col-12">
+                <h1> {{share.traduci('str_carrello')}}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-pintour">
+
+    <div class="row pt-2 pb-4">
+        <div class="col-12 col-xl-6">
+            <div class="form-group text-primary">
+                <h1><span class="text-secondary">{{share.traduci('str_search_totale')}}</span>
+                    {{share.getPrezzoCarrello()}}€</h1>
+            </div>
+        </div>
+        <div class="col-12 col-xl-6">
+            <div class="form-group float-right">
+                <button class="btn btn-danger " (click)="share.svuotaCarrello()">
+                    <i class="mdi mdi-trash-can-outline mr-2"></i>{{share.traduci('str_svuota_carrello')}}</button>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngFor="let item of share.getCarrello().elementi">
+        <div class="col-12">
+            <!--nome linea-->
+            <div class="form-group">
+                <h2 class="text-secondary">{{share.traduci('str_linea')}}: <span class="ml-2 text-primary">{{share.traduciPrivato(item.traduzioniNome,item.nome)}}</span></h2>
+            </div>
+        </div>
+        <div class="col-12">
+            <!--data-->
+            <div class="form-group">
+                <h2 class="text-secondary">{{share.traduci('str_data')}}: <span class="ml-2 text-primary">{{item.data}}
+                    </span></h2>
+            </div>
+        </div>
+        <div class="col-12">
+            <!--da-->
+            <div class="form-group">
+                <div class="text-secondary d-flex">
+                    <div class=" mr-2">
+                        <h2>{{share.traduci('str_da')}}:</h2>
+                    </div>
+                    <div class="ml-2 text-primary">
+                        <h2 class="mb-0">
+                            {{share.traduciPrivato(item.backup.from.traduzioniCitta,item.backup.from.citta)}} -
+                            {{share.troncaTesto(item.datiBiglietto.partenza,5,false)}}</h2>
+                        <div>
+                            <p class="text-muted mb-0">{{item.backup.from.indirizzo}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12">
+            <!--to-->
+            <div class="form-group">
+                <div class="text-secondary d-flex">
+                    <div class=" mr-2">
+                        <h2>{{share.traduci('str_to')}}:</h2>
+                    </div>
+                    <div class="ml-2 text-primary">
+                        <h2 class="mb-0">
+                            {{share.traduciPrivato(item.backup.to.traduzioniCitta,item.backup.to.citta)}} -
+                            {{share.troncaTesto(item.datiBiglietto.arrivo,5,false)}}</h2>
+                        <div>
+                            <p class="text-muted mb-0">{{item.backup.to.indirizzo}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12">
+            <!--bagagliOpzionali-->
+            <div class="form-group d-block d-xl-flex ">
+                <div class="mr-xl-4">
+                    <h2 class="text-secondary">{{share.traduci('str_bagagliOpzionali')}}:</h2>
+                </div>
+                <div class="pl-4 pl-xs-4 pl-sm-4 pl-md-4 pl-lg-4 pl-xl-0 border-top-0 border-bottom-0 border-right-0 border-ticket border-secondary">
+                    <h2 class="text-primary">
+                        <div><span class="text-secondary mr-2">X</span>{{item.datiBiglietto.numeroBagagliOpzionali}}
+                        </div>
+                        <div><span class="text-secondary mr-2">€</span>{{item.datiBiglietto.prezzoBagagli}}</div>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group d-block d-xl-flex ">
+                <div class="mr-xl-4">
+                    <h2 class="text-secondary">{{share.traduci('str_biglietti')}}:</h2>
+                </div>
+                <div class="pl-4 pl-xs-4 pl-sm-4 pl-md-4 pl-lg-4 pl-xl-0 border-top-0 border-bottom-0 border-right-0 border-ticket border-secondary">
+                    <div *ngFor="let b of item.datiBiglietto.biglietti">
+                        <span *ngIf="b.numero >0" class="text-primary">
+                            <h2>
+                                <div>{{share.traduciPrivato(b.traduzioniNome,b.nome)}}</div>
+                                <div><span class="text-secondary mr-2">X</span>{{b.numero}}</div>
+                                <div><span class="text-secondary mr-2">€</span>{{b.costo}}</div>
+                            </h2>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button class="btn btn-danger" (click)="share.deleteCarrello(item.guid,item.data)"><i class="mdi mdi-trash-can-outline mr-2"></i>{{share.traduci('str_elimina_dal_carrello')}}</button>
+            </div>
+        </div>
+        <hr class="w-100 pb-2">
+    </div>
+    <div class="row" *ngIf="!share.commonF.isEmpty(share.getCarrello().elementi)">
+
+    </div>
+    <div class="row" *ngIf="share.commonF.isEmpty(share.getCarrello().elementi)">
+        <div class="col-12 text-center">
+            <h1 class="text-muted">{{share.traduci('str_nessunElementoNelCarrello')}}</h1>
+
+        </div>
+    </div>
+
+    <form class="row py-2" (ngSubmit)='buttonCLick()' ngNativeValidate>
+        <div class="col-12">
+            <div class="form-group">
+                <h2 class="text-secondary">{{share.traduci('str_titolo_riepilogo')}}</h2>
+                <small class="text-muted">{{share.traduci('str_obbligatorio_perche')}}</small>
+            </div>
+        </div>
+        <div class="col-12 col-xl-3">
+            <div class="form-group">
+                <label>{{share.traduci('str_nome_completo')}}</label>
+                <input required [(ngModel)]="nome" type="text" name="nome" maxlength="255" class="form-control" placeholder="{{share.traduci('str_nome_completo')}}">
+            </div>
+        </div>
+        <div class="col-12 col-xl-3">
+            <div class="form-group">
+                <label>{{share.traduci('str_prefisso')}}</label>
+                  
+                <!--<input required [(ngModel)]="prefisso" type="number" name="prefisso" maxlength="4" class="form-control"  placeholder="{{share.traduci('str_prefisso')}}">-->
+                <select  onload="initSelect()" id="selectprefisso" required   name="prefisso" id="prefisso" class="form-control selectprefisso">
+
+                    <option value="" [innerHTML]="" selected> {{share.traduci('str_prefisso')}} </option>
+                 
+                    <!-- Aggiungere qui tutti i prefissi telefonici desiderati -->
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-xl-3">
+            <div class="form-group">
+                <label>{{share.traduci('str_telefono')}}</label>
+                <input required [(ngModel)]="telefono" type="number" name="telefono" maxlength="255" class="form-control" placeholder="{{share.traduci('str_telefono')}}">
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-3">
+            <div class="form-group">
+                <label>{{share.traduci('str_email')}}</label>
+                <input required [(ngModel)]="email" type="email" name="email" minlength="3" maxlength="255" class="form-control" placeholder="{{share.traduci('str_email')}}">
+            </div>
+        </div>
+        <div class="col-12   ">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" required id="customCheck1" class="custom-control-input"><label for="customCheck1" class="custom-control-label pl-0"><a href="" data-toggle="modal" data-target="#exampleModal" [innerHTML]="share.traduci('str_accetta_termini_e_condizioni')"></a>
+
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 ">
+            <div class="form-group">
+                <button class="btn btn-block btn-success" type="submit" [disabled]="share.getPrezzoCarrello()<=0">
+                    {{share.traduci('str_acquista')}}</button>
+            </div>
+        </div>
+        <div class="container-pintour">
+            <div class="row  pt-4">
+                <div class="col-12 text-center">
+                    <div class="form-group">
+                        <h3 class="text-primary font-weight-bold pagamentoSicuro">
+                            {{share.traduci('text_home_pagamentisicuri')}}</h3>
+                    </div>
+
+                </div>
+                <div class="col-12 text-center">
+
+                    <a><img src="assets/img/home/paypal.png"></a>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </form>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" [innerHTML]="share.traduci('str_termini_e_condizioni')"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" [innerHTML]="share.traduci('str_termini')">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{share.traduci('str_chiudi')}}</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

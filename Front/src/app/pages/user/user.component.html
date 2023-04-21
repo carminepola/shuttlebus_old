@@ -1,0 +1,154 @@
+<div class="container animated fadeIn faster" *ngIf="!share.isCaricamento('pagina','1')">
+    <div class="row">
+        <div class="col-12">
+            <h3>Dati</h3>
+            <hr>
+        </div>
+        <div class="col-12">
+            <div class="form-group row">
+                <label for="idutente" class="col-sm-2 col-form-label">ID Utente:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly="" class="form-control-plaintext" id="idutente" [value]="obj['id']">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly="" class="form-control-plaintext" id="email"
+                        [value]="obj['nomeUtente']">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col-12">
+            <h3>Cambia password</h3>
+            <hr>
+        </div>
+        <div class="col-12">
+            <form method="patch" (ngSubmit)="cambioPassword(userCambio['vecchiaPassword'],userCambio['nuovaPassword'])"
+                #f="ngForm" ngNativeValidate>
+
+                <div class="form-group">
+                    <label for="vecchiaPassword">Vecchia password</label>
+                    <input id="vecchiaPassword" class="form-control" required type="password" name="vecchiaPassword"
+                        [(ngModel)]="userCambio['vecchiaPassword']" pattern="" minlength="10" maxlength="255"
+                        placeholder="Vecchia password"
+                        [ngClass]="{'is-invalid': vecchiaPassword.invalid && (vecchiaPassword.dirty || vecchiaPassword.touched),'is-valid':!vecchiaPassword.invalid}"
+                        #vecchiaPassword="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="nuovaPassword">Nuova password</label>
+                    <input id="nuovaPassword" class="form-control" required type="password" name="nuovaPassword"
+                        [(ngModel)]="userCambio['nuovaPassword']"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,50}$" minlength="10"
+                        maxlength="255" placeholder="Nuova password"
+                        [ngClass]="{'is-invalid': nuovaPassword.invalid && (nuovaPassword.dirty || nuovaPassword.touched),'is-valid':!nuovaPassword.invalid}"
+                        #nuovaPassword="ngModel">
+                    <div>
+                        <small>La password deve essere compresa tra 10 e 50 caratteri e deve contentere almeno una
+                            maiuscola, un numero e un carattere
+                            speciale tra questi !@#$%^&*_=+-</small>
+                    </div>
+                    <div>
+                        <small class="text-danger"
+                            *ngIf="userCambio['nuovaPassword'] == userCambio['vecchiaPassword'] && !share.commonF.isEmpty(userCambio['nuovaPassword']) && !share.commonF.isEmpty(userCambio['vecchiaPassword'])">La
+                            password deve essere diversa da quella precedente</small>
+                    </div>
+
+
+                </div>
+                <div class="form-group">
+                    <label for="ripetiPassword">Ripteti password</label>
+                    <input id="ripetiPassword" class="form-control" type="password" name="ripetiPassword"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,50}$" minlength="10"
+                        maxlength="255" placeholder="Ripeti password" [(ngModel)]="userCambio['ripetiPassword']"
+                        [ngClass]="{'is-invalid': ripetiPassword.invalid && (ripetiPassword.dirty || ripetiPassword.touched) || userCambio['nuovaPassword'] != userCambio['ripetiPassword'] ,'is-valid':!ripetiPassword.invalid && userCambio['nuovaPassword'] == userCambio['ripetiPassword'] }"
+                        #ripetiPassword="ngModel">
+
+                    <small
+                        *ngIf="userCambio['nuovaPassword'] != userCambio['ripetiPassword'] && !share.commonF.isEmpty(userCambio['nuovaPassword']) && !share.commonF.isEmpty(userCambio['ripetiPassword'])"
+                        class="text-danger">Le password non corrispondono</small>
+                </div>
+
+                <button class="btn btn  btn-secondary float-right" type="submit"
+                    [disabled]="share.isCaricamento('buttonUser', '1')|| !f.valid || userCambio['nuovaPassword'] != userCambio['ripetiPassword'] || userCambio['nuovaPassword'] == userCambio['vecchiaPassword']">
+                    <span class=" mr-2 spinner-border spinner-border-sm" *ngIf="share.isCaricamento('buttonUser', '1')"
+                        role="status" aria-hidden="true"></span>Salva
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Cambia E-Mail</h3>
+            <hr>
+        </div>
+
+        <div class="col-12">
+
+            <form (ngSubmit)="cambioEmail(f3.value.nuovaEmail)" #f3="ngForm" ngNativeValidate>
+
+                <div class="form-group">
+                    <label for="nuovaEmail">Nuova E-Mail</label>
+                    <input id="nuovaEmail" class="form-control" type="email" name="nuovaEmail" required
+                        placeholder="Nuova E-Mail" [ngModel]
+                        [ngClass]="{'is-invalid': nuovaEmail.invalid && (nuovaEmail.dirty || nuovaEmail.touched)}"
+                        #nuovaEmail="ngModel" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}">
+                    <small>Ti verrà inviato un codice per verificare la mail</small>
+                </div>
+                <button class="btn btn-secondary float-right" type="submit"
+                    [disabled]="!f3.valid || share.isCaricamento('buttonUser', '2')">
+                    <span class=" mr-2 spinner-border spinner-border-sm"
+                        *ngIf="share.isCaricamento('buttonUser', '2')"></span>Invia codice
+                </button>
+            </form>
+        </div>
+        <div class="col-12">
+            <form (ngSubmit)="cambioEmailCodice(fa.value.codice)" #fa="ngForm">
+
+                <div class="form-group">
+                    <label for="codiceEmail">Codice arrivato via E-Mail</label>
+                    <input id="codiceEmail" class="form-control" required type="text" name="codice" placeholder="Codice"
+                        pattern="(?:\d+[a-z]|[a-z]+\d)[a-z\d]*" minlength="10" maxlength="255" ngModel
+                        #codice="ngModel">
+                    <small>Inserisci il codice arrivato tramite mail per confermare il cambio</small>
+                </div>
+                <button class="btn btn-secondary float-right" type="submit"
+                    [disabled]="!fa.valid || share.isCaricamento('buttonUser', '3')">
+                    <span class=" mr-2 spinner-border spinner-border-sm"
+                        *ngIf="share.isCaricamento('buttonUser', '3')"></span> Cambia E-Mail
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Notifiche</h3>
+            <hr>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                        [checked]="obj['notificheEmail']" [(ngModel)]="obj['notificheEmail']" (change)="notifiche()">
+                    <label class="custom-control-label" for="customSwitch1">Ricevi notifiche tramite E-mail
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch2" [checked]="obj['notifiche']"
+                        [(ngModel)]="obj['notifiche']" (change)="notifiche()">
+                    <label class="custom-control-label" for="customSwitch2">Ricevi notifiche tramite Push</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<app-loading-div *ngIf="share.isCaricamento('pagina','1')"></app-loading-div>

@@ -1,0 +1,76 @@
+<app-loading-div *ngIf="share.commonF.isEmpty(ris)">
+
+</app-loading-div>
+
+<div class="container animated fadeIn faster" *ngIf="!share.commonF.isEmpty(ris)">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button class="btn btn-primary" [routerLink]="['/linea']" routerLinkActive="router-link-active">Nuova
+                    linea</button>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+                    [placeholder]="share.traduci('search')">
+            </div>
+        </div>
+
+        <div class="col-12" *ngFor="let item of data |filter:searchText; let i = index">
+
+            <div class="form-group" *ngIf="item.cancellato != true && i < limitTo">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-12 col-lg-8">
+                                <h3>{{share.traduciPrivato(item.traduzioniNome,item.nome)}}</h3>
+                                <ul>
+                                    <li *ngFor="let punto of item.itinerario">
+                                        {{share.traduciPrivato(punto.traduzioniCitta,punto.citta)}}
+                                        <small>({{punto.indirizzo}})</small>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="col-12 col-lg-4 ">
+                                <div class="form-group float-right">
+                                    <div class="btn-group-justified" role="group" aria-label="Vertical button group">
+                                        <button class="btn btn-primary mr-2 mt-2" [routerLink]="['/linea',item.id]"
+                                            routerLinkActive="router-link-active">
+                                            Modifica
+                                        </button>
+                                        <button class="btn btn-danger mt-2" (click)="elimina(item.id)">
+                                            Elimina
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-12 ">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch{{i}}"
+                                        (change)="item.disattivato= !item.disattivato; disabilitaLinea(item.id,item.disattivato);"
+                                        id="customSwitch{{i}}" [checked]="!item.disattivato">
+                                    <label class="custom-control-label" for="customSwitch{{i}}">Linea
+                                        <span *ngIf="!item.disattivato">
+                                            attiva
+                                        </span>
+                                        <span *ngIf="item.disattivato">
+                                            disattiva
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

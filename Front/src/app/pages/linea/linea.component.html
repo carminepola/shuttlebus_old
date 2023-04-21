@@ -1,0 +1,362 @@
+<app-loading-div *ngIf="caricamento"></app-loading-div>
+
+
+<div *ngIf=" !caricamento" class=" container animate fadeIn faster">
+    <div class="row">
+        <div class="col-12">
+
+            <h3>
+                Dati linea
+            </h3>
+            <hr class="w-100">
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Nome it</label>
+                <input maxlength="255" placeholder="Nome it" required class="form-control" type="text" id="nomeit"
+                    name="nomeit" [(ngModel)]="obj['traduzioniNome'][0]['it']">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Nome en</label>
+                <input [(ngModel)]="obj['traduzioniNome'][0]['en']" name="nomeenw" maxlength="255" placeholder="Nome en"
+                    required class="form-control" type="text">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Des it</label>
+                <ngx-wig [(ngModel)]="obj['traduzioniDesc'][0]['it']" id="desit" name="desit" #desIt="ngModel">
+                </ngx-wig>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Des en</label>
+                <ngx-wig [(ngModel)]="obj['traduzioniDesc'][0]['en']" id="desen" name="desen" #desEn="ngModel">
+                </ngx-wig>
+            </div>
+        </div>
+        <div class="col-12">
+            <h3 class="pt-5">
+                Itinerario
+
+            </h3>
+            <hr class="w-100">
+        </div>
+        <div class="col-12">
+            <div class="form-group" *ngFor="let item of obj.itinerario; let i = index">
+
+                <div class=" card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-lg-2">
+                                <div class="form-group">
+
+                                    Fermata: {{i+1}}
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-lg-8">
+                                <div class="form-group">
+                                    <h5 class="card-title">
+                                        {{share.traduciPrivato(obj.itinerario[i].traduzioniCitta,obj.itinerario[i].citta)}}
+                                    </h5>
+                                    <p class="card-text">{{obj.itinerario[i].indirizzo}}</p>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-lg-2">
+                                <div class="form-group"><button class="btn btn-danger"
+                                        *ngIf="i+1 == obj.itinerario.length  "
+                                        (click)="eliminaFascia()">Elimina</button>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <div class="col-12">
+
+            <div class="form-group">
+                <label for="my-input">Seleziona un punto da aggiungere</label>
+                <div class="input-group">
+
+
+                    <select [(ngModel)]="fermataSelezionata" class="form-control custom-select">
+                        <option value="">Seleziona un elemento</option>
+
+                        <option *ngFor="let item of fermate; let i = index" [value]="i">
+
+                            {{share.traduciPrivato(item.traduzioniCitta,item.citta)}} - {{item.indirizzo}}</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"
+                            [disabled]="share.commonF.isEmpty(fermataSelezionata)"
+                            (click)="aggiungiAdItinerario(fermataSelezionata)">Aggiungi</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="col-12">
+            <h3 class="pt-5">
+                Fasce orarie
+
+            </h3>
+            <hr class="w-100">
+        </div>
+
+        <div class="col-12" *ngFor="let fascia of obj.fasceOrarie; let i = index">
+            <h3 class="pt-5">Fascia {{i+1}}</h3>
+
+            <hr class="w-100">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-danger float-right" (click)="rimuoviFascia(i)">Rimuovi fascia</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-group" *ngFor="let item of obj.fasceOrarie[i].orari; let j= index">
+                <label>{{j+1}}) Orario arrivo a
+                    {{share.traduciPrivato(obj.itinerario[j].traduzioniCitta,obj.itinerario[j].citta)}}</label>
+
+                <input class="form-control" type="time" [value]="obj.fasceOrarie[i].orari[0].da"
+                    [(ngModel)]="obj.fasceOrarie[i].orari[j].orario">
+
+            </div>
+            <h4>Configurazione</h4>
+            <div class="form-group">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" [(ngModel)]="obj.fasceOrarie[i].settings[0].disattivato "
+                        class="custom-control-input" id="setting{{i}}" name="setting{{i}}">
+                    <label class="custom-control-label" for="setting{{i}}">Disattivato</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Posti</label>
+                <input class="form-control" type="number" min="0" name="d"
+                    [(ngModel)]="obj.fasceOrarie[i].settings[0].posti">
+            </div>
+            <div class="form-group">
+                <label>Bagagli</label>
+                <input class="form-control" type="number" min="0" name="f"
+                    [(ngModel)]="obj.fasceOrarie[i].settings[0].bagagli">
+            </div>
+            <div class="form-group">
+                <label>Bagagli opzionali</label>
+                <input class="form-control" type="number" min="0" name="g"
+                    [(ngModel)]="obj.fasceOrarie[i].settings[0].bagagliOpzionali">
+            </div>
+            <div class="form-group">
+                <label>Prezzo bagagli opzionali</label>
+                <input class="form-control" type="number" min="0" name="l"
+                    [(ngModel)]="obj.fasceOrarie[i].settings[0].prezzoBagagli">
+            </div>
+            <h4>Apertura</h4>
+
+
+
+            <div *ngFor="let item of obj.fasceOrarie[i].apertura; let j = index">
+                <div class="form-group">
+
+
+                    <label>Dal</label>
+                    <input class="form-control" type="date" pattern="/\d{2}/\d{2}/\d{4}"
+                        [(ngModel)]="obj.fasceOrarie[i].apertura[j].da">
+
+                </div>
+                <div class="form-group">
+                    <label>Al</label>
+                    <input class="form-control" type="date" pattern="/\d{2}/\d{2}/\d{4}"
+                        [(ngModel)]="obj.fasceOrarie[i].apertura[j].a">
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group float-right">
+
+                            <button class="btn btn-danger " *ngIf="j +1 < obj.fasceOrarie[i].apertura.length"
+                                (click)="rimuoviArcoTemporale(i,j)">Rimuovi</button>
+                            <button class="btn btn-primary " *ngIf="j +1 == obj.fasceOrarie[i].apertura.length"
+                                (click)="aggiungiArcoTemporale(i)">Aggiungi
+                                arco temporale
+                            </button>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+            <h4>Eccezioni linea</h4>
+            <div class=" form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="acustomCheck1-{{i}}"
+                        [checked]="esisteEccezione(i,'Lunedi')" (change)="toggleEccezione(i,'Lunedi')">
+                    <label class="custom-control-label" for="acustomCheck1-{{i}}">Lunedi</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="acustomCheck2-{{i}}"
+                        [checked]="esisteEccezione(i,'Martedi')" (change)="toggleEccezione(i,'Martedi')">
+                    <label class="custom-control-label" for="acustomCheck2-{{i}}">Martedi</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="acustomCheck3-{{i}}"
+                        [checked]="esisteEccezione(i,'Mercoledi')" (change)="toggleEccezione(i,'Mercoledi')">
+                    <label class="custom-control-label" for="acustomCheck3-{{i}}">Mercoledi</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="acustomCheck4-{{i}}"
+                        [checked]="esisteEccezione(i,'Giovedi')" (change)="toggleEccezione(i,'Giovedi')">
+                    <label class="custom-control-label" for="acustomCheck4-{{i}}">Giovedi</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="acustomCheck8-{{i}}"
+                        [checked]="esisteEccezione(i,'Venerdi')" (change)="toggleEccezione(i,'Venerdi')">
+                    <label class="custom-control-label" for="acustomCheck8-{{i}}">Venerdi</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="acustomCheck5-{{i}}"
+                        [checked]="esisteEccezione(i,'Sabato')" (change)="toggleEccezione(i,'Sabato')">
+                    <label class="custom-control-label" for="acustomCheck5-{{i}}">Sabato</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="acustomCheck6-{{i}}"
+                        [checked]="esisteEccezione(i,'Domenica')" (change)="toggleEccezione(i,'Domenica')">
+                    <label class="custom-control-label" for="acustomCheck6-{{i}}">Domenica</label>
+                </div>
+            </div>
+
+            <div *ngFor="let item of obj.fasceOrarie[i].eccezioni; let j = index">
+                <div *ngIf="item.tipo == 'DATA'">
+                    <div class="form-group">
+                        <div class="input-group">
+
+                            <input class="form-control" type="date" [(ngModel)]="item.data">
+                            <div class="input-group-append">
+                                <button class="btn btn-danger" (click)="rimuoviEccezioneData(i,j)">Rimuovi</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="form-group">
+                <label>Aggiungi eccezione</label>
+                <div class="input-group">
+                    <input class="form-control" type="date" [(ngModel)]="GiornoDaAggiungere"
+                        placeholder="Aggiungi giorno" aria-label="Recipient's " aria-describedby="my-addon">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary"
+                            (click)="aggiungiEccezioneData(i,GiornoDaAggiungere)">Aggiungi</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+        <div class="col-12">
+
+            <div class="form-group float-right">
+                <button class=" btn btn-primary" [disabled]="obj.itinerario.length == 0"
+                    (click)="aggiungiFascia()">Aggiungi
+                    fascia oraria</button>
+
+            </div>
+
+        </div>
+
+        <div class="col-12">
+
+            <h3 class="pt-5">Biglietti</h3>
+            <hr class="w-100">
+
+            <div class="form-group" *ngFor="let item of obj.biglietti">
+                <div class="input-group">
+
+                    <input class="form-control" [value]="share.traduciPrivato(item.traduzioniNome,item.nome)" disabled>
+
+
+                    <div class="input-group-append">
+
+
+                        <button class="btn btn-danger" (click)="rimuoviBiglietto(item.id)">Rimuovi
+                            biglietto
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+
+
+                <label for="my-select2">Aggiungi biglietti</label>
+                <div class="input-group">
+
+                    <select id="my-select2" class="form-control" [(ngModel)]="bigliettoSelezionato">
+                        <option value="">Seleziona un biglietto</option>
+
+
+                        <option *ngFor="let item of listaBiglietti()" [value]="item.id">
+                            {{share.traduciPrivato(item.traduzioniNome,item.nome)}}</option>
+
+
+                    </select>
+                    <span class="input-group-btn" style="width:0px;"></span>
+                    <div class="input-group-append">
+
+
+                        <button class="btn btn-primary" [disabled]="share.commonF.isEmpty(bigliettoSelezionato)"
+                            (click)="aggiungiBiglietto(bigliettoSelezionato)">Aggiungi
+                            biglietto
+
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button (click)="salva()" class="btn btn-primary" [disabled]="share.isCaricamento('linea','salva')">
+                    <span *ngIf="share.isCaricamento('linea','salva')" class="spinner-border spinner-border-sm mr-2"
+                        role="status" aria-hidden="true"></span>
+                    Salva</button>
+            </div>
+        </div>
+    </div>
+</div>

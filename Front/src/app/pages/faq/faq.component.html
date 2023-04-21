@@ -1,0 +1,56 @@
+<div class="bg-secondary text-white form-group d-flex flex-column   justify-content-center" style="min-height: 200px;">
+    <div class="container-pintour">
+        <div class="row">
+            <div class="col-12">
+                <h1>F.A.Q.</h1>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<app-loading-div *ngIf="caricamento">
+
+</app-loading-div>
+
+<div class="container animated fadeIn faster" *ngIf="!caricamento">
+    <div class="row py-3">
+
+        <div class="col-12">
+            <div class="form-group">
+                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+                    [placeholder]="share.traduci('search')">
+            </div>
+        </div>
+
+        <div class="col-12 ">
+
+            <div class="form-group">
+                <div class=" accordion" id="accordionExample">
+                    <div class="card" *ngFor="let item of data.slice(0,limitTo) |filter:searchText">
+                        <div class="card-header" id="headingOne" [attr.data-target]="'#collapse'+item.id"
+                            data-toggle="collapse">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link font-weight-bold" type="button" aria-expanded="false"
+                                    aria-controls="collapseOne" [innerHTML]="domanda(item)">
+                                    Collapsible Group Item #1
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div [id]="'collapse'+item.id" class="collapse" aria-labelledby="headingOne"
+                            data-parent="#accordionExample">
+                            <div class="card-body" [innerHTML]="risposta(item)">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

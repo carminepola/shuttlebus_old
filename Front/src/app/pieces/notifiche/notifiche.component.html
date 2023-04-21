@@ -1,0 +1,6 @@
+<li class="nav-item cursor-pointer" [ngClass]="{'active': share.samePath('notificationscenter')}">
+    <a  data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-link" [routerLink]="['/notificationscenter']"><i class="mdi mdi-bell-outline mdi-18px"></i>
+        <span class="badge badge-secondary not-chart"
+            *ngIf="share.notifiche.getNotificheReverse().length>0">{{share.notifiche.getNotificheReverse().length}}</span>
+    </a>
+</li>

@@ -1,0 +1,18 @@
+<div class="container">
+    <span *ngFor="let item of share.alert.getAlert()">
+        <div [id]="item.id" class="alert alert-dismissible alertAnimation pointer-all cursor-pointer"
+            [class.attiva]="item.show" [ngClass]="item.tipo" role="alert">
+            <div class="row">
+                <div class="col-10 col-lg-11">
+                    <span [textContent]="item.testoCorto"></span>
+                </div>
+                <div class="col-2 col-lg-1 d-flex justify-content-center align-items-center"
+                    (click)="share.alert.dimissAlert(item.id)">
+                    <a class=" cursor-pointer" aria-label="Close">
+                        <i class="mdi mdi-window-close"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </span>
+</div>

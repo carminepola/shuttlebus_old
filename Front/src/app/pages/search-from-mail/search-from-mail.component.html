@@ -1,0 +1,75 @@
+<div class="bg-secondary text-white form-group d-flex flex-column   justify-content-center" style="min-height: 200px;">
+    <div class="container-pintour">
+        <div class="row">
+            <div class="col-12">
+                <h1 [innerHTML]="share.traduci('titolo_lista_biglietti')"></h1>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<div class="container-pintour" *ngIf="!caricamento">
+
+    <div class="row" *ngIf="!share.commonF.isEmpty(ris)  ">
+       
+        <div class="col-12" *ngFor="let item of ris  ">
+
+            <div class="form-group"  >
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+
+                                    <h5 class="card-title">
+                                        <span
+                                            class="text-secondary font-weight-bold">{{share.traduci('str_codicebiglietto')}}:&nbsp;</span><span
+                                            class="text-primary">{{item.riferimento}}</span>
+                                    </h5>
+                                    <div class="row">
+
+                                        <div class="col-12 col-xl-6">
+                                            <div class="card-text">
+                                                <span
+                                                    class="text-secondary">{{share.traduci('str_data_acquisto')}}:&nbsp;</span>{{this.share.troncaTesto(share.commonF.dataTimeToString(item.data),10,false)}}
+
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <hr class="w-100">
+                                <div class="form-group">
+
+                                    <button class="btn btn-secondary float-right" (click)="vaiacercaMail(item.riferimento)" >{{share.traduci('str_visualizza_dettagli')}}</button>
+
+                                   
+                                </div>
+
+
+                            </div>
+                             
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row" *ngIf="share.commonF.isEmpty(ris) ">
+        <div class="col-12 text-center">
+            <h2 class="text-muted" [innerHTML]="share.traduci('avvertimento_nessun_biglietto')"></h2>
+            <button class="btn btn-secondary mb-2" (click)="share.go('')">{{share.traduci('go_back')}}</button>
+        </div>
+    </div>
+</div>
+
+<app-loading-div *ngIf="caricamento" class="opacityAnimation" [ngClass]="{active: share.commonF.isEmpty(ris)}">
+</app-loading-div>

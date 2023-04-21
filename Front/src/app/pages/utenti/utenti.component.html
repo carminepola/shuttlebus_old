@@ -1,0 +1,64 @@
+<div class="container" *ngIf="!caricamento">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button class="btn btn-primary " [routerLink]="['/nuovoutente']"
+                    routerLinkActive="router-link-active">Crea utente</button>
+            </div>
+        </div>
+
+        <div class="col-12 animated fadeIn " *ngFor="let item of obj; let i =index">
+            <div class="form-group" *ngIf="item.cancellato != true && i < limitTo">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-12 col-xl-6">
+                                <div class="form-group">
+                                    <p class="card-text">
+                                        <b>Nome utente: </b>{{item.nomeUtente}}
+                                    </p>
+                                </div>
+
+                            </div>
+                            <!-- (click)="eliminaUtente(obj[i].id, !obj[i].bloccato)"-->
+                            <div class="col-12 col-xl-6 float-right">
+                                <div class="form-group float-right">
+                                    <button class="btn btn-danger" (click)="eliminaUtente(item.id)"><i
+                                            class="mdi mdi-trash-can-outline mr-2"></i>Elimina
+                                        utente</button>
+                                </div>
+                            </div>
+                            <div class=" col-12">
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input"
+                                            (change)="item.bloccato= !item.bloccato; disabilitaUtente(item.id,item.bloccato);"
+                                            id="customSwitch{{i}}" [checked]="!item.bloccato">
+                                        <label class="custom-control-label" for="customSwitch{{i}}">
+                                            <span *ngIf="!item.bloccato">
+                                                Attivo
+                                            </span>
+                                            <span *ngIf="item.bloccato">
+                                                Disattivo
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<app-loading-div *ngIf="caricamento"></app-loading-div>

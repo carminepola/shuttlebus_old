@@ -1,0 +1,35 @@
+
+.notifica{
+    display: block !important;
+   
+    transition : transform 400ms linear, opacity 200ms ease-out,  max-height  200ms linear 200ms ;
+    max-height: 0px;
+    opacity: 0 !important;
+    transform: translate3d(100%,0,0) !important;
+       border: 0px solid rgba(0,0,0,.1) !important;
+  
+}
+.notifica.attiva{
+    display: block !important;
+      max-height: 100vh !important;
+   transition : transform 400ms linear, opacity 400ms ease-in,  max-height 70ms linear;
+     opacity: 1 !important;
+    transform: translateZ(0)  !important;
+    border: 1px solid rgba(0,0,0,.1) !important;
+   
+   
+    
+     
+  
+}
+  
+.iconeNotifica{
+    transition : transform 400ms linear, opacity 200ms ease-out;
+       opacity: 0 !important;
+        transform: translate3d(100%,0,0) !important;
+}
+.iconeNotifica.attiva{
+      transition : transform 400ms linear, opacity 200ms ease-in 200ms;
+       opacity: 1 !important;
+       transform: translateZ(0)  !important;
+}

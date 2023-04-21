@@ -1,0 +1,32 @@
+<app-loading-div *ngIf="caricamento"></app-loading-div>
+<div class="container" *ngIf="!caricamento">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>Nome</label>
+                <input class="form-control" [disabled]="!share.commonF.isEmpty(id)" [(ngModel)]="obj.parola" type="text"
+                    name="ee" placeholder="Nome">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Traduzione ita</label>
+                <ngx-wig id="tradit" [(ngModel)]="obj.it" name="tradit">
+                </ngx-wig>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Traduzione en</label>
+                <ngx-wig id="tradit" [(ngModel)]="obj.en" name="tradit">
+                </ngx-wig>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button class="btn btn-primary" [disabled]="share.isCaricamento('traduzioni','salva')"
+                    (click)="salva()">Salva</button>
+            </div>
+        </div>
+    </div>
+</div>

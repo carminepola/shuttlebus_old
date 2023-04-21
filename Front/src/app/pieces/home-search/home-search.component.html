@@ -1,0 +1,302 @@
+<div *ngIf="!s.dati.inRicerca" class="w-100">
+    <div class="bg-secondary text-white">
+        <div class="container-pintour py-3">
+            <div class="row ">
+                <div class="col-12">
+                    <h2>{{s.traduci('str_search_data')}}</h2>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-3 col-xl-2 d-flex justify-content-center flex-column">
+                    <div class="form-group text-center">
+                        <button [disabled]="s.commonF.convertData(s.dati.calendario.value) == s.commonF.convertData('')"
+                            (click)="clickData(s.dati.calendario.value,-1)" class="btn btn-link btn-block text-white "
+                            id="iconButton1"><i class="mdi mdi-chevron-left mdi-48px"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-4 col-xl  d-none d-xl-flex justify-content-center flex-column">
+                    <div class="form-group   ">
+
+                        <button class="btn btn-outline-light btn-block  "
+                            (click)="clickData(s.dati.calendario.value,-1)"
+                            [disabled]="s.commonF.convertData(s.dati.calendario.value) == s.commonF.convertData('')">
+                            <h2 class="pb-0 mb-0">
+                                {{s.commonF.convertData(s.dati.calendario.value,-1)}}
+                            </h2>
+
+                        </button>
+                    </div>
+                </div>
+                <div class="col col-xl d-flex  justify-content-center flex-column">
+                    <div class="form-group   ">
+                        <button class="btn btn-light btn-block  text-primary ">
+                            <h2 class="pb-0 mb-0" id="dataButton">
+                                {{s.commonF.convertData(s.dati.calendario.value)}}
+                            </h2>
+
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 col-xl  d-none  d-xl-flex justify-content-center flex-column">
+                    <div class="form-group   ">
+                        <button class="btn btn-outline-light btn-block  "
+                            (click)="clickData(s.dati.calendario.value,1)">
+                            <h2 class="pb-0 mb-0">
+
+                                {{s.commonF.convertData(s.dati.calendario.value,1)}}
+                            </h2>
+
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3 col-xl-2  d-flex justify-content-center flex-column">
+                    <div class="form-group text-center">
+                        <button class="btn btn-link btn-block text-white "
+                            (click)="clickData(s.dati.calendario.value,1)"><i id="iconButton2"
+                                class="mdi mdi-chevron-right mdi-48px"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-12 col-xl-6 d-none d-xl-block">
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <h2>{{s.traduci('str_search_linea')}}</h2>
+                        </div>
+                        <div class="col-12">
+                            <h3>{{s.traduci('str_search_partenzaArrivo')}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-6 text-xl-right">
+                    <div class="row form-group">
+                        <div class="col-12 ">
+                            <a [routerLink]="['/carrello']" class="text-white" routerLinkActive="router-link-active">
+                                <h2>{{s.traduci('str_search_carrello')}}</h2>
+                            </a>
+
+                        </div>
+                        <div class="col-12">
+
+                            <a class="cursor-pointer text-white" [routerLink]="['/carrello']"
+                                routerLinkActive="router-link-active">
+                                <h3><i class="mdi mdi-cart-outline mr-3 text-white"></i>{{s.getPrezzoCarrello()}} €
+                                </h3>
+                            </a>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container-pintour" *ngIf="!s.commonF.isEmpty(s.risultatiRicerca)">
+        <div class="row py-3" *ngFor="let item of s.risultatiRicerca">
+
+            <div class="col-xl-6 col-12">
+                <div class="form-group text-secondary">
+                    <h2>{{s.traduciPrivato(item.traduzioniNome,item.nome)}}</h2>
+                </div>
+            </div>
+            <div class="col-xl-6 col-12 " id="cercato">
+                <div class="form-group float-right">
+                    <button class="btn btn-link text-secondary font-weight-bold "
+                        [routerLink]="['/busline',item.id,s.generaNome(s.traduciPrivato(item.traduzioniNome,item.nome))]">{{s.traduci('str_visualizza_linea')}}</button>
+                </div>
+            </div>
+            <div class="col-12" *ngFor="let fasce of item.fasce; let indiiceFascia = index;">
+                <div class="form-group">
+                    <div class="card" [id]="'card-'+ indiiceFascia">
+
+                        <div class="card-body">
+                            <div class="row">
+                                <!--Se non esiste nel carrello-->
+                                <div class="col-12 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="pl-0">{{s.traduci('text_home_da')}}</label>
+                                        <p class="text-primary font-weight-bold">{{s.dati.from.valueView }} -
+                                            {{s.troncaTesto(fasce.partenza,5,false)}}<br>
+                                            <small>{{s.dati.from.backup.indirizzo}}</small></p>
+
+
+                                        <label class="pl-0">{{s.traduci('text_home_a')}}</label>
+                                        <p class="text-primary font-weight-bold">{{s.dati.to.valueView}} -
+                                            {{s.troncaTesto(fasce.arrivo,5,false) }}
+                                            <br>
+                                            <small>{{s.dati.to.backup.indirizzo}}</small>
+                                        </p>
+                                    </div>
+
+
+                                </div>
+                                <hr class="w-100 d-block d-xl-none">
+                                <div class="col-12 col-xl-6"
+                                    *ngIf="!s.seNelCarrelloEsiste(fasce.guid,s.dati.calendario.valueView)">
+                                    <div class="row"
+                                        *ngFor="let biglietto of fasce.biglietti; let indiceBiglietto = index">
+                                        <div class="col-12 col-xl-5 text-primary font-weight-bold  my-auto">
+
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-10 ">
+                                                        {{s.traduciPrivato(biglietto.traduzioniNome,biglietto.nome)}}
+                                                    </div>
+                                                    <div class="col-2 ">
+                                                        <i id="a-{{indiiceFascia}}b-{{indiceBiglietto}}"
+                                                            class="ml-2 mdi mdi-information cursor-pointer text-primary font-weight-bold"
+                                                            tooltip='{{s.traduciPrivato(biglietto.traduzioniDes,biglietto.descrizione)}}'
+                                                            placement="top" container="body">
+
+                                                        </i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="col-12 col-xl-2 d-flex justify-content-center flex-column  text-center">
+                                            <div class="form-group">
+                                                <h5 class="mb-0">{{biglietto.costo}} €</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col col-xl-1 text-center">
+                                            <div class="form-group">
+                                                <button class="btn btn-link"
+                                                    (click)="biglietto.numero = bigliettoAggiungi(biglietto.numero,-1,fasce.posti,fasce.biglietti)"
+                                                    [disabled]="biglietto.numero == 0 || fasce.posti==0"><i
+                                                        class="mdi mdi-minus mdi-24px text-secondary"></i></button>
+                                            </div>
+
+
+                                        </div>
+                                        <div
+                                            class="col col-xl-2 d-flex justify-content-center flex-column text-center text-primary">
+                                            <div class="form-group">
+                                                <h6 class="mb-0" *ngIf="fasce.posti==0">{{s.traduci('str_terminati')}}
+                                                </h6>
+                                                <h3 class="mb-0" *ngIf="fasce.posti>0">{{biglietto.numero}}</h3>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col col-xl-1 text-center">
+                                            <div class="form-group">
+
+                                                <button class="btn btn-link"
+                                                    [disabled]="biglietto.numero == fasce.posti || fasce.posti==0"
+                                                    (click)="biglietto.numero = bigliettoAggiungi(biglietto.numero,1,fasce.posti,fasce.biglietti)"><i
+                                                        class="mdi mdi-plus mdi-24px text-secondary"></i></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div
+                                            class="col-12 col-xl-5 text-primary font-weight-bold d-flex justify-content-center flex-column">
+                                            <div class="d-block">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-10">
+                                                            {{s.traduci('str_search_bagaglioOpzionale')}}
+                                                        </div>
+                                                        <div class="col-2 d-block">
+                                                            <i id="a-{{indiiceFascia}}"
+                                                                class="ml-2 mdi mdi-information cursor-pointer text-primary font-weight-bold"
+                                                                tooltip='{{s.traduci("str_search_infoBagaglioOpzionale")}}'
+                                                                placement="top" container="body">
+
+                                                            </i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="col-12 col-xl-2 d-flex justify-content-center flex-column  text-center">
+                                            <div class="form-group">
+
+                                                <h5 class="mb-0">{{fasce.prezzoBagagli}} €</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col col-xl-1 text-center">
+                                            <div class="form-group">
+                                                <button class="btn btn-link"
+                                                    [disabled]=" fasce.numeroBagagliOpzionali== 0 || fasce.bagagliOpzionali == 0"
+                                                    (click)="fasce.numeroBagagliOpzionali = bagaglioAggiungi(fasce.numeroBagagliOpzionali,-1,fasce.bagagliOpzionali)"><i
+                                                        class="mdi mdi-minus mdi-24px text-secondary"></i></button>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="col col-xl-2 d-flex justify-content-center flex-column text-center text-primary">
+                                            <div class="form-group">
+                                                <h6 class="mb-0" *ngIf="fasce.bagagliOpzionali==0">
+                                                    {{s.traduci('str_terminati')}}
+                                                </h6>
+                                                <h3 class="mb-0" *ngIf="fasce.bagagliOpzionali>0">
+                                                    {{fasce.numeroBagagliOpzionali}}</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col col-xl-1 text-center">
+                                            <div class="form-group">
+                                                <button class="btn btn-link"
+                                                    [disabled]=" fasce.numeroBagagliOpzionali== fasce.bagagliOpzionali || fasce.bagagliOpzionali == 0"
+                                                    (click)="fasce.numeroBagagliOpzionali = bagaglioAggiungi(fasce.numeroBagagliOpzionali,1,fasce.bagagliOpzionali)"><i
+                                                        class="mdi mdi-plus mdi-24px text-secondary"></i></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 ">
+                                            <div class="form-group float-right">
+                                                <h3 class="text-secondary">{{s.traduci('str_search_totale')}} =<span
+                                                        class="text-primary">
+                                                        {{costoBiglietti(fasce)}} €</span> </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 ">
+                                            <div class="form-group">
+                                                <button class="btn btn-block btn-secondary"
+                                                    [disabled]="numeroBiglietti(fasce)==0"
+                                                    (click)="s.pushCarrello(fasce.idLinea,fasce.guid,item.nome, item.traduzioniNome, s.dati.calendario.valueView, fasce, costoBiglietti(fasce),s.dati.from.valueView,s.dati.to.valueView,indiiceFascia,s.dati.from.backup,s.dati.to.backup)">{{s.traduci('str_search_aggiungiAlCarrello')}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 d-flex justify-content-center flex-column text-center"
+                                    *ngIf="s.seNelCarrelloEsiste(fasce.guid,s.dati.calendario.valueView)">
+                                    <div class="form-group">
+                                        <h2 class="text-secondary">{{s.traduci("str_elementogianelcarrello")}}</h2>
+                                        <button class="btn btn-danger btn-block "
+                                            (click)="s.deleteCarrello(fasce.guid,s.dati.calendario.valueView)">{{s.traduci("str_rimuovidalcarrello")}}</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-pintour py-3" *ngIf="s.commonF.isEmpty(s.risultatiRicerca)" id="cercato">
+        <div class="row" *ngFor="let item of s.problemiRicerca">
+            <div class="col-12">
+                <div class="form-group text-center text-primary font-weight-bold" [innerHTML]="s.traduci(item)">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-loading-div *ngIf="s.dati.inRicerca"></app-loading-div>

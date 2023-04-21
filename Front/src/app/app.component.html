@@ -1,0 +1,12 @@
+<app-notifications class="spazio-notifiche overflow-x-hidden">
+</app-notifications>
+<app-nav-admin *ngIf="share.getAccessoRichiesto()"></app-nav-admin>
+<app-navbar *ngIf="share.getNavbar().show"></app-navbar>
+
+<div id="page" class="overflow-x-hidden" [ngStyle]="{'min-height': share.pagina.altezzaContenuto}">
+    <router-outlet></router-outlet>
+</div>
+<app-footer *ngIf=" share.getFooter().show">
+</app-footer>
+<app-alert class="spazio-alert"></app-alert>
+<app-loading></app-loading>

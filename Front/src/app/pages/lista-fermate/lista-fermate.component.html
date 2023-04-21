@@ -1,0 +1,75 @@
+<app-loading-div *ngIf="share.commonF.isEmpty(ris)">
+
+</app-loading-div>
+<div class="container animated fadeIn faster" *ngIf="!share.commonF.isEmpty(ris)">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button class="btn btn-primary" [routerLink]="['/fermata']" routerLinkActive="router-link-active">Nuovo
+                    Fermata</button>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+                    [placeholder]="share.traduci('search')">
+            </div>
+        </div>
+
+        <div class="col-12" *ngFor="let item of data |filter:searchText;  let i =  index">
+
+            <div class="form-group" *ngIf="item.cancellato != true && i < limitTo">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-lg-2 text-center">
+                                <div class="form-group">
+                                    <div class="img-thumbnail img">
+
+                                        <div class="h-100 w-100 bg-contain"
+                                            [style.background-image]="'url('+share.fotoUrl('../../../public/',item.foto)+')'">
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class=" col-12 col-lg-6">
+
+                                <div class="form-group">
+
+                                    <h5 class="card-title">
+                                        Città: {{share.traduciPrivato(item.traduzioniCitta,item.citta)}}</h5>
+                                    <p class="card-text">
+                                        Indirizzo: {{item.indirizzo}}
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4 ">
+                                <div class="form-group float-right">
+                                    <div class="btn-group-justified" role="group" aria-label="Vertical button group">
+                                        <button class="btn btn-primary mr-2 mt-2" [routerLink]="['/fermata',item.id]"
+                                            routerLinkActive="router-link-active">
+                                            Modifica
+                                        </button>
+                                        <button class="btn btn-danger mt-2" (click)="elimina(item.id)">
+                                            Elimina
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

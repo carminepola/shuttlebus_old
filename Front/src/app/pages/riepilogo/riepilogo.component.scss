@@ -1,0 +1,38 @@
+@media (min-width: 0px) { 
+    .border-ticket{
+        border-left: 2px solid;
+    }
+    h2{
+        font-size: 1.2rem ;
+    }
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+     .border-ticket{
+        border-left: 2px solid;
+    }
+      h2{
+        font-size: 1.3rem ;
+    }
+ }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+     .border-ticket{
+        border-left: 2px solid;
+    }
+     h2{
+        font-size: 1.4rem ;
+    }
+ }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+     .border-ticket{
+        border-left: 0px solid;
+    }
+     h2{
+        font-size: 1.5rem ;
+    }
+}

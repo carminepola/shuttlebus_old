@@ -1,0 +1,124 @@
+@import '~node_modules/@devmin/pintourtheme/variables';
+
+
+.dropdown-menu{
+    z-index: 9999999 !important;
+}
+.bg-napoli{
+  
+    min-height: 600px;
+    
+  background: url('~src/assets/img/home/amalfi.jpg') center center no-repeat;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.dropdown-bottom{
+    transform: translate3d(15px, 70px, 0px) !important;
+    max-width: 92vw;
+    
+}
+.card-body{
+    z-index: 99;
+}
+.dropdown-item{
+    white-space: normal !important;
+}
+.divHome{
+    height: calc(100vh - 78.83px);
+    min-height: 600px;
+    background-color: #0d0c0c3d;
+    background: url('~src/assets/img/sfondo.jpeg') center center no-repeat;
+    background: url('~src/assets/img/sfondo.jpeg') center center no-repeat, -moz-linear-gradient(top, #0d0c0c3d, #ffffff3d);
+    background: url('~src/assets/img/sfondo.jpeg') center center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff3d), to(#ffffff3d));
+    background: url('~src/assets/img/sfondo.jpeg') center center no-repeat, -webkit-linear-gradient(top, #0d0c0c3d, #ffffff3d);
+    background: url('~src/assets/img/sfondo.jpeg') center center no-repeat, -o-linear-gradient(top, #0d0c0c3d, #ffffff3d);
+    background: linear-gradient(#0d0c0c3d,#ffffff3d), url('~src/assets/img/sfondo.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.minHeight{
+    min-height: 400px;
+}
+.bgHome{
+    background-color: transparent;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) { 
+    .divHome{
+    height: auto;
+    min-height: auto;
+    background-color: #0d0c0c3d;
+    background-image: none;
+  
+} 
+.minHeight{
+    min-height: 150px;
+}
+.bg-napoli{
+  
+    min-height: 150px;
+  
+}
+.bgHome{
+    background-color: $secondary;
+}
+.bgHome>h2{
+ font-size: 18px !important;
+    font-weight: normal !important;
+}
+.home.container-pintour{
+    padding:0;
+}
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) { 
+     .divHome{
+    height: auto;
+    min-height: auto;
+    background-color: #0d0c0c3d;
+    background-image: none;
+    .bg-napoli{
+  
+    min-height: 200px;
+  
+}
+  
+} 
+.minHeight{
+    min-height: 200px;
+}
+.bgHome{
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+   
+    background-color: $secondary;
+}
+.bgHome>h2{
+ font-size: 18px !important;
+    font-weight: normal !important;
+}
+.home.container-pintour{
+    padding:0;
+}
+ }
+#data.form-control:disabled, .form-control[readonly] {
+    background-color: $white;
+    opacity: 1;
+}
+// Large devices (desktops, 992px and up)
+@media (max-width: 992px) { 
+      .bg-napoli{
+  
+    min-height: 200px;
+  
+}
+ }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (max-width: 1200px) {  }

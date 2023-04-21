@@ -1,0 +1,13 @@
+<app-loading-div *ngIf="s.commonF.isEmpty(ris)">
+</app-loading-div>
+<div class="container-pintour" *ngIf="!s.commonF.isEmpty(ris)">
+    <div class="row">
+        <div class="col-12 text-center py-2">
+
+            <h2 class="text-secondary font-weight-bold" [innerHTML]="s.traduci(message)"></h2>
+        </div>
+        <div class="col-12 text-center">
+            <button class="btn btn-secondary" (click)="s.go('')">{{s.traduci('str_torna_home')}}</button>
+        </div>
+    </div>
+</div>

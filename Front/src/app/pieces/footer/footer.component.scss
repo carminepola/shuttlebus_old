@@ -1,0 +1,12 @@
+img{
+    max-width: 70%;
+}
+
+@media (max-width: 576px) { .pagamentoSicuro{
+   font-size: 17px;
+}}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) { .pagamentoSicuro{
+    font-size: 17px;
+} }

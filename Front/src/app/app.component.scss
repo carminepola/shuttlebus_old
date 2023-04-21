@@ -1,0 +1,36 @@
+.spazio-notifiche {
+  position: fixed !important;
+  min-height: 100vh;
+  right: 0px;
+  z-index: 99;
+  overflow: hidden;
+  pointer-events: none !important;
+}
+
+.spazio-alert {
+  position: fixed !important;
+  bottom: 0px !important;
+  right: 0px !important;
+  left: 0px !important;
+  z-index: 99;
+  overflow: hidden;
+  pointer-events: none !important;
+}
+
+@media only screen and (min-width: 350px) {
+  .spazio-notifiche {
+    min-width: 350px !important;
+  }
+}
+
+@media only screen and (min-width: 200px) and (max-width: 349) {
+  .spazio-notifiche {
+    min-width: 200px !important;
+  }
+}
+
+@media only screen and (max-width: 200px) {
+  .spazio-notifiche {
+    min-width: 50px !important;
+  }
+}

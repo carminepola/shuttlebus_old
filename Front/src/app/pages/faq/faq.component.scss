@@ -1,0 +1,8 @@
+.collapse:not(.show) {
+    display: none;
+}
+.collapse.show{
+
+    transition: all 400ms linear,
+
+}

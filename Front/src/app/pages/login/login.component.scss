@@ -1,0 +1,40 @@
+.bg-login{
+    background: url('~src/assets/img/login/flotta-home-2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+.minHeigth{
+    min-height: 0px;
+}
+@media (min-width: 576px) { 
+    .minHeigth{
+    min-height: 0px;
+}
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    .minHeigth{
+    min-height: 450px;
+}
+  }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+      .minHeigth{
+    min-height: 500px;
+}
+ }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {  
+      .minHeigth{
+    min-height: 700px;
+}
+}

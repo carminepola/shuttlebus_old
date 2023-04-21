@@ -1,0 +1,40 @@
+<app-loading-div *ngIf="caricamento"></app-loading-div>
+<div class="container" *ngIf="!caricamento">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>Domanda ita</label>
+                <ngx-wig [(ngModel)]="obj.domandaIT">
+                </ngx-wig>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Risposta ita</label>
+                <ngx-wig [(ngModel)]="obj.rispostaIT">
+                </ngx-wig>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Domanda en</label>
+                <ngx-wig [(ngModel)]="obj.domandaEN">
+                </ngx-wig>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Risposta en</label>
+                <ngx-wig [(ngModel)]="obj.rispostaEN">
+                </ngx-wig>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="form-group float-right">
+            <button class="btn btn-primary" (click)="salva()"
+                [disabled]="share.isCaricamento('traduzioni','salva')">Salva</button>
+        </div>
+    </div>
+</div>

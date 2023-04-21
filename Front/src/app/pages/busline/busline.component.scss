@@ -1,0 +1,14 @@
+@import "node_modules/@devmin/pintourtheme/_variables.scss";
+
+.border-pink>tr,td,th{
+    border-top:0;
+    border-bottom: solid 1px $secondary!important;
+  
+}
+
+.noBorder{
+    border:0 !important;
+}
+.minHeight{
+    min-height: 400px;
+}

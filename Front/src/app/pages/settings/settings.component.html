@@ -1,0 +1,21 @@
+<app-loading-div *ngIf="share.commonF.isEmpty(ris)">
+
+</app-loading-div>
+<div class="container animated fadeIn faster" *ngIf="!share.commonF.isEmpty(ris)">
+    <div class="row">
+        <div class="col-12" *ngFor="let item of data">
+            <div class="form-group">
+                <label class="text-uppercase">{{item.chiave}}</label>
+                <input class="form-control" [(ngModel)]="item.valore" placeholder="{{item.chiave}}" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 ">
+            <button class="btn btn-primary float-right" (click)="salva()"
+                [disabled]="share.isCaricamento('impostazioni','salva')">
+                <span *ngIf="share.isCaricamento('impostazioni','salva')" class="spinner-border spinner-border-sm mr-2"
+                    role="status" aria-hidden="true"></span>Salva</button>
+        </div>
+    </div>
+</div>

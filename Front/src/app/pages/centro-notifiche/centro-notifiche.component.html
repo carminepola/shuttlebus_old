@@ -1,0 +1,53 @@
+<div class="container-fluid my-2">
+    <div class="row" *ngIf="share.notifiche.getNotificheReverse().length>0">
+        <div class="col-md-6 col-xs-12 col-sm-12  offset-md-3 offset-xm-0 offset-sm-0">
+            <div class="form-group">
+                <a class="float-right cursor-pointer mr-2" aria-label="Clear"
+                    (click)="share.notifiche.eliminaTutte();delete()">
+                    <i class=" mdi mdi-notification-clear-all mdi-24px" alt="Elimina notifiche"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xs-12 col-sm-12  offset-md-3 offset-xm-0 offset-sm-0">
+            <div *ngFor="let notifica of share.notifiche.getNotificheReverse();let i=index">
+                <div class="toast notifica " [class.attiva]="!notifica.eliminata && i < limitTo" [id]="notifica.id"
+                    role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img [src]="notifica.icona" class="rounded mr-2" height="25" width="25"
+                            *ngIf="!share.commonF.isEmpty(notifica.icona)">
+                        <strong class="mr-auto" [textContent]="notifica.titoloLungo"></strong>
+                        <small class="text-muted mr-2" [textContent]="notifica.ora"></small>
+
+                        <a class="float-right cursor-pointer"
+                            (click)="delete(notifica.id);share.notifiche.eliminaNotifica(notifica.id);"
+                            aria-label="Close">
+                            <i class="mdi mdi-window-close"></i>
+                        </a>
+                    </div>
+                    <div class="toast-body">
+                        <div [innerHTML]="notifica.testoLungo"></div>
+                        <div class="container-fluid mt-2" *ngIf="!share.commonF.isEmpty(notifica.buttons)">
+                            <div class="row">
+                                <div class="col" *ngFor="let button of notifica.buttons">
+                                    <button (click)="button.function();share.notifiche.visualizzaNotifica(notifica.id)"
+                                        [class]="button.class"><i *ngIf="!share.commonF.isEmpty(button.icon)"
+                                            [class]='button.icon'></i><span [textContent]="button.title"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xs-12 col-sm-12  offset-md-3 offset-xm-0 offset-sm-0">
+            <div class="form-group text-center" *ngIf="share.notifiche.getNotificheReverse().length<=0">
+                <h2 class="text-muted">Non ci sono notifiche</h2>
+            </div>
+        </div>
+    </div>
+</div>

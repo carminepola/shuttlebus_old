@@ -1,0 +1,35 @@
+<app-loading-div *ngIf="caricamento" class="opacityAnimation" [ngClass]="{active: share.commonF.isEmpty(ris)}">
+</app-loading-div>
+<div class="container-fluid" *ngIf="!caricamento">
+
+    <div class="row">
+        <div class="col-12 col-xl-4">
+            <div class="form-group">
+                <label>Data da visualizzare</label>
+                <div class="input-group">
+                    <input class="form-control" type="date" [(ngModel)]="dataDaVisualizzare" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" (click)="carica(dataDaVisualizzare)">Cerca</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="col-12">
+            <table class="table table-borderless table-striped w-100" id="tabella">
+                <thead>
+
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

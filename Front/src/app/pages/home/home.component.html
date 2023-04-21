@@ -1,0 +1,189 @@
+<div class="divHome" [ngClass]="{search: searchComponent}">
+
+    <div class=" home container-pintour h-100 d-flex   justify-content-center flex-column">
+
+        <div class="py-5 bgHome" *ngIf="!searchComponent">
+
+            <h2 class="text-white text-left text-uppercase " [innerHTML]="share.traduci('text_home_1')">
+
+            </h2>
+        </div>
+
+        <div>
+            <div class="card w-100 border-0"
+                *ngIf="share.dati.from.loading || share.dati.to.loading || share.commonF.isEmpty(share.dati)">
+                <div class="card-body">
+                    <app-loading-div>
+
+                    </app-loading-div>
+                </div>
+
+            </div>
+
+
+            <form class="card w-100 border-0 " role="form" (ngSubmit)="cerca()" ngNativeValidate
+                *ngIf="!share.dati.from.loading && !share.dati.to.loading && !share.commonF.isEmpty(share.dati)">
+
+
+
+                <div class="card-body animated fadeIn faster" name="init" id="init" role="form">
+
+                    <div name="pinco" id="searchBox" class=" row py-2 justify-content-md-left
+                        justify-content-lg-center justify-content-xl-center ">
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-2">
+
+
+                            <div class="d-flex align-content-center justify-content-center align-items-center h-100"
+                                *ngIf="share.dati.from.loadingOnly">
+                                <div class="spinner-border text-secondary " role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" *ngIf="!share.dati.from.loadingOnly">
+
+
+
+                                <label>{{share.traduci('text_home_da')}}</label>
+
+
+                                <input (ngModelChange)="share.dropdown('#dropdownMenuButton','#dropdown1','open')"
+                                    (click)="share.dati.from.value ='';share.initCalendario('')"
+                                    (focusout)="fromOutsideClick()" (clickOutside)="fromOutsideClick()"
+                                    autocomplete="off" type="text" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" list="da" name="browser" name="da"
+                                    [ngClass]="{'is-invalid': da.invalid && (da.dirty || da.touched),'is-valid':!da.invalid}"
+                                    type="text" required=true class="form-control w-100"
+                                    placeholder="{{share.traduci('text_home_da')}}" [(ngModel)]="share.dati.from.value"
+                                    #da="ngModel">
+
+
+                                <div class="dropdown-menu scrollable-menu dropdown-bottom"
+                                    aria-labelledby="dropdownMenuButton" data-static="true" id="dropdown1">
+                                    <a class="dropdown-item"
+                                        (click)="share.dati.from.id=''; share.dati.from.value='';  this.share.dati.to.option = this.share.primoTo;">{{share.traduci('text_home_nessunselezionato')}}</a>
+
+
+                                    <a *ngFor="let item of share.dati.from.option.sort(share.sortBy(share.getLenguage(),'asc'))  |  filter:share.dati.from.value "
+                                        (click)="share.dati.from.id= item.id; share.dati.from.backup = item;share.dati.from.value= share.traduciPrivato(item.traduzioniCitta, item.citta);searchTo();"
+                                        class="dropdown-item ">
+                                        <div class="text-primary font-weight-bold">
+
+                                            {{share.traduciPrivato(item.traduzioniCitta, item.citta)}}</div>
+                                        <small class="text-muted">{{item.indirizzo}}</small>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-2">
+                            <div class="d-flex align-content-center justify-content-center align-items-center h-100"
+                                *ngIf="share.dati.to.loadingOnly">
+                                <div class="spinner-border text-secondary " role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+
+                            </div>
+                            <div class="form-group" *ngIf="!share.dati.to.loadingOnly">
+
+                                <label class="text-capitalize">{{share.traduci('text_home_a')}}</label>
+                                <input (click)="share.dati.to.value =''; share.initCalendario('')"
+                                    (ngModelChange)="share.dropdown('#dropdownMenuButtonb','#dropdown2','open')"
+                                    (focusout)="toOutsideClick()" (clickOutside)="toOutsideClick()" autocomplete="off"
+                                    type="text" (change)="searchFrom()" id="dropdownMenuButtonb" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" name="a" name="a"
+                                    [ngClass]="{'is-invalid': to.invalid && (to.dirty || to.touched),'is-valid':!to.invalid}"
+                                    type="text" required=true class="form-control w-100"
+                                    placeholder="{{share.traduci('text_home_a')}}" [(ngModel)]="share.dati.to.value"
+                                    #to="ngModel">
+
+
+                                <div class="dropdown-menu scrollable-menu dropdown-bottom"
+                                    aria-labelledby="dropdownMenuButtonb" id="dropdown2" data-static="true">
+                                    <a class="dropdown-item"
+                                        (click)="share.dati.to.id=''; share.dati.to.value='';share.dati.from.option = share.primoFrom">{{share.traduci('text_home_nessunselezionato')}}</a>
+
+
+                                    <a *ngFor="let item of share.dati.to.option.sort(share.sortBy(share.getLenguage(),'asc')) | filter:share.dati.to.value;"
+                                        (click)="share.dati.to.id= item.id; share.dati.to.backup = item; share.dati.to.value= share.traduciPrivato(item.traduzioniCitta, item.citta);searchFrom();"
+                                        class="dropdown-item ">
+                                        <div class="text-primary font-weight-bold">
+                                            {{share.traduciPrivato(item.traduzioniCitta, item.citta)}}</div>
+                                        <small class="text-muted">{{item.indirizzo}}</small>
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-2">
+                            <div class="d-flex align-content-center justify-content-center align-items-center h-100"
+                                *ngIf="share.dati.calendario.loadingOnly">
+                                <div class="spinner-border text-secondary " role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" *ngIf="!share.dati.calendario.loadingOnly">
+                                <label class="text-capitalize">{{share.traduci('text_home_data')}}</label>
+                                <input id="data" autocomplete="off" name="data" type="text"
+                                    placeholder="{{share.traduci('text_home_data')}}" class="form-control"
+                                    [datesDisabled]="share.disabledDates" bsDatepicker readonly
+                                    [(ngModel)]="share.dati.calendario.value" (onShown)="onShowPicker($event)"
+                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="minDate">
+
+
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-2">
+                            <div class="form-group">
+                                <label class="text-capitalize">{{share.traduci('text_home_ora')}}</label>
+                                <select class="form-control" [(ngModel)]="share.dati.filtroOra" name="filtroOra">
+                                    <option value="0" class="text-muted">{{share.traduci("text_home_tutteleore")}}
+                                    </option>
+                                    <option value="1" class="text-muted">00:00 - 08:00
+                                    </option>
+                                    <option value="2" class="text-muted">08:00 - 16:00
+                                    </option>
+                                    <option value="3" class="text-muted">16:00 - 24:00
+                                    </option>
+                                </select>
+
+
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-2">
+                            <div class="form-group">
+                                <label class="text-capitalize">{{share.traduci('text_home_passeggeri')}}</label>
+                                <select class="form-control custom-select" name="persone"
+                                    [(ngModel)]="share.dati.persone">
+                                    <option *ngFor="let item of share.commonF.newArray(30);let i = index" [value]="i+1">
+                                        {{i+1}}
+                                    </option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center py-2">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 align-self-center ">
+                            <div class="form-group">
+                                <button class="btn btn-block btn-secondary text-capitalize" type="submit"
+                                    type="submit">{{share.traduci('text_home_cercaLinea')}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+<app-home-one *ngIf="!searchComponent"></app-home-one>
+<app-home-search *ngIf="searchComponent"></app-home-search>

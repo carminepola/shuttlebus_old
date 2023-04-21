@@ -1,0 +1,95 @@
+<app-loading-div *ngIf="caricamento"></app-loading-div>
+<div class="container" *ngIf="!caricamento">
+    <form class="row" #f="ngForm" ngNativeValidate>
+        <div class="col-12" [ngClass]="{'placeholder image': share.commonF.isEmpty(obj.foto)}">
+            <div class="form-group text-center">
+                <img [src]=" share.fotoUrl('../../../public/',obj.foto)" style="max-height: 200px;"
+                    class="img-thumbnail" *ngIf="!share.commonF.isEmpty(obj.foto)">
+            </div>
+        </div>
+        <div class=" col-12 ">
+            <div class=" form-group">
+                <label>Carica la foto</label>
+                <div class="input-group " *ngIf="!caricamento">
+                    <div class="custom-file" *ngIf="!caricamento">
+                        <input [disabled]="caricaFile" type="file" accept="image/*" (change)="fileChange($event)"
+                            class="custom-file-input" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02">
+                            <span *ngIf="!share.commonF.isEmpty(obj.foto)">{{obj.foto}}</span>
+                            <span *ngIf="share.commonF.isEmpty(obj.foto)">Carica una foto</span>
+                        </label>
+                    </div>
+                </div>
+                <small *ngIf="erroreFoto" class="text-danger">Errore nel formato del file caricato</small>
+                <div class="progress mt-2" *ngIf="caricaFile">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        Caricamento in
+                        corso</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Città ita</label>
+
+                <input class="form-control" required maxlength="255" placeholder="Città ita"
+                    [(ngModel)]="obj['traduzioniCitta'][0]['it']" name="cittaita" #cittaita="ngModel">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Città en</label>
+                <input class="form-control" required maxlength="255" placeholder="Città en"
+                    [(ngModel)]="obj['traduzioniCitta'][0]['en']" name="cittaen" #cittaen="ngModel">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Note ita</label>
+                <ngx-wig [(ngModel)]="obj['traduzioniNote'][0]['it']" id="tradit" name="tradit" #noteIt="ngModel">
+                </ngx-wig>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Note en</label>
+                <ngx-wig [(ngModel)]="obj['traduzioniNote'][0]['en']" id="traden" name="traden" #noteEn="ngModel">
+                </ngx-wig>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Indirizzo</label>
+
+                <div class="input-group">
+                    <input required class="form-control" [(ngModel)]="obj.indirizzo"
+                        (change)="posizione['trovato'] =false" type="text" name="indirizzo" placeholder="Indirizzo">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" (click)="updateIndirizzo()"
+                            [disabled]="share.isCaricamento('fermata','button')"><span
+                                *ngIf="share.isCaricamento('fermata','button')"
+                                class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                            Valida indirizzo</button>
+                    </div>
+
+
+                </div>
+                <small *ngIf="!share.commonF.isEmpty(posizione['indirizzo']) && !posizione['trovato']"
+                    class="text-danger">Indirizzo
+                    non
+                    trovato</small>
+
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button (click)="salva(f)" class="btn btn-primary"
+                    [disabled]="(f.valid && !posizione['trovato'])||share.isCaricamento('fermata','salva')">
+                    <span *ngIf="share.isCaricamento('fermata','salva')" class="spinner-border spinner-border-sm mr-2"
+                        role="status" aria-hidden="true"></span>
+                    Salva</button>
+            </div>
+        </div>
+    </form>
+</div>

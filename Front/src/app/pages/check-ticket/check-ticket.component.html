@@ -1,0 +1,130 @@
+<div class="bg-secondary text-white form-group d-flex flex-column   justify-content-center" style="min-height: 200px;">
+    <div class="container-pintour">
+        <div class="row">
+            <div class="col-12">
+                <h1 [innerHTML]="share.traduci('titolo_cerca_biglietto')"></h1>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<div class="container-pintour" *ngIf="!caricamento">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>{{share.traduci('visualizza_biglietto')}}</label>
+                <div class="input-group">
+                    <input class="form-control" [(ngModel)]="id"
+                        placeholder="{{share.traduci('visualizza_biglietto')}}" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" (click)="carica()"
+                            [disabled]="share.commonF.isEmpty(id)">{{share.traduci('cerca_biglietto')}}</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" *ngIf="!share.commonF.isEmpty(ris) && cercato ">
+        <div class="col-12" *ngFor="let item of ris | filter:searchText; let i =  index ">
+
+            <div class="form-group" *ngIf="i < limitTo ">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+
+                                    <h5 class="card-title">
+                                        <span
+                                            class="text-secondary font-weight-bold">{{share.traduci('str_codicebiglietto')}}:&nbsp;</span><span
+                                            class="text-primary">{{item.riferimento}}</span>
+                                    </h5>
+                                    <div class="row">
+
+                                        <div class="col-12 col-xl-6">
+                                            <div class="card-text">
+                                                <span
+                                                    class="text-secondary">{{share.traduci('str_data')}}:&nbsp;</span>{{this.share.troncaTesto(share.commonF.dataTimeToString(item.data),10,false)}}
+
+                                            </div>
+                                            <div class="card-text">
+                                                <span
+                                                    class="text-secondary">{{share.traduci('str_linea')}}:&nbsp;</span>{{share.traduciPrivato(item.traduzioniNome,item.nome)}}
+
+                                            </div>
+                                            <div class="card-text">
+                                                <span
+                                                    class="text-secondary">{{share.traduci('str_fascia')}}:&nbsp;</span>{{item.idfasciaoraria}}
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-xl-6">
+                                            <div class="card-text">
+                                                <span class="text-secondary">{{share.traduci('str_da')}}:&nbsp;
+                                                </span>{{share.traduciPrivato(item.itinerari[0].traduzioniNome,item.itinerari[0].citta)}}&nbsp;-&nbsp;{{share.troncaTesto(item.itinerari[0].orario,5,false)}}
+                                                <br><a target="_blank"
+                                                    [attr.href]="'https://www.google.com/maps/search/?api=1&query=' + item.itinerari[0].lat+','+item.itinerari[0].lng"><small>{{item.itinerari[0].indirizzo}}</small></a>
+
+                                            </div>
+                                            <div class="card-text">
+                                                <span
+                                                    class="text-secondary">{{share.traduci('str_to')}}:&nbsp;</span>{{share.traduciPrivato(item.itinerari[item.itinerari.length-1].traduzioniNome,item.itinerari[item.itinerari.length-1].citta)}}&nbsp;-&nbsp;{{share.troncaTesto(item.itinerari[item.itinerari.length-1].orario,5,false)}}
+                                                <br><a target="_blank"
+                                                    [attr.href]="'https://www.google.com/maps/search/?api=1&query=' + item.itinerari[item.itinerari.length-1].lat+','+item.itinerari[item.itinerari.length-1].lng"><small>{{item.itinerari[item.itinerari.length-1].indirizzo}}</small></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="w-100">
+                                <div class="form-group">
+
+
+                                    <div *ngIf="item.itinerari[0].bagagliOpzionali>0">
+
+                                        <span class="text-secondary">x</span>{{item.itinerari[0]["bagagliOpzionali"]}}
+                                        &nbsp;-&nbsp;Bagagli aggiuntivi&nbsp;-&nbsp;
+                                        {{item.itinerari[0].costoBagaglioOpzionale}}<span class="text-secondary">
+                                            €</span>
+                                    </div>
+                                    <div *ngFor="let b of item.biglietti">
+                                        <span class="text-secondary">x</span>
+                                        {{b.numero}}
+                                        &nbsp;-&nbsp;
+                                        {{share.traduciPrivato(b.traduzioniNome,b.nome)}}
+                                        &nbsp;-&nbsp;
+                                        {{b.costo}}
+                                        <span class="text-secondary">€</span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-12 col-xl-6">
+                                <div class="form-group" *ngIf="item.rimborsato == true">
+                                    <span class="text-danger font-weight-bold">Annullato</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row" *ngIf="share.commonF.isEmpty(ris) && cercato ">
+        <div class="col-12 text-center">
+            <h2 class="text-muted">{{share.traduci('nessun_biglietto_trovato')}}</h2>
+        </div>
+    </div>
+</div>
+
+<app-loading-div *ngIf="caricamento" class="opacityAnimation" [ngClass]="{active: share.commonF.isEmpty(ris)}">
+</app-loading-div>

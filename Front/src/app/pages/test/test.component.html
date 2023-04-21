@@ -1,0 +1,99 @@
+<div class="container-fluid overflow-x-hidden">
+
+    <div class="row py-2">
+        <div class="col-12">
+            <h2>Pagina</h2>
+        </div>
+        <div class="col-6">
+            <div class="form-group animated slideInLeft faster ">
+                <label for="altezzaPagina">Altezza pagina</label>
+                <input id="altezzaPagina" class="form-control" type="text" [(ngModel)]="share.pagina.altezza"
+                    name="altezzaPagina">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group  animated slideInRight faster ">
+                <label for="larghezzaPagina">Larghezza pagina</label>
+                <input id="larghezzaPagina" class="form-control" type="text" [(ngModel)]="share.pagina.larghezza"
+                    name="larghezzaPagina">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <hr class="w-100">
+            </div>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="col-12">
+            <div class="form-group">
+                <h2>Notifica</h2>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="testNotifica()">
+                    start
+                </button>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="testNotificaPulsanti()">
+                    start
+                </button>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <hr class="w-100">
+            </div>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="col-12">
+            <div class="form-group">
+                <h2>Alert</h2>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="testAlert()">
+                    danger
+                </button>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="testAlertS()">
+                    success
+                </button>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <hr class="w-100">
+            </div>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="col-12">
+            <div class="form-group">
+                <h2>Traduzioni</h2>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <p>{{share.traduci('errore_1')}}</p>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="form-group">
+                <hr class="w-100">
+            </div>
+        </div>
+    </div>
+
+
+</div>

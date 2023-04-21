@@ -1,0 +1,41 @@
+<app-loading-div *ngIf="caricamento">
+
+</app-loading-div>
+<div class="container-fluid animated fadeIn faster" *ngIf="!caricamento">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button class="btn btn-primary" [routerLink]="['/traduzione']">Nuova traduzione</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th scope=" col">#</th>
+                        <th scope="col">Parola</th>
+                        <th scope="col">It</th>
+                        <th scope="col">En</th>
+                        <th scope="col">Modifica</th>
+                        <th scope="col">Elimina</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data; let i = index">
+                        <th scope="row">{{item.id}}</th>
+                        <td>{{share.troncaTesto(item.parola,100)}}</td>
+                        <td>{{share.troncaTesto(item.it,100)}}</td>
+                        <td>{{share.troncaTesto(item.en,100)}}</td>
+                        <td><button class="btn btn-primary" [routerLink]="['/traduzione',item.id]"
+                                routerLinkActive="router-link-active">Modifica</button></td>
+                        <td><button class="btn btn-danger" (click)="elimina(item.id)">Elimina</button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

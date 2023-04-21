@@ -1,0 +1,29 @@
+
+
+    @-webkit-keyframes conditionalOpen {
+        from {height: 0px; }
+        to { height: 49px; }
+    }
+    @-moz-keyframes conditionalOpen {
+        from {height: 0px; }
+        to { height: 49px; }
+    }
+    @keyframes conditionalOpen {
+       from {height: 0px; }
+        to { height: 49px; }
+    }
+   
+    .easeElement{
+      
+                    -webkit-animation: conditionalOpen .2s normal ease-in ;
+           -moz-animation: conditionalOpen .2s normal  ease-in ;
+                animation: conditionalOpen .2s normal ease-in;
+                -webkit-transform-origin: bottom;
+           -moz-transform-origin: bottom;
+                transform-origin: bottom;
+    }
+
+   
+    
+
+   

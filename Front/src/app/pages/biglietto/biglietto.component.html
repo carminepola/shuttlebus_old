@@ -1,0 +1,72 @@
+<app-loading-div *ngIf="caricamento" class="opacityAnimation" [ngClass]="{active: caricamento}">
+
+</app-loading-div>
+<div class="container animated fadeIn faster" *ngIf="!caricamento">
+    <form class="row" #f="ngForm" ngNativeValidate>
+        <div class="col-12">
+            <h3>Biglietto</h3>
+            <hr>
+        </div>
+
+        <div class="col-12">
+
+            <div class="form-group">
+                <label>Nome it</label>
+                <input id="nomeIt" name="nomeIt" type="text " class="form-control"
+                    [(ngModel)]="biglietto.traduzioniNome[0].it" maxlength="250" placeholder="Nome Italiano" required
+                    #nomeIt="ngModel">
+
+            </div>
+
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Nome en</label>
+                <input id="nomeEn" name="nomeEn" type="text " class="form-control"
+                    [(ngModel)]="biglietto.traduzioniNome[0].en" maxlength="250" placeholder="Nome inglese" required
+                    #nomeEn="ngModel">
+
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Descrizione it</label>
+                <ngx-wig [(ngModel)]="biglietto.traduzioniDesc[0].it" id="desIt" name="desIt">
+                </ngx-wig>
+                <!--<ckeditor id="desIt" name="desIt" [(ngModel)]="biglietto.traduzioniDesc[0].it" [editor]="Editor"
+                    [data]="biglietto.traduzioniDesc[0].it">
+                </ckeditor>-->
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Descrizione en</label>
+                <ngx-wig [(ngModel)]="biglietto.traduzioniDesc[0].en" id="desEn" name="desEn">
+                </ngx-wig>
+                <!--<ckeditor id="desEn" name="desEn" [(ngModel)]="biglietto.traduzioniDesc[0].en" [editor]="Editor"
+                    [data]="biglietto.traduzioniDesc[0].en">
+                </ckeditor>-->
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Costo €</label>
+                <input class="form-control" type="number" required value="0" min="0" name="costo"
+                    [(ngModel)]="biglietto.costo">
+            </div>
+
+        </div>
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button class="btn btn-secondary" type="submit"
+                    [disabled]="biglietto['costo']<0 || share.isCaricamento('salva', 'biglietti')" (click)="salva(f)">
+
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                        *ngIf="share.isCaricamento('salva', 'biglietti')"></span>
+                    Salva</button>
+            </div>
+        </div>
+
+
+    </form>
+</div>

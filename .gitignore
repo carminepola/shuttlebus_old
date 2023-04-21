@@ -1,0 +1,10 @@
+Back/awssite
+Back/bin
+Back/app_data/log/system/*
+Back/app_data/log/user/*
+Back/obj
+Front/dist
+Front/public/*
+.vscode
+Back/.vscode
+Front/node_modules

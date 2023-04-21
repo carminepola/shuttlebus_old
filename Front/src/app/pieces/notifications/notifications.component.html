@@ -1,0 +1,43 @@
+<div aria-live="polite" aria-atomic="true">
+    <div class="container">
+        <span *ngFor="let notifica of share.notifiche.getNotifiche()">
+            <div class="row" *ngIf="!notifica.notificata">
+                <div class="col-12">
+                    <div class="toast notifica mt-1 mt-sm-3 pointer-all cursor-pointer"
+                        [class.attiva]="notifica.visibile" id="{{notifica.id}}" role="alert" aria-live="assertive"
+                        aria-atomic="true">
+                        <div class="toast-header">
+                            <img [src]="notifica.icona" class="rounded mr-2" height="25" width="25"
+                                *ngIf="!commonF.isEmpty(notifica.icona)">
+                            <strong class="mr-auto" [textContent]="notifica.titolo"></strong>
+                            <small class="text-muted mr-2" [textContent]="notifica.ora"></small>
+                            <a class="float-right cursor-pointer mr-2" aria-label="Clear"
+                                (click)="share.notifiche.segnaTutteComeVisualizzate()">
+                                <i class=" mdi mdi-notification-clear-all mdi-24px" alt="Elimina notifiche"></i>
+                            </a>
+                            <a class="float-right cursor-pointer" (click)="share.notifiche.eliminaNotifica(notifica.id)"
+                                aria-label="Close">
+                                <i class="mdi mdi-window-close"></i>
+                            </a>
+                        </div>
+                        <div class="toast-body" (click)="share.go('/notificationscenter')">
+                            <div [innerHTML]="notifica.testo"></div>
+                            <div class="container-fluid mt-2" *ngIf="!commonF.isEmpty(notifica.buttons)">
+                                <div class="row">
+                                    <div class="col" *ngFor="let button of notifica.buttons">
+                                        <button
+                                            (click)="button.function();share.notifiche.visualizzaNotifica(notifica.id)"
+                                            [class]="button.class"><i *ngIf="!commonF.isEmpty(button.icon)"
+                                                [class]='button.icon'></i><span
+                                                [textContent]="button.title"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </span>
+
+    </div>
+</div>

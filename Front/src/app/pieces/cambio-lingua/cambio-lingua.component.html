@@ -1,0 +1,15 @@
+<li class="nav-item dropdown nav-item mx-xl-3">
+    <a class="nav-link dropdown-toggle text-capitalize" href="#" id="navbarDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{share.getLenguage()}}<span class="flag-icon flag-icon-{{correggiLingua(share.getLenguage())}}  ml-2"></span>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <section *ngFor="let item of share.getListLenguage()">
+            <a class="dropdown-item cursor-pointer text-capitalize" *ngIf="share.getLenguage() != item.shortLng"
+                (click)="share.changeLenguage(item.shortLng)">{{item.shortLng}}<span
+                    class="flag-icon flag-icon-{{correggiLingua(item.shortLng)}}  ml-2"></span></a>
+
+        </section>
+
+    </div>
+</li>

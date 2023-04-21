@@ -1,0 +1,40 @@
+<div class="container">
+    <form class="row" #f="ngForm" (ngSubmit)='creautente()' ngNativeValidate>
+        <div class="col-12">
+            <div class="form-group">
+
+                <label for="email">Email</label>
+                <input id="email" required class="form-control" value="" type="text" name="email" placeholder="email"
+                    #email="ngModel" [(ngModel)]="newUser.nomeUtente" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}">
+            </div>
+
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <div class="custom-control custom-radio" (click)="newUser.ruolo = 1">
+                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"
+                        [checked]="1 == newUser.ruolo">
+                    <label class="custom-control-label" for="customRadio1">Admin</label>
+                </div>
+                <div class="custom-control custom-radio" (click)="newUser.ruolo = 10">
+                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input"
+                        [checked]="10 == newUser.ruolo">
+                    <label class="custom-control-label" for="customRadio2">Utente</label>
+                </div>
+                <div class="custom-control custom-radio" (click)="newUser.ruolo = 20">
+                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input"
+                        [checked]="20 == newUser.ruolo">
+                    <label class="custom-control-label" for="customRadio3">Rivenditore</label>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 ">
+            <button class="btn btn-secondary float-right" [disabled]="!f.valid"
+                [disabled]="share.isCaricamento('nuovoUtente', '1')"> <span
+                    class="spinner-border spinner-border-sm mr-2" *ngIf="share.isCaricamento('nuovoUtente', '1')"
+                    role="status" aria-hidden="true"></span>Salva</button>
+        </div>
+    </form>
+</div>

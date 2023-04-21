@@ -1,0 +1,59 @@
+<app-loading-div *ngIf="caricamento">
+
+</app-loading-div>
+<div class="container animated fadeIn faster" *ngIf="!caricamento">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group float-right">
+                <button class="btn btn-primary" [routerLink]="['/adminfaq']" routerLinkActive="router-link-active">Nuova
+                    faq</button>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+                    [placeholder]="share.traduci('search')">
+            </div>
+        </div>
+
+        <div class="col-12" *ngFor="let item of data.slice(0,limitTo) |filter:searchText">
+
+            <div class="form-group" *ngIf="item.cancellato != true">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-lg-8">
+                                <div class="form-group">
+
+                                    <h5 class="card-title" [innerHTML]="share.troncaTesto(item.domandaIT,20)">
+                                    </h5>
+                                    <p [innerHTML]="share.troncaTesto(item.rispostaIT,100)"></p>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4 ">
+                                <div class="form-group float-right">
+                                    <div class="btn-group-justified" role="group" aria-label="Vertical button group">
+                                        <button class="btn btn-primary mr-2 mt-2" [routerLink]="['/adminfaq',item.id]"
+                                            routerLinkActive="router-link-active">
+                                            Modifica
+                                        </button>
+                                        <button class="btn btn-danger mt-2" (click)="elimina(item.id)">
+                                            Elimina
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,81 @@
+<div class="container-pintour py-2 pt-lg-3 bg-secondary text-white" id="footer">
+
+    <div class="row py-3  ">
+        <div class="col-12 col-xl-4">
+            <div class="form-group">
+                <h3 class="mb-4">
+                    <img class="navbar-imgLogo" src="assets/img/logo/white.png" height="17px">
+                </h3>
+                <!--sostituisci con logo-->
+                <p [innerHTML]="share.traduci('nomeSocieta')"></p>
+                <p [innerHTML]="share.traduci('sede')"></p>
+                <p [innerHTML]="share.traduci('piva')"></p>
+            </div>
+
+        </div>
+        <div class="col-12 col-xl-4">
+            <div class="form-group">
+                <h3 class="mb-4">{{share.traduci('contatti')}}</h3>
+                <!--sostituisci con logo-->
+
+                <p><a href="tel:{{share.traduci('numero')}}" class="text-white"><i
+                            class="mr-2 mdi mdi-phone-outline"></i>{{share.traduci('numero')}}</a>
+                </p>
+                <p><a href="mailto:{{share.traduci('email')}}" class="text-white"><i
+                            class="mr-2 mdi mdi-email-outline"></i>{{share.traduci('email')}}</a>
+                </p>
+            </div>
+        </div>
+        <div class="col-12 col-xl-4">
+            <h3 class="mb-4">{{share.traduci('social')}}</h3>
+            <!--sostituisci con logo-->
+
+            <a href="{{share.traduci('link_facebook')}}" target="_blank" class="text-white"><i
+                    class="mdi mdi-facebook-box mdi-36px"></i></a>
+            <a href="{{share.traduci('link_instagram')}}" target="_blank" class="text-white"><i
+                    class="mdi mdi-instagram mdi-36px"></i></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-auto mr-auto"></div>
+        <div class="col-auto">
+            <a *ngIf="!share.isValidSession()" class="text-white cursor-pointer" [routerLink]="['/login']">Login</a>
+            <a *ngIf="share.isValidSession()" class="text-white cursor-pointer" [routerLink]="['/dash']">Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<div class="container-pintour">
+    <div class="row  pt-4">
+        <div class="col-12 text-center">
+            <div class="form-group">
+                <h3 class="text-primary font-weight-bold pagamentoSicuro">
+                    {{share.traduci('text_home_pagamentisicuri')}}</h3>
+            </div>
+
+        </div>
+        <div class="col-12 text-center">
+
+            <a><img src="assets/img/home/paypal.png"></a>
+
+        </div>
+    </div>
+
+</div>
+<div class="container-fluid">
+    <div class="row pb-2 pt-2">
+        <div class="col-12 ">
+            <a class="font-weight-bold float-right" href="https://devmin.it"><img
+                    src="https://devmin.it/img/logo_dark.svg" class="mr-2" width="150"></a>
+
+
+        </div>
+
+    </div>
+
+</div>
+<div class="alert alert-info text-center" style="position:fixed; bottom: 0px;  left:6px; right: 6px; z-index: 999 !important;" role="alert"
+    *ngIf="policy">
+    <span [innerHTML]="share.traduci('cookie_policy')"></span><br>
+    <button class="btn btn-success" (click)="policySet()">{{share.traduci('button_accetto')}}</button>
+</div>
