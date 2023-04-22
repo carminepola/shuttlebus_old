@@ -21,7 +21,7 @@ services:
     environment:
     - TZ=Europe/Roma
     ports:
-    - 35000:80
+    - 45000:80
     networks:
     - pintournet
  db:
@@ -31,7 +31,7 @@ services:
     networks:
     - pintournet
     ports:
-    - 35002:1433
+    - 45001:1433
     volumes:
     - pintour-backup:/mnt/backup
     - pintour-db:/var/opt/mssql/data/
@@ -41,7 +41,7 @@ services:
     - ACCEPT_EULA=Y
     - MSSQL_RPC_PORT=135
     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    - SA_PASSWORD=Password-00
+    - SA_PASSWORD=Svuhsbweuiybd37t3467g4j4hnrbd
 networks:
   pintournet:
     driver: bridge

@@ -1,7 +1,6 @@
 dbpintour:1433
 Pintour
 sa
-Password-00
-
+Svuhsbweuiybd37t3467g4j4hnrbd
 
 
