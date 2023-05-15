@@ -35,7 +35,7 @@ export class filter implements PipeTransform {
 
     confronta(parola) {
         if (parola !== null && parola !== undefined && parola !== "" && parola.length !== 0) {
-debugger
+ 
           parola = parola.toString().toLowerCase().trim().replace(/ /g, '')
           var soluzione = parola.includes(this.fil);
         return soluzione;

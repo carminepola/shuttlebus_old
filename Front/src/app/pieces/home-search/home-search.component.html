@@ -9,7 +9,8 @@
             <div class="row ">
                 <div class="col-3 col-xl-2 d-flex justify-content-center flex-column">
                     <div class="form-group text-center">
-                        <button [disabled]="s.commonF.convertData(s.dati.calendario.value) == s.commonF.convertData('')"
+                         
+                        <button [disabled]="s.commonF.convertData(s.dati.calendario.value) == s.commonF.convertData('',1)"
                             (click)="clickData(s.dati.calendario.value,-1)" class="btn btn-link btn-block text-white "
                             id="iconButton1"><i class="mdi mdi-chevron-left mdi-48px"></i>
                         </button>
@@ -17,10 +18,10 @@
                 </div>
                 <div class="col-4 col-xl  d-none d-xl-flex justify-content-center flex-column">
                     <div class="form-group   ">
-
+ 
                         <button class="btn btn-outline-light btn-block  "
                             (click)="clickData(s.dati.calendario.value,-1)"
-                            [disabled]="s.commonF.convertData(s.dati.calendario.value) == s.commonF.convertData('')">
+                            [disabled]="s.commonF.convertData(s.dati.calendario.value) == s.commonF.convertData('',1)">
                             <h2 class="pb-0 mb-0">
                                 {{s.commonF.convertData(s.dati.calendario.value,-1)}}
                             </h2>
@@ -289,7 +290,7 @@
             </div>
         </div>
     </div>
-    <div class="container-pintour py-3" *ngIf="s.commonF.isEmpty(s.risultatiRicerca)" id="cercato">
+    <div class="container-pintour py-3" *ngIf="s.commonF.isEmpty(s.risultatiRicerca) " id="cercato">
         <div class="row" *ngFor="let item of s.problemiRicerca">
             <div class="col-12">
                 <div class="form-group text-center text-primary font-weight-bold" [innerHTML]="s.traduci(item)">

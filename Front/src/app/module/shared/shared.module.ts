@@ -28,7 +28,8 @@ export class SharedModule {
   protected isNotLocal = false; //se l'api non si trova sullo stesso server
   protected isNotUrl = "https://shuttlebus.pintourbus.com/api/1.0/"; //url dell'api
    //protected devApi = "https://pintour.servernas.it/api/1.0/";
-  protected devApi = "https://localhost:5000/";
+   protected devApi ="";
+ // protected devApi = "https://localhost:5000/";
   //protected devApi = " https://shuttlebus.pintourbus.com/api/1.0/"
   protected positionImage = "public/";
   public regex = _regex;
@@ -135,7 +136,7 @@ export class SharedModule {
         loadingOnly: false,
       },
       calendario: {
-        value: new Date(),
+        value: new Date(new Date().setDate(new Date().getDate() + 1)),
         valueView: "",
         option: [],
         search: "",
@@ -912,6 +913,7 @@ export class SharedModule {
   }
 
   initCalendario(dat) {
+    
     var enabledDates = [];
     if (this.commonF.isEmpty(dat)) {
       this.disabledDates = [];
@@ -921,17 +923,22 @@ export class SharedModule {
 
     var trovato = false;
     for (var i = 0; i < dat.length; i++) {
-      enabledDates.push(new Date(dat[i]));
-      if (
-        this.commonF.convertData(dat[i]) ==
-        this.commonF.convertData(this.dati.calendario.value)
-      ) {
-        trovato = true;
+      debugger
+      if(new Date(dat[i]).getDate() > new Date().getDate() )
+      {
+        enabledDates.push(new Date(dat[i]));
+        if (
+          this.commonF.convertData(dat[i]) ==
+          this.commonF.convertData(this.dati.calendario.value)
+        ) {
+          trovato = true;
+        }
       }
+     
     }
 
     if (!trovato) {
-      this.dati.calendario.value = new Date(dat[0]);
+      this.dati.calendario.value = new Date(enabledDates[0]);
     }
     this.GetDisabledDates(enabledDates);
   }

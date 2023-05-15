@@ -8,3 +8,5 @@ Front/public/*
 .vscode
 Back/.vscode
 Front/node_modules
+Front/package-lock.json
+

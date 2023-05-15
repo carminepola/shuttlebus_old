@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
   }
   ngOnInit() {
 
-   
+    debugger
     if (this.share.samePath('search')) {
       this.share.initCalendario(this.share.dati.calendario.option);
       this.searchComponent = true;
@@ -366,6 +366,7 @@ debugger
 
   cerca() {
     try {
+      debugger
       this.share.dati.from.valueView = this.share.dati.from.value;
       this.share.dati.to.valueView = this.share.dati.to.value;
       this.share.dati.calendario.valueView = this.share.commonF.convertData(this.share.dati.calendario.value);

@@ -19,6 +19,7 @@ export class HomeSearchComponent implements OnInit {
 
   ngOnInit() {
     try {
+      debugger
 
       if (this.s.commonF.isEmpty(this.s.dati.from.value) || this.s.commonF.isEmpty(this.s.dati.to.value)) {
         if (localStorage["search"]) {
