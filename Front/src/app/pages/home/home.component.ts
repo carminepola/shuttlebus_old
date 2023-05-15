@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
 
   locales = listLocales();
 
-  public minDate = new Date();
+  public minDate = new Date(new Date().setDate(new Date().getDate() + 1)); 
   public searchComponent = false;
 
 
