@@ -1,7 +1,7 @@
 version: "3.8" 
 services: 
  back:
-    image: docker.servernas.it/pintourbeckend:1.0.3
+    image: docker.servernas.it/pintourbeckend
     environment:
     - TZ=Europe/Roma
     container_name: PintourBackEnd
@@ -14,7 +14,7 @@ services:
     networks:
     - pintournet
  front:
-    image: docker.servernas.it/pintourfrontend:1.0.3
+    image: docker.servernas.it/pintourfrontend:1.0.2
     container_name: PintourFontEnd
     volumes:
     - pintour-public:/usr/share/nginx/html/public
