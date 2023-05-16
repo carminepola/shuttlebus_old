@@ -676,7 +676,12 @@ namespace core.Controllers
 
                     }
                     string oggi = DateTime.Now.ToString("yyyy-MM-dd");
-                    string orarioAdesso = DateTime.Now.ToString("HH:mm:ss");
+                    DateTime now = DateTime.Now;
+                    DateTime newTime = now.AddMinutes(30);
+
+
+
+                    string orarioAdesso = newTime.ToString("HH:mm:ss");
                     if (day == oggi.ToString())
                     {
 

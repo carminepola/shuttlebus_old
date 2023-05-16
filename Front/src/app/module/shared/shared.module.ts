@@ -28,8 +28,8 @@ export class SharedModule {
   protected isNotLocal = false; //se l'api non si trova sullo stesso server
   protected isNotUrl = "https://shuttlebus.pintourbus.com/api/1.0/"; //url dell'api
   //protected devApi = "https://pintour.servernas.it/api/1.0/";
-  protected devApi = "";
-  // protected devApi = "https://localhost:5000/";
+  //protected devApi = "";
+  protected devApi = "https://localhost:5001/";
   //protected devApi = " https://shuttlebus.pintourbus.com/api/1.0/"
   protected positionImage = "public/";
   public regex = _regex;
@@ -131,7 +131,7 @@ export class SharedModule {
         loadingOnly: false,
       },
       calendario: {
-        value: new Date(new Date().setDate(new Date().getDate() + 1)),
+        value: new Date(),
         valueView: "",
         option: [],
         search: "",
@@ -862,12 +862,12 @@ export class SharedModule {
     for (var i = 0; i < dat.length; i++) {
       debugger;
 
-      if (new Date(dat[i]) > new Date()) {
+       
         enabledDates.push(new Date(dat[i]));
         if (this.commonF.convertData(dat[i]) == this.commonF.convertData(this.dati.calendario.value)) {
           trovato = true;
         }
-      }
+     
     }
 
     if (!trovato) {
