@@ -27,9 +27,9 @@ export class SharedModule {
   protected _apiVersion = "/api/1.0/"; //posizione api.
   protected isNotLocal = false; //se l'api non si trova sullo stesso server
   protected isNotUrl = "https://shuttlebus.pintourbus.com/api/1.0/"; //url dell'api
-   //protected devApi = "https://pintour.servernas.it/api/1.0/";
-   protected devApi ="";
- // protected devApi = "https://localhost:5000/";
+  //protected devApi = "https://pintour.servernas.it/api/1.0/";
+  protected devApi = "";
+  // protected devApi = "https://localhost:5000/";
   //protected devApi = " https://shuttlebus.pintourbus.com/api/1.0/"
   protected positionImage = "public/";
   public regex = _regex;
@@ -69,12 +69,7 @@ export class SharedModule {
     altezzaContenuto: "",
   };
   //End variabili
-  public constructor(
-    public commonF: commonFunctionModule,
-    public notifiche: NotificationsModule,
-    public alert: AlertsModule,
-    public router: Router
-  ) {}
+  public constructor(public commonF: commonFunctionModule, public notifiche: NotificationsModule, public alert: AlertsModule, public router: Router) {}
   /**
    * Ritorna la lista di parametri in Data sulla pagina app-routing
    */
@@ -173,24 +168,18 @@ export class SharedModule {
           if (!this.commonF.isEmpty(indirizzo)) {
             var geocoder = new google.maps.Geocoder();
 
-            geocoder.geocode(
-              { address: indirizzo },
-              function (results, status) {
-                if (status === "OK") {
-                  risposta.lat = results[0].geometry.location.lat();
-                  risposta.lng = results[0].geometry.location.lng();
-                  risposta.latlng =
-                    results[0].geometry.location.lat() +
-                    ", " +
-                    results[0].geometry.location.lng();
-                  risposta.indirizzo = results[0].formatted_address;
-                  risposta.trovato = true;
-                } else {
-                  console.log("errore maps");
-                }
-                resolve(risposta);
+            geocoder.geocode({ address: indirizzo }, function (results, status) {
+              if (status === "OK") {
+                risposta.lat = results[0].geometry.location.lat();
+                risposta.lng = results[0].geometry.location.lng();
+                risposta.latlng = results[0].geometry.location.lat() + ", " + results[0].geometry.location.lng();
+                risposta.indirizzo = results[0].formatted_address;
+                risposta.trovato = true;
+              } else {
+                console.log("errore maps");
               }
-            );
+              resolve(risposta);
+            });
           } else {
             resolve(risposta);
           }
@@ -398,10 +387,7 @@ export class SharedModule {
       var risposta = parola;
       if (!this.commonF.isEmpty(this._dictionary)) {
         for (var i = 0; i < this._dictionary.length; i++) {
-          if (
-            parola.toLocaleLowerCase() ==
-            this._dictionary[i]["parola"].toString().toLowerCase()
-          ) {
+          if (parola.toLocaleLowerCase() == this._dictionary[i]["parola"].toString().toLowerCase()) {
             a = this._dictionary[i][this.getLenguage()];
 
             if (a != undefined) {
@@ -487,10 +473,7 @@ export class SharedModule {
   }
 
   public setAltezzaContenuto() {
-    this.pagina.altezzaContenuto =
-      this.getAltezzaPagina() -
-      (this.getAltezzaElemento("navbar") + this.getAltezzaElemento("footer")) +
-      "px";
+    this.pagina.altezzaContenuto = this.getAltezzaPagina() - (this.getAltezzaElemento("navbar") + this.getAltezzaElemento("footer")) + "px";
   }
 
   public textFromHtml(text) {
@@ -665,10 +648,7 @@ export class SharedModule {
    * sessione
    */
   ripristinaSessione() {
-    if (
-      !this.commonF.isEmpty(localStorage["token"]) &&
-      !this.commonF.isEmpty(localStorage["ruolo"])
-    ) {
+    if (!this.commonF.isEmpty(localStorage["token"]) && !this.commonF.isEmpty(localStorage["ruolo"])) {
       sessionStorage["token"] = localStorage["token"];
       sessionStorage["ruolo"] = localStorage["ruolo"];
       sessionStorage["id"] = localStorage["id"];
@@ -686,10 +666,7 @@ export class SharedModule {
     this.go("/login");
   }
   isValidSession() {
-    if (
-      !this.commonF.isEmpty(sessionStorage["token"]) &&
-      !this.commonF.isEmpty(sessionStorage["ruolo"])
-    ) {
+    if (!this.commonF.isEmpty(sessionStorage["token"]) && !this.commonF.isEmpty(sessionStorage["ruolo"])) {
       return true;
     }
     return false;
@@ -714,10 +691,7 @@ export class SharedModule {
     };
   };
   generaNome(nome) {
-    var outString = nome.replace(
-      /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-      "_"
-    );
+    var outString = nome.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "_");
     var a = this.replaceAll(outString, " ", "_");
     return a;
   }
@@ -757,15 +731,9 @@ export class SharedModule {
     var a = [];
     var cont = 0;
     for (let i = 0; i < this._carrello.elementi.length; i++) {
-      if (
-        this._carrello.elementi[i].guid !== guid ||
-        this._carrello.elementi[i].data !== data
-      ) {
+      if (this._carrello.elementi[i].guid !== guid || this._carrello.elementi[i].data !== data) {
         a.push(this._carrello.elementi[i]);
-      } else if (
-        this._carrello.elementi[i].guid === guid &&
-        this._carrello.elementi[i].data === data
-      ) {
+      } else if (this._carrello.elementi[i].guid === guid && this._carrello.elementi[i].data === data) {
         cont += this._carrello.elementi[i].prezzo;
       }
     }
@@ -773,20 +741,7 @@ export class SharedModule {
     this._carrello.elementi = a;
     this.saveCart();
   }
-  pushCarrello(
-    idLinea,
-    guid,
-    nome,
-    traduzioniNome,
-    data,
-    datiBiglietto,
-    prezzo,
-    from,
-    to,
-    idCard,
-    fromBackup,
-    toBackup
-  ) {
+  pushCarrello(idLinea, guid, nome, traduzioniNome, data, datiBiglietto, prezzo, from, to, idCard, fromBackup, toBackup) {
     if (this.seNelCarrelloEsiste(guid, data)) {
       return false;
     }
@@ -817,10 +772,7 @@ export class SharedModule {
   }
   seNelCarrelloEsiste(guid, giorno) {
     for (let i = 0; i < this._carrello.elementi.length; i++) {
-      if (
-        guid == this._carrello.elementi[i].guid &&
-        giorno == this._carrello.elementi[i].data
-      ) {
+      if (guid == this._carrello.elementi[i].guid && giorno == this._carrello.elementi[i].data) {
         return true;
       }
     }
@@ -837,23 +789,13 @@ export class SharedModule {
     if (localStorage["cart"]) {
       var dataCompare = new Date();
       dataCompare.setDate(dataCompare.getDate() - 1);
-      if (
-        new Date(
-          this.commonF.convertData(localStorage["expire"], 0, "time", "-")
-        ) > dataCompare
-      ) {
+      if (new Date(this.commonF.convertData(localStorage["expire"], 0, "time", "-")) > dataCompare) {
         check = true;
         this._carrello = JSON.parse(localStorage["cart"]);
 
         var a = [];
         for (let i = 0; i < this._carrello.elementi.length; i++) {
-          var f = new Date(
-            this.commonF.convertStringToDataIt(
-              this._carrello.elementi[i].data,
-              "time",
-              "-"
-            )
-          );
+          var f = new Date(this.commonF.convertStringToDataIt(this._carrello.elementi[i].data, "time", "-"));
           var g = new Date();
           g.setDate(g.getDate() - 1);
 
@@ -878,11 +820,7 @@ export class SharedModule {
     }
   }
   IsSameDay(date1: Date, date2: Date) {
-    if (
-      date1.getFullYear() == date2.getFullYear() &&
-      date1.getMonth() == date2.getMonth() &&
-      date1.getDate() == date2.getDate()
-    ) {
+    if (date1.getFullYear() == date2.getFullYear() && date1.getMonth() == date2.getMonth() && date1.getDate() == date2.getDate()) {
       return true;
     } else {
       return false;
@@ -913,7 +851,6 @@ export class SharedModule {
   }
 
   initCalendario(dat) {
-    
     var enabledDates = [];
     if (this.commonF.isEmpty(dat)) {
       this.disabledDates = [];
@@ -923,18 +860,14 @@ export class SharedModule {
 
     var trovato = false;
     for (var i = 0; i < dat.length; i++) {
-      debugger
-      if(new Date(dat[i]).getDate() > new Date().getDate() )
-      {
+      debugger;
+
+      if (new Date(dat[i]) > new Date()) {
         enabledDates.push(new Date(dat[i]));
-        if (
-          this.commonF.convertData(dat[i]) ==
-          this.commonF.convertData(this.dati.calendario.value)
-        ) {
+        if (this.commonF.convertData(dat[i]) == this.commonF.convertData(this.dati.calendario.value)) {
           trovato = true;
         }
       }
-     
     }
 
     if (!trovato) {
