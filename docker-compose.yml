@@ -14,7 +14,7 @@ services:
     networks:
     - pintournet
  front:
-    image: docker.servernas.it/pintourfrontend:test1
+    image: docker.servernas.it/pintourfrontend
     container_name: PintourFontEnd
     volumes:
     - pintour-public:/usr/share/nginx/html/public
