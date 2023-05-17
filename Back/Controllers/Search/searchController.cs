@@ -677,11 +677,11 @@ namespace core.Controllers
                     }
                     string oggi = DateTime.Now.ToString("yyyy-MM-dd");
                     DateTime now = DateTime.Now;
-                    DateTime newTime = now.AddMinutes(30);
+                    //now = now.AddMinutes(30);
 
 
 
-                    string orarioAdesso = newTime.ToString("HH:mm:ss");
+                    string orarioAdesso = now.ToString("HH:mm:ss");
                     if (day == oggi.ToString())
                     {
 
@@ -696,7 +696,7 @@ namespace core.Controllers
                 var check1 = false;
                 var check2 = false;
 
-                if (IsDataTableEmpty(dati.data))
+                if (dati.data.Rows.Count==0)
                 {
                     response check = new response();
 
@@ -741,10 +741,10 @@ namespace core.Controllers
                     }
                     else
                     {
-                        contaErrore("0");
+                        
                     }
 
-                    return dati;
+                    contaErrore("0");
                 }
                 else
                 {
