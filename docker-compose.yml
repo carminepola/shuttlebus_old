@@ -1,7 +1,7 @@
 version: "3.8" 
 services: 
  back:
-    image: docker.servernas.it/pintourbeckend:1.0.6
+    image: docker.servernas.it/pintourbeckend:1.0.5
     environment:
     - TZ=Europe/Rome
     container_name: PintourBackEnd
