@@ -28,8 +28,8 @@ export class SharedModule {
   protected isNotLocal = false; //se l'api non si trova sullo stesso server
   protected isNotUrl = "https://shuttlebus.pintourbus.com/api/1.0/"; //url dell'api
   //protected devApi = "https://pintour.servernas.it/api/1.0/";
-  protected devApi = "";
-  //protected devApi = "https://localhost:5001/";
+  //protected devApi = "";
+  protected devApi = "https://localhost:5001/";
   //protected devApi = " https://shuttlebus.pintourbus.com/api/1.0/"
   protected positionImage = "public/";
   public regex = _regex;
