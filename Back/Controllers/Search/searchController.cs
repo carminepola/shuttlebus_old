@@ -677,7 +677,7 @@ namespace core.Controllers
                     }
                     string oggi = DateTime.Now.ToString("yyyy-MM-dd");
                     DateTime now = DateTime.Now;
-                    //now = now.AddMinutes(30);
+                    now = now.AddMinutes(30);
 
 
 
