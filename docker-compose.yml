@@ -1,9 +1,9 @@
 version: "3.8" 
 services: 
  back:
-    image: docker.servernas.it/pintourbeckend:1.0.5
+    image: docker.servernas.it/pintourbeckend
     environment:
-    - TZ=Europe/Rome
+    - TZ=Europe/Roma
     container_name: PintourBackEnd
     hostname: pintourback
     volumes:
@@ -14,12 +14,12 @@ services:
     networks:
     - pintournet
  front:
-    image: docker.servernas.it/pintourfrontend:1.0.4
+    image: docker.servernas.it/pintourfrontend:1.0.2
     container_name: PintourFontEnd
     volumes:
     - pintour-public:/usr/share/nginx/html/public
     environment:
-    - TZ=Europe/Rome
+    - TZ=Europe/Roma
     ports:
     - 45000:80
     networks:
@@ -37,7 +37,7 @@ services:
     - pintour-db:/var/opt/mssql/data/
   
     environment:
-    - TZ=Europe/Rome
+    - TZ=Europe/Roma
     - ACCEPT_EULA=Y
     - MSSQL_RPC_PORT=135
     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
