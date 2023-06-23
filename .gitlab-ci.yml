@@ -14,7 +14,6 @@ build_stage:
     paths:
       - Back/bin/
 
-
 build_docker_image:
   stage: build_docker_image
   image: docker:latest 
