@@ -16,7 +16,11 @@ build_stage:
 
 build_docker_image:
   stage: build_docker_image
-  image: docker:dind
+ 
+  image: docker:latest
+  services:
+    - name: docker:dind
+      alias: docker
   script:
     - "cd Back"
     - "docker build -t  carminepola/pintour:test ."
