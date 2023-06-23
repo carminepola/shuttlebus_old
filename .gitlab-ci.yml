@@ -6,7 +6,7 @@ stages:
 
  
 before_script:
-    - "cd back"
+    - "cd Back"
     - "dotnet restore"
 
 build:
