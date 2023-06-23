@@ -10,18 +10,22 @@ build_stage:
     - "cd Back"
     - "dotnet restore"
     - "dotnet build"
+  artifacts:
+    paths:
+      - Back/bin/
+
 
 build_docker_image:
   stage: build_docker_image
   image: docker:latest 
   script:
     - "cd Back"
-    - "docker build -t registry.servernas.it/carminepola/pintour:test ."
+    - "docker build -t  carminepola/pintour:test ."
 
 push_docker_image:
   stage: push_docker_image
   image: docker:latest
  
   script:
-    - "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push registry.servernas.it/carminepola/pintour:test"
+    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    - "docker push carminepola/pintour:test"
