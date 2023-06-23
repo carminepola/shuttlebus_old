@@ -13,9 +13,7 @@ build_stage:
 
 build_docker_image:
   stage: build_docker_image
-  image: docker:latest
-  services:
-    - docker:dind
+  image: docker:latest 
   script:
     - "cd Back"
     - "docker build -t registry.servernas.it/carminepola/pintour:test ."
@@ -23,8 +21,7 @@ build_docker_image:
 push_docker_image:
   stage: push_docker_image
   image: docker:latest
-  services:
-    - docker:dind
+ 
   script:
     - "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - "docker push registry.servernas.it/carminepola/pintour:test"
