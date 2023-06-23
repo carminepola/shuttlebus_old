@@ -1,22 +1,30 @@
-image: mcr.microsoft.com/dotnet/sdk:7.0.202
-
 stages:
-    - build
-    - test
+  - build_netcore_stage
+  - build_docker_image
+  - push_docker_image
 
- 
-before_script:
-    - "ls"
+build_stage:
+  stage: build_netcore_stage
+  image: mcr.microsoft.com/dotnet/sdk:7.0.202
+  script:
     - "cd Back"
     - "dotnet restore"
     - "dotnet build"
-    - "docker build -t gitlab.servernas.it:12055/carminepola/pintour:back ."
-    - "docker "
- 
 
-build:
-    stage: build
-    script:
-        - "dotnet build"
+build_docker_image:
+  stage: build_docker_image
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - "cd Back"
+    - "docker build -t gitlab.servernas.it:12055/carminepola/pintour:test ."
 
- 
+push_docker_image:
+  stage: push_docker_image
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    - "docker push gitlab.servernas.it:12055/carminepola/pintour:test"
