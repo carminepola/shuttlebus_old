@@ -18,16 +18,12 @@ build_stage:
 build_docker_image:
   stage: build_docker_image
   image: docker:latest 
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
+  services:
+    - docker:dind
   script:
     - "cd Back"
     - "docker build -t  carminepola/pintour:test ."
-
-push_docker_image:
-  stage: push_docker_image
-  image: docker:latest
- 
-  script:
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - "docker push carminepola/pintour:test"
+
+ 
