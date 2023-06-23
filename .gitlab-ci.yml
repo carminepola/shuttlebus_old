@@ -9,6 +9,9 @@ before_script:
     - "ls"
     - "cd Back"
     - "dotnet restore"
+    - "dotnet build"
+    - "docker build -t gitlab.servernas.it:12055/carminepola/pintour:back ."
+    - "docker "
  
 
 build:
