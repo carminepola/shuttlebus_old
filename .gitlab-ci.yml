@@ -18,7 +18,7 @@ build_docker_image:
     - docker:dind
   script:
     - "cd Back"
-    - "docker build -t gitlab.servernas.it:12055/carminepola/pintour:test ."
+    - "docker build -t registry.servernas.it/carminepola/pintour:test ."
 
 push_docker_image:
   stage: push_docker_image
@@ -27,4 +27,4 @@ push_docker_image:
     - docker:dind
   script:
     - "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push gitlab.servernas.it:12055/carminepola/pintour:test"
+    - "docker push registry.servernas.it/carminepola/pintour:test"
