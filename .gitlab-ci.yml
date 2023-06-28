@@ -3,6 +3,8 @@ stages:
 build_docker_image:
   stage: build_docker_image
   image: docker:dind
+  variables:
+    DOCKER_HOST: tcp://loclhost:2375
  
   script:
     
