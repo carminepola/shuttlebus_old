@@ -2,9 +2,9 @@ stages:
    - build_docker_image
 build_docker_image:
   stage: build_docker_image
-  image: docker:latest
+  image: docker:dind
   services:
-    - name: docker:dind
+    
       alias: docker
   script:
     
