@@ -22,9 +22,9 @@ build_docker_image:
     - name: docker:dind
       alias: docker
   script:
-    - "ls"
+ 
     - "cd Back"
-    - "ls"
+    - "docker container ls -a"
     - "docker build -t  carminepola/pintour:test ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - "docker push carminepola/pintour:test"
