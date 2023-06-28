@@ -1,31 +1,10 @@
-stages:
-  - build_netcore_stage
-  - build_docker_image
-  - push_docker_image
-
-build_stage:
-  stage: build_netcore_stage
-  image: mcr.microsoft.com/dotnet/sdk:7.0.202
-  script:
-    - "cd Back"
-    - "dotnet restore"
-    - "dotnet build"
-  artifacts:
-    paths:
-      - Back/bin/
-
 build_docker_image:
   stage: build_docker_image
- 
   image: docker:latest
   services:
     - name: docker:dind
       alias: docker
   script:
- 
-    - "cd Back"
-    - "docker container ls -a"
-    - "docker build -t  carminepola/pintour:test ."
-    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push carminepola/pintour:test"
- 
+    
+    - "docker --version"
+    - "docker container ls"
