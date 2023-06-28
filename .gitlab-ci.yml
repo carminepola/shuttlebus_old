@@ -1,3 +1,5 @@
+stages:
+   - build_docker_image
 build_docker_image:
   stage: build_docker_image
   image: docker:latest
