@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 as runtime
 WORKDIR /publish
-COPY /bin/Release/netcoreapp7.0/publish /publish
-COPY /app_data /publish/app_data
+COPY ./bin/Release/netcoreapp7.0/publish /publish
+COPY ./app_data /publish/app_data
 ENV ASPNETCORE_URLS=http://+:5000
 EXPOSE 5000
 ENTRYPOINT ["dotnet", "core.dll"]
