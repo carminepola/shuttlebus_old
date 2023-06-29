@@ -25,8 +25,9 @@ compila_dockerfile_back:
 
 compila_angular_front:
   stage: compila_angular_front
-  image: apptower/angularcli
+  image: node:12
   script:
-    - "cd Front" 
+    - "cd Front"
+    - "npm install -g @angular/cli" 
     - "npm install"
     - "ng build --prod"
