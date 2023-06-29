@@ -1,33 +1,47 @@
 stages:
-#  - compilazione_dotnet_back
-#  - compila_dockerfile_back
+  - compilazione_dotnet_back
+  - compila_dockerfile_back
   - compila_angular_front
+  - compila_dockerfile_front
 
-#compilazione_dotnet_back:
-#  stage: compilazione_dotnet_back
-#  image: mcr.microsoft.com/dotnet/sdk:7.0.202
-#  script:
-#    - "cd Back"
-#    - "dotnet restore"
-#    - "dotnet build -c Release"
-#  artifacts:
-#    paths:
-#      - Back/bin/
+compilazione_dotnet_back:
+  stage: compilazione_dotnet_back
+  image: mcr.microsoft.com/dotnet/sdk:7.0.202
+  script:
+    - "cd Back"
+    - "dotnet restore"
+    - "dotnet build -c Release"
+  artifacts:
+    paths:
+      - Back/bin/
 
-#compila_dockerfile_back:
-#  stage: compila_dockerfile_back
-#  image: docker:dind
-#  script:
-#    - "cd Back" 
-#    - "docker build -t  registry.servernas.it/carminepola/pintour:test ."
-#    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-#    - "docker push registry.servernas.it/carminepola/pintour:test"
+compila_dockerfile_back:
+  stage: compila_dockerfile_back
+  image: docker:dind
+  script:
+    - "cd Back" 
+    - "docker build -t  registry.servernas.it/carminepola/pintour:back ."
+    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    - "docker push registry.servernas.it/carminepola/pintour:back"
 
 compila_angular_front:
   stage: compila_angular_front
-  image: node:10
+  image: node:16
   script:
     - "cd Front"
     - "npm install -g @angular/cli" 
     - "npm install"
     - "ng build --prod"
+  artifacts:
+    paths:
+      - Back/dist/
+
+compila_dockerfile_front:
+  stage: compila_dockerfile_front
+  image: docker:dind
+  script:
+    - "cd Front" 
+    - "docker build -t  registry.servernas.it/carminepola/pintour:front ."
+    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    - "docker push registry.servernas.it/carminepola/pintour:front"
+
