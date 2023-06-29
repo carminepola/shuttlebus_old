@@ -1,27 +1,27 @@
 stages:
-  - compilazione_dotnet_back
-  - compila_dockerfile_back
+#  - compilazione_dotnet_back
+#  - compila_dockerfile_back
   - compila_angular_front
 
-compilazione_dotnet_back:
-  stage: compilazione_dotnet_back
-  image: mcr.microsoft.com/dotnet/sdk:7.0.202
-  script:
-    - "cd Back"
-    - "dotnet restore"
-    - "dotnet build -c Release"
-  artifacts:
-    paths:
-      - Back/bin/
+#compilazione_dotnet_back:
+#  stage: compilazione_dotnet_back
+#  image: mcr.microsoft.com/dotnet/sdk:7.0.202
+#  script:
+#    - "cd Back"
+#    - "dotnet restore"
+#    - "dotnet build -c Release"
+#  artifacts:
+#    paths:
+#      - Back/bin/
 
-compila_dockerfile_back:
-  stage: compila_dockerfile_back
-  image: docker:dind
-  script:
-    - "cd Back" 
-    - "docker build -t  registry.servernas.it/carminepola/pintour:test ."
-    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push registry.servernas.it/carminepola/pintour:test"
+#compila_dockerfile_back:
+#  stage: compila_dockerfile_back
+#  image: docker:dind
+#  script:
+#    - "cd Back" 
+#    - "docker build -t  registry.servernas.it/carminepola/pintour:test ."
+#    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+#    - "docker push registry.servernas.it/carminepola/pintour:test"
 
 compila_angular_front:
   stage: compila_angular_front
