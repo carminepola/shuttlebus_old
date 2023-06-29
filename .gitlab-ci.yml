@@ -25,6 +25,7 @@ build_docker_image:
  
     - "cd Back"
     - "cd bin"
+    - "cd Release"
     - "ls"
 
 
