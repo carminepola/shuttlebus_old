@@ -23,6 +23,6 @@ build_docker_image:
  
     - "cd Back" 
     
-    - "docker build -t  carminepola/pintour:test ."
+    - "docker build -t  registry.servernas.it/carminepola/pintour:test ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - "docker push registry.servernas.it/carminepola/pintour:test"
