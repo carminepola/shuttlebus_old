@@ -25,10 +25,10 @@ build_docker_image:
  
     - "cd Back"
     - "ls"
-    - "ls /bin/"
-    - "ls /bin/Release/"
-    - "ls /bin/Release/netcoreapp7.0/"
-    - "ls /bin/Release/netcoreapp7.0/publish"
+    - "ls bin/"
+    - "ls bin/Release/"
+    - "ls bin/Release/netcoreapp7.0/"
+    - "ls bin/Release/netcoreapp7.0/publish"
     - "docker build -t  carminepola/pintour:test ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
  
