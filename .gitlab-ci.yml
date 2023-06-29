@@ -27,4 +27,5 @@ compila_angular_front:
   stage: compila_angular_front
   image: ange10k/angularcli
   script:
+    - "cd Front" 
     - "npm build --prod"
