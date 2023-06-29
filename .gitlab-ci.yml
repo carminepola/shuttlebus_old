@@ -28,4 +28,5 @@ compila_angular_front:
   image: ange10k/angularcli
   script:
     - "cd Front" 
+    - "npm install"
     - "npm build --prod"
