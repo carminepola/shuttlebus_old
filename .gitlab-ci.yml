@@ -1,8 +1,9 @@
 stages:
-  - compilazione_dotnet_back
-  - compila_dockerfile_back
   - compila_angular_front
   - compila_dockerfile_front
+  - compilazione_dotnet_back
+  - compila_dockerfile_back
+
 
 compilazione_dotnet_back:
   stage: compilazione_dotnet_back
@@ -34,7 +35,7 @@ compila_angular_front:
     - "ng build --prod"
   artifacts:
     paths:
-      - Back/dist/
+      - Front/dist/
 
 compila_dockerfile_front:
   stage: compila_dockerfile_front
