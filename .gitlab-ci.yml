@@ -9,7 +9,7 @@ build_stage:
   script:
     - "cd Back"
     - "dotnet restore"
-    - "dotnet build"
+    - "dotnet build -c Release"
   artifacts:
     paths:
       - Back/bin/
