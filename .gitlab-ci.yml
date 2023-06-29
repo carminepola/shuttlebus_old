@@ -25,7 +25,7 @@ stages:
 
 compila_angular_front:
   stage: compila_angular_front
-  image: node:16
+  image: node:10
   script:
     - "cd Front"
     - "npm install -g @angular/cli" 
