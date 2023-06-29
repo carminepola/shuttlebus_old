@@ -25,7 +25,7 @@ compila_dockerfile_back:
 
 compila_angular_front:
   stage: compila_angular_front
-  image: ange10k/angularcli
+  image: apptower/angularcli
   script:
     - "cd Front" 
     - "npm install"
