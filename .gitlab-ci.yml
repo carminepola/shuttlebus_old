@@ -25,4 +25,4 @@ build_docker_image:
     
     - "docker build -t  carminepola/pintour:test ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push carminepola/pintour:test"
+    - "docker push registry.servernas.it/carminepola/pintour:test"
