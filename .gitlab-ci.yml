@@ -29,4 +29,4 @@ compila_angular_front:
   script:
     - "cd Front" 
     - "npm install"
-    - "npm build --prod"
+    - "ng build --prod"
