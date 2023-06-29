@@ -1,10 +1,10 @@
 stages:
-  - build_netcore_stage
-  - build_docker_image
-  - push_docker_image
+  - compilazione_dotnet_back
+  - compila_dockerfile_back
+  - compila_angular_front
 
-build_stage:
-  stage: build_netcore_stage
+compilazione_dotnet_back:
+  stage: compilazione_dotnet_back
   image: mcr.microsoft.com/dotnet/sdk:7.0.202
   script:
     - "cd Back"
@@ -14,15 +14,17 @@ build_stage:
     paths:
       - Back/bin/
 
-build_docker_image:
-  stage: build_docker_image
- 
+compila_dockerfile_back:
+  stage: compila_dockerfile_back
   image: docker:dind
- 
   script:
- 
     - "cd Back" 
-    
     - "docker build -t  registry.servernas.it/carminepola/pintour:test ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - "docker push registry.servernas.it/carminepola/pintour:test"
+
+compila_angular_front:
+  stage: compila_angular_front
+  image: ange10k/angularcli
+  script:
+    - "npm build --prod"
