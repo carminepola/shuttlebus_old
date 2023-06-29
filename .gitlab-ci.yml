@@ -17,18 +17,11 @@ build_stage:
 build_docker_image:
   stage: build_docker_image
  
-  image: docker:latest
-  services:
-    - name: docker:dind
-      alias: docker
+  image: docker:dind
+ 
   script:
  
-    - "cd Back"
-    - "cd bin"
-    - "cd Release"
-    - "ls"
-
-
-#    - "docker build -t  carminepola/pintour:test ."
-#    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-#    - "docker push carminepola/pintour:test"
+    - "cd Back" 
+    - "docker build -t  carminepola/pintour:test ."
+    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    - "docker push carminepola/pintour:test"
