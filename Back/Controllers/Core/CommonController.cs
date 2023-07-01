@@ -137,7 +137,7 @@ namespace core.Controllers
         };
         public response catchError(string message = "", string stack = "", string lng = "")
         {
-             response ris = new response();
+            response ris = new response();
             try
             {
                 int codiceErrore = -1;
@@ -154,7 +154,7 @@ namespace core.Controllers
                         }
                     }
                 }
-               
+
                 ris.error.message = message;
                 ris.error.stack = stack;
                 ris.error.exist = true;
@@ -163,13 +163,13 @@ namespace core.Controllers
                 f.notifica("Errore", message, "", "", getToken());
 
                 log(message, stack, "");
-               
+
             }
             catch (Exception ex)
             {
-             
+
             }
-             return ris;
+            return ris;
         }
         //email
 
@@ -524,10 +524,10 @@ namespace core.Controllers
                 else
                 {
                     string port = "";
-                    if(ip.Split(":").Length>1)
+                    if (ip.Split(":").Length > 1)
                     {
                         port = ip.Split(":")[1].ToString();
-                        ip = ip.Split(":")[0]+","+port;
+                        ip = ip.Split(":")[0] + "," + port;
                     }
                     return "Data Source=" + ip + ";Initial Catalog=" + db + ";User Id=" + nomeUtente + ";Password=" + password + ";";
                 }
@@ -587,7 +587,7 @@ namespace core.Controllers
             }
             catch (Exception ex)
             {
-                 return token;
+                return token;
             }
             return token;
         }
@@ -697,10 +697,36 @@ namespace core.Controllers
         }
         public string convertDate(string dat)
         {
-            var d = dat.Replace("00:00:00","");
+            var d = dat.Replace("00:00:00", "");
             var a = d.Split('/');
-            return a[2].Trim()+'-'+a[0]+'-'+a[1];
+            return a[2].Trim() + '-' + a[0] + '-' + a[1];
         }
+
+
+        public bool checkdateBeforeNow(string dateita, string time)
+        {
+
+
+            string[] da = dateita.Split("/");
+            string dataStringa = da[2] + "-" + da[1] + "-" + da[0] + "T" + time;
+            DateTime data;
+
+            if (DateTime.TryParse(dataStringa, out data))
+            {
+                if (data <= DateTime.Now)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+
+
+        }
+        
         public string dateToString(DateTime date, string tipo, string divisore)
         {
             string a = date.ToString().Substring(0, 10);

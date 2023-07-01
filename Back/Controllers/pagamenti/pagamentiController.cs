@@ -78,7 +78,6 @@ namespace core.Controllers
             try
             {
 
-
                 if (ipBloccato(getIp()))
                 {
 
@@ -90,6 +89,28 @@ namespace core.Controllers
                 }
 
 
+
+                for (var i = 0; i < data["elementi"].Count; i++)
+                {
+
+
+                    var dataViaggio = data["elementi"][i]["data"].ToString();
+                    var dataPartenza = data["elementi"][i]["datiBiglietto"]["partenza"].ToString();
+                    if (checkdateBeforeNow(dataViaggio, dataPartenza))
+                    {
+                        ris.error.message = "str_old_chart";
+                        return ris;
+                    }
+
+
+                }
+
+
+
+
+
+
+
                 var paypalToken = "";
                 var stripeToken = "";
                 var a = data["prezzo"].ToString();
@@ -98,7 +119,7 @@ namespace core.Controllers
                     throw new Exception(listaErrori[5]);
                 }
 
-                log("nuovo pagamento " + sessionePagamento, sessionePagamento + DateTime.Now.ToString("yyyyMMdd"), sessioneUtente );
+                log("nuovo pagamento " + sessionePagamento, sessionePagamento + DateTime.Now.ToString("yyyyMMdd"), sessioneUtente);
 
                 response daEliminare = esegui("Select * from sessioniPagamenti where [usersession] = " + apic(sessioneUtente) + " and DATEDIFF(MINUTE,data,GetDate())<=300 and inCorso = 0 ");
                 if (!IsDataTableEmpty(daEliminare.data))
@@ -147,7 +168,7 @@ namespace core.Controllers
                             paypalController pp = new paypalController();
                             List<string> ppString = new List<string>();
                             ppString = pp.get(a, sessionePagamento, ticket);
-                            if (ppString.Count()>0)
+                            if (ppString.Count() > 0)
                             {
                                 paypalToken = ppString[0];
                                 ris.data.Rows[i]["link"] = ppString[1];
@@ -286,7 +307,7 @@ namespace core.Controllers
 
 
             response ris = new response();
-           
+
             ris.data = "ko";
             try
             {
@@ -310,12 +331,12 @@ namespace core.Controllers
                             int codice = inserisciAcquisto(data, id, "Reseller", getLng(), recupero.data.Rows[0]["ticket"]);
                             if (codice == 100)
                             {
-                                ris.error.message = traduzioni.traduci("str_pagamentoriuscito", getLng()) + "<br>" +  recupero.data.Rows[0]["ticket"];
+                                ris.error.message = traduzioni.traduci("str_pagamentoriuscito", getLng()) + "<br>" + recupero.data.Rows[0]["ticket"];
                                 ris.data = "ok";
                             }
                             else
                             {
-                                ris.error.message = traduzioni.traduci("str_pagamento_non_rouscito", getLng())  ;
+                                ris.error.message = traduzioni.traduci("str_pagamento_non_rouscito", getLng());
                                 ris.data = "ok";
                             }
 
