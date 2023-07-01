@@ -1,3 +1,6 @@
+variables:
+  VERSION_FRONT: "front_test"
+  VERSION_BACK: "back_test"
 stages:
   - compila_angular_front
   - compila_dockerfile_front
@@ -21,8 +24,8 @@ compila_dockerfile_back:
   image: docker:dind
   script:
     - "cd Back" 
-    - "docker build -t  registry.servernas.it/carminepola/pintour:back ."
-    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION_BACK ."
+    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p pintour"
     - "docker push registry.servernas.it/carminepola/pintour:back"
 
 compila_angular_front:
@@ -42,7 +45,7 @@ compila_dockerfile_front:
   image: docker:dind
   script:
     - "cd Front" 
-    - "docker build -t  registry.servernas.it/carminepola/pintour:front ."
+    - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION_FRONT ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - "docker push registry.servernas.it/carminepola/pintour:front"
 
