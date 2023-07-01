@@ -26,7 +26,7 @@ compila_dockerfile_back:
     - "cd Back" 
     - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION_BACK ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p pintour"
-    - "docker push registry.servernas.it/carminepola/pintour:back"
+    - "docker push registry.servernas.it/carminepola/pintour:$VERSION_BACK"
 
 compila_angular_front:
   stage: compila_angular_front
@@ -47,5 +47,5 @@ compila_dockerfile_front:
     - "cd Front" 
     - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION_FRONT ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push registry.servernas.it/carminepola/pintour:front"
+    - "docker push registry.servernas.it/carminepola/pintour:$VERSION_FRONT"
 
