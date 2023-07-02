@@ -2,8 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp7.0</TargetFramework>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+      <DeleteExistingFiles>true</DeleteExistingFiles>
+    
+        <SelfContained>true</SelfContained>
   <!--<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>--> 
   </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />

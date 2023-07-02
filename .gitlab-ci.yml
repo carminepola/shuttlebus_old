@@ -10,7 +10,7 @@ stages:
 
 compilazione_dotnet_back:
   stage: compilazione_dotnet_back
-  image: mcr.microsoft.com/dotnet/sdk:7.0.202
+  image: mcr.microsoft.com/dotnet/sdk:7.0.108
   script:
     - "cd Back"
     - "dotnet restore"
