@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/module/shared/shared.module';
 declare var $: any;
@@ -270,7 +271,16 @@ export class CarrelloComponent implements OnInit {
   ];
   ngOnInit() {
 
-
+    debugger
+ 
+    if(localStorage["datiUtente"]){
+      let user = JSON.parse(localStorage["datiUtente"]);
+      this.nome =user.nome;
+      this.email = user.email;
+      this.prefisso = user.prefisso;
+      this.telefono = user.telefono;
+    }
+     
 
 
 
@@ -279,6 +289,8 @@ export class CarrelloComponent implements OnInit {
       $('.selectprefisso').select2({
         data:this.prefix,
 
+
+        val:this.prefisso,
         placeholder:placeholder,
         theme: "bootstrap"
 
@@ -287,6 +299,12 @@ export class CarrelloComponent implements OnInit {
         this.prefisso = e.params.data.id;
 
       });
+
+      if(this.prefisso != "")
+      {
+        $('.selectprefisso').val(this.prefisso);
+        $('.selectprefisso').trigger('change');
+      }
 
 
 
@@ -297,6 +315,15 @@ export class CarrelloComponent implements OnInit {
   buttonCLick(): void {
     debugger
     if (!this.share.commonF.isEmpty(this.nome) && !this.share.commonF.isEmpty(this.email)) {
+
+      let user = {
+        "nome":this.nome,
+        "email":this.email,
+        "prefisso":this.prefisso,
+      
+        "telefono": this.telefono
+      }
+      localStorage["datiUtente"] = JSON.stringify(user);
 
 
       this.share.patchCarrello(this.nome, "+"+this.prefisso+ " "+ this.telefono, this.email);

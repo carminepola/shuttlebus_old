@@ -23,7 +23,9 @@ export class HomeComponent implements OnInit {
   public minDate = new Date(); 
   public searchComponent = false;
 
-
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({behavior: 'smooth'});
+}
 
   fromOutsideClick() {
 

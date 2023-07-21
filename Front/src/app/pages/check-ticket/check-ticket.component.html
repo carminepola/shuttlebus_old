@@ -31,9 +31,10 @@
         <div class="col-12" *ngFor="let item of ris | filter:searchText; let i =  index ">
 
             <div class="form-group" *ngIf="i < limitTo ">
-                <div class="card">
+                <div class="card" [id]="'div'+i">
 
                     <div class="card-body">
+                       
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -44,6 +45,7 @@
                                             class="text-primary">{{item.riferimento}}</span>
                                     </h5>
                                     <div class="row">
+                                        
 
                                         <div class="col-12 col-xl-6">
                                             <div class="card-text">
@@ -77,6 +79,9 @@
                                                     [attr.href]="'https://www.google.com/maps/search/?api=1&query=' + item.itinerari[item.itinerari.length-1].lat+','+item.itinerari[item.itinerari.length-1].lng"><small>{{item.itinerari[item.itinerari.length-1].indirizzo}}</small></a>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <img [src]="'https://chart.googleapis.com/chart?cht=qr&chl='+ item.riferimento + '&chs=150x150'">
                                     </div>
                                 </div>
                                 <hr class="w-100">
@@ -113,6 +118,7 @@
                         </div>
                     </div>
                 </div>
+                <button class="btn btn-secondary float-right mt-2" (click)="printDiv('div'+i)"><i class="fa fa-print  mr-2"></i>{{share.traduci('str_print')}}</button>
             </div>
 
         </div>

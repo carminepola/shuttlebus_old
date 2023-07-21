@@ -17,4 +17,13 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  isLocalMail(){
+    
+    if(localStorage["mail"])
+    {
+      return localStorage["mail"];
+    }
+    return "";
+  }
+
 }

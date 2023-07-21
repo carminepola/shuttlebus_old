@@ -6,8 +6,12 @@
 
             <h2 class="text-secondary font-weight-bold" [innerHTML]="s.traduci(message)"></h2>
         </div>
-        <div class="col-12 text-center">
+        <div class="col-12 text-center" *ngIf="visualizzaAcquisti">
+            <a class="btn btn-secondary"  [routerLink]="['/'+s.getLenguage()+'/searchfromail/'+isLocalMail()]">{{s.traduci('str_visualizza_acquisti')}}</a>
+        </div>
+        <div class="col-12 text-center" *ngIf="!visualizzaAcquisti">
             <button class="btn btn-secondary" (click)="s.go('')">{{s.traduci('str_torna_home')}}</button>
         </div>
+        
     </div>
 </div>

@@ -44,6 +44,17 @@ export class CheckTicketComponent implements OnInit {
     }
 
   }
+  printDiv(currentDiv){
+ 
+      var divToPrint = $("#"+currentDiv).html();
+      var printWindow = window.open('');
+     
+      printWindow.document.write(divToPrint);
+    
+      printWindow.document.close();
+      printWindow.print();
+  
+  }
   carica(): void {
     if (!this.share.commonF.isEmpty(this.id)) {
       this.caricamento = true;

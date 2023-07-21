@@ -16,6 +16,7 @@ export class CheckPaymentComponent implements OnInit {
   public tipo: string = "";
   public ris: any;
   public message: any;
+  public visualizzaAcquisti: boolean = true;
   ngOnInit(): void {
     this.route.params.subscribe((params) => this.tipo = params.tipo);
     this.route.params.subscribe((params) => this.biglietto = params.id);
@@ -27,17 +28,32 @@ export class CheckPaymentComponent implements OnInit {
       this.s.svuotaCarrello();
     
   }
+  isLocalMail(){
+    
+    if(localStorage["mail"])
+    {
+      return localStorage["mail"];
+    }
+    return "";
+  }
   pagamento(): void {
     switch (this.tipo) {
       case "private":
 
         this.rem.pagamenti.privato(this.biglietto).subscribe(
           data => {
+            debugger
 
             this.ris = data["data"];
             this.message = data["error"]["message"];
             localStorage["sessionID"] = this.s.commonF.NewGuid();
-          
+            let error = data["error"]["code"];
+            if(error.toString() === "0")
+            {
+              let user = JSON.parse(localStorage["datiUtente"]);
+              localStorage["mail"] = user.email;
+              this.visualizzaAcquisti = true;
+            }
 
           }
         )
@@ -51,6 +67,14 @@ export class CheckPaymentComponent implements OnInit {
             localStorage["sessionID"] = this.s.commonF.NewGuid();
             this.ris = data["data"];
             this.message = data["error"]["message"];
+            let error = data["error"]["code"];
+            if(error.toString() === "0")
+            {
+              let user = JSON.parse(localStorage["datiUtente"]);
+              localStorage["mail"] = user.email;
+              this.visualizzaAcquisti = true;
+            }
+
             if(this.ris =="refresh")
             {
               setTimeout(() => {
