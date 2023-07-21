@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { SharedModule } from 'src/app/module/shared/shared.module';
 import { RemService } from 'src/app/services/REM/rem.service';
 import { ActivatedRoute } from '@angular/router';
-
+declare var $: any;
 @Component({
   selector: 'app-check-ticket',
   templateUrl: './check-ticket.component.html',
