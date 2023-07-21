@@ -80,9 +80,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                   <!-- <div class="row">
                                         <img [src]="'https://chart.googleapis.com/chart?cht=qr&chl='+ item.riferimento + '&chs=150x150'">
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <hr class="w-100">
                                 <div class="form-group">
@@ -110,7 +110,7 @@
                             </div>
                             <div class="col-12 col-xl-6">
                                 <div class="form-group" *ngIf="item.rimborsato == true">
-                                    <span class="text-danger font-weight-bold">Annullato</span>
+                                    <h3 class="text-danger font-weight-bold">Annullato</h3>
                                 </div>
 
                             </div>
@@ -118,7 +118,9 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-secondary float-right mt-2" (click)="printDiv('div'+i)"><i class="fa fa-print  mr-2"></i>{{share.traduci('str_print')}}</button>
+                <button class="btn btn-secondary float-right mt-2 mb-2" (click)="printDiv('div'+i)" ><i class="fa fa-print  mr-2"></i>{{share.traduci('str_print')}}</button>
+                <button class="btn btn-secondary float-right mt-2 mb-2 mr-2"  (click)="downloadDiv('div'+i,item.riferimento)" ><i class="fa fa-file-pdf-o  mr-2"></i>{{share.traduci('str_download')}}</button>
+
             </div>
 
         </div>

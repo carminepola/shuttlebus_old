@@ -47,6 +47,10 @@ export class SearchFromMailComponent implements OnInit {
           this.cercato = true;
           this.ris = data["data"];
 
+          if(!this.share.commonF.isEmpty(this.ris)){
+            localStorage["mail"] = this.id
+          }
+
           this.caricamento = false;
         },
         error => {

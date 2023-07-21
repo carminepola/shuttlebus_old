@@ -1,0 +1,5 @@
+.content {
+    width: 200mm; /* Imposta la larghezza desiderata in millimetri */
+    transform: scale(0.7); /* Scala il div al 70% per adattarlo al PDF */
+    transform-origin: top; /* Imposta il punto di origine della scala in alto */
+  }
