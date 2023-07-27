@@ -1,3 +1,7 @@
+
+
+
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
     <div class="container-pintour">
 
@@ -57,3 +61,11 @@
         <i class="fa fa-whatsapp my-float"></i>
         </a>
 </nav>
+<div class="d-flex justify-content-center  " *ngIf="share.traduci('str_message_banner') != 'str_message_banner' && share.traduci('str_message_banner') != ''">
+    <div class="alert alert-dismissible alert-danger float-alert ">
+      
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4 class="alert-heading" [innerHTML]="share.traduci('str_warning')"></h4>
+        <p class="mb-0" [innerHTML]="share.traduci('str_message_banner')"> </p>
+      </div>
+</div>

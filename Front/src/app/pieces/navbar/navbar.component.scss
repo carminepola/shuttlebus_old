@@ -48,3 +48,12 @@
 .my-float2{
 	margin-top:16px;
 }
+
+.float-alert{
+	top:15px;
+	position: fixed;
+	z-index: 6999;
+	
+	align-items: center;
+	justify-self: center;
+}
