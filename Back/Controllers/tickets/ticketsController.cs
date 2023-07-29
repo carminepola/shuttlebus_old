@@ -25,7 +25,7 @@ namespace core.Controllers
                 ris = esegui(q);
                 if (!IsDataTableEmpty(ris.data))
                 {
-                   
+
                     return ris;
                 }
                 else
@@ -73,7 +73,7 @@ namespace core.Controllers
 
                         q = "SELECT * FROM bigliettiacquistati LEFT JOIN biglietti ON biglietti.id = bigliettiacquistati.idbiglietto WHERE"
                         + " riferimento = " + apic(riferimento) + " AND idfascia = " + apic(idFascia) + "AND idlinea = " + apic(idLinea) + "and data =" + apic(dataRiferimento);
-                        
+
                         response biglietti = esegui(q);
                         biglietti.data.Columns.Add("traduzioniNome", typeof(DataTable));
                         biglietti.data.Columns.Add("traduzioniDesc", typeof(DataTable));
@@ -137,7 +137,7 @@ namespace core.Controllers
                             var dataRiferimento = convertDate(row["data"].ToString());
 
                             q = "SELECT * FROM bigliettiacquistati LEFT JOIN biglietti ON biglietti.id = bigliettiacquistati.idbiglietto WHERE"
-                            + " riferimento = " + apic(riferimento) + " AND idfascia = " + apic(idFascia) + "AND idlinea = " + apic(idLinea)+ "and data =" + apic(dataRiferimento);;
+                            + " riferimento = " + apic(riferimento) + " AND idfascia = " + apic(idFascia) + "AND idlinea = " + apic(idLinea) + "and data =" + apic(dataRiferimento); 
                             response biglietti = esegui(q);
                             biglietti.data.Columns.Add("traduzioniNome", typeof(DataTable));
                             biglietti.data.Columns.Add("traduzioniDesc", typeof(DataTable));
@@ -183,50 +183,14 @@ namespace core.Controllers
                     string[] dataSearch = giorno.Split("-");
                     //string q = "Select Distinct(riferimento), [data] from intinerariAcquistati  order by [data] DESC";
                     //return esegui(q);
-                    string q = "Select Distinct(a.riferimento),a.idfascia,a.idlinea,a.rimborsato,a.data,b.nome,c.idfasciaoraria from intinerariAcquistati as a left join linee as b on a.idlinea = b.id left join fasceOrarie as c on a.idfascia = c.guid   where MONTH([data]) = " + apic(dataSearch[1]) + " and YEAR([data]) = " + apic(dataSearch[0]) + " order by a.[data] DESC;";
+                    string q = "SELECT a.*,  lista.fasceAnnullate FROM acquisti a LEFT JOIN ( SELECT riferimento,   STRING_AGG(idlinea, ',') WITHIN GROUP (ORDER BY idlinea) AS 'fasceAnnullate'  FROM ( SELECT DISTINCT riferimento, idlinea FROM intinerariAcquistati where rimborsato = 1  AND MONTH([data]) = " + apic(dataSearch[1]) + "  AND YEAR([data]) =  " + apic(dataSearch[0]) + ") AS Subquery GROUP BY riferimento ) AS lista ON a.riferimento = lista.riferimento ORDER BY a.id DESC;";
+                    //q = "Select *  from  acquisti where   MONTH([data]) = " + apic(dataSearch[1]) + "  AND YEAR([data]) =  " + apic(dataSearch[0]) + "  ORDER BY  id DESC;";
+                    q = "select acquisti.*,bigliettiAcquistati.rimborsato, bigliettiAcquistati.[data] as dataViaggio, bigliettiAcquistati.idLinea from bigliettiAcquistati left join acquisti on bigliettiAcquistati.riferimento = acquisti.riferimento where   MONTH(bigliettiAcquistati.data) =  " + apic(dataSearch[1]) + "    AND YEAR(bigliettiAcquistati.data) =  " + apic(dataSearch[0]) +  "  and acquisti.riferimento <> ' ' order by id desc";
+
+
                     ris = esegui(q);
-                    if (!IsDataTableEmpty(ris.data))
-                    {
-                        ris.data.Columns.Add("biglietti", typeof(DataTable));
-                        ris.data.Columns.Add("itinerari", typeof(DataTable));
-                        ris.data.Columns.Add("dati", typeof(DataTable));
-                        ris.data.Columns.Add("traduzioniNome", typeof(DataTable));
-                        for (var i = 0; i < ris.data.Rows.Count; i++)
-                        {
-
-                            DataRow row = ris.data.Rows[i];
-                            var idFascia = row["idfascia"].ToString();
-                            var idLinea = row["idlinea"].ToString();
-                            var riferimento = row["riferimento"].ToString();
-                            var nome = ris.data.Rows[i]["nome"];
-                            ris.data.Rows[i]["traduzioniNome"] = traduzioni.getTraduzioniPrivate(ris.data.Rows[i]["nome"].ToString());
-                                var dataRiferimento = convertDate(row["data"].ToString());
-
-
-                            q = "SELECT * FROM bigliettiacquistati LEFT JOIN biglietti ON biglietti.id = bigliettiacquistati.idbiglietto WHERE"
-                            + " riferimento = " + apic(riferimento) + " AND idfascia = " + apic(idFascia) + "AND idlinea = " + apic(idLinea)+ "and data =" + apic(dataRiferimento);;
-                            response biglietti = esegui(q);
-                            biglietti.data.Columns.Add("traduzioniNome", typeof(DataTable));
-                            biglietti.data.Columns.Add("traduzioniDesc", typeof(DataTable));
-                            for (var ii = 0; ii < biglietti.data.Rows.Count; ii++)
-                            {
-                                biglietti.data.Rows[ii]["traduzioniNome"] = traduzioni.getTraduzioniPrivate(biglietti.data.Rows[ii]["nome"].ToString());
-                                biglietti.data.Rows[ii]["traduzioniDesc"] = traduzioni.getTraduzioniPrivate(biglietti.data.Rows[ii]["descrizione"].ToString());
-                            }
-                            q = "SELECT * FROM intinerariacquistati LEFT JOIN fermate ON intinerariacquistati.idfermata = fermate.id LEFT JOIN fasceOrarie on intinerariAcquistati.idlinea = fasceOrarie.idlinea and intinerariAcquistati.idfascia = fasceOrarie.guid and intinerariAcquistati.idfermata = fasceOrarie.idFermata where intinerariacquistati.riferimento = " + apic(riferimento) + " and intinerariacquistati.idfascia=" + apic(idFascia) + " and intinerariacquistati.idlinea = " + apic(idLinea);
-                            response intinerariAcquistati = esegui(q);
-                            intinerariAcquistati.data.Columns.Add("traduzioniNome", typeof(DataTable));
-                            for (var ii = 0; ii < intinerariAcquistati.data.Rows.Count; ii++)
-                            {
-                                DataRow rowItinerario = intinerariAcquistati.data.Rows[ii];
-                                intinerariAcquistati.data.Rows[ii]["traduzioniNome"] = traduzioni.getTraduzioniPrivate(intinerariAcquistati.data.Rows[ii]["citta"].ToString());
-                            }
-                            response dati = esegui("Select acquisti.*,utenti.nomeUtente from acquisti left join utenti on utenti.id = acquisti.reseller where riferimento = " + apic(riferimento));
-                            ris.data.Rows[i]["dati"] = dati.data;
-                            ris.data.Rows[i]["itinerari"] = intinerariAcquistati.data;
-                            ris.data.Rows[i]["biglietti"] = biglietti.data;
-                        }
-                    }
+                  
+                    
 
                 }
 
@@ -245,14 +209,14 @@ namespace core.Controllers
             {
                 if (isValidSession() && getRuolo() < 10)
                 {
-                  
 
-                        List<string> q = new List<string>();
-                        q.Add("update  intinerariAcquistati set rimborsato = 1 where riferimento = " + apic(riferimento) + " and idFascia = " + apic(idFascia) + " and idlinea = " + apic(idLinea));
-                        q.Add("update  bigliettiAcquistati set rimborsato = 1 where riferimento = " + apic(riferimento) + " and idFascia = " + apic(idFascia) +" and idlinea = " + apic(idLinea));
-                        ris = eseguiTransact(q);
 
- 
+                    List<string> q = new List<string>();
+                    q.Add("update  intinerariAcquistati set rimborsato = 1 where riferimento = " + apic(riferimento) + " and idFascia = " + apic(idFascia) + " and idlinea = " + apic(idLinea));
+                    q.Add("update  bigliettiAcquistati set rimborsato = 1 where riferimento = " + apic(riferimento) + " and idFascia = " + apic(idFascia) + " and idlinea = " + apic(idLinea));
+                    ris = eseguiTransact(q);
+
+
 
                 }
             }

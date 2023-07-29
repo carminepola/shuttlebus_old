@@ -2,9 +2,9 @@
 
 </app-loading-div>
 
-<div class="container animated fadeIn faster" *ngIf="!caricamento">
+<div class="container-fluid animated fadeIn faster" *ngIf="!caricamento">
     <div class="row">
-
+ 
         <div class="col-12 col-xl-6">
             <div class="form-group">
                 <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
@@ -16,132 +16,79 @@
             <input class="form-control" type="month"  [(ngModel)]="dataSearch" autocomplete="off">
         </div>
         <div class="col-12 col-xl-2"> 
-<button class="btn btn-primary btn-block" (click)="caricaDati(dataSearch)">Aggiorna</button>
+<button class="btn btn-primary mt-2 mt-xl-0 btn-block" (click)="caricaDati(dataSearch)">Aggiorna</button>
         </div>
 
-        <div class="col-12" *ngFor="let item of data | filter:searchText; let i =  index ">
+        <div class="col-12"  >
+
+            <div class="table-responsive">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Biglietto</th>
+                    <th scope="col">Nome e Cognome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Data Aquisto</th>
+                    <th scope="col">Data Viaggio</th>
+                    <th scope="col">Da</th>
+                    <th scope="col">A</th>
+                    <th scope="col">Partenza</th>
+                   
+                    <th scope="col">Arrivo</th>
+                    <th scope="col">Posti</th>
+                    <th scope="col">Bagagli</th>
+                    <th scope="col">Prezzo</th>
+                    <th scope="col">Dettagli</th>
+                    <th scope="col">Azioni</th>
+             
+             
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of data | filter:searchText; let i =  index">
+                    <th [innerText]="item.id"></th>
+                    <th scope="row" [innerText]="item.riferimento"></th>
+                    <td  [innerText]="item.nome"> </td>
+                    <td  >  <a [href]="'mailto:'+item.email" [innerText]="item.email"> </a></td>
+                    <td  >  <a [href]="'tel:'+item.telefono" [innerText]="item.telefono">
+                       
+                     </a> </td>
+                    <td [innerText]="item.data"></td>
+                    <td [innerText]="item.dataViaggio"></td>
+                    <td [innerText]="item.from"></td>
+                    <td [innerText]="item.to"></td>
+                    <td [innerText]="item.partenza"></td>
+                 
+                    <td [innerText]="item.arrivo"></td>
+                    <td [innerText]="item.posti"></td>
+                    <td [innerText]="item.bagagli"></td>
+                    <td [innerText]="item.prezzo + '€'"></td>
+                    <td  [innerHTML]="item.dettagli"> 
+                       
+                    </td>
+                    <td  >
+                        <div *ngIf="item.rimborsato">
+                            <h5 class="text-danger font-weight-bold">Annullato</h5>
 
 
-            <div class="form-group" >
-                <div class="card" >
-
-                    <div class="card-body" *ngIf="!share.commonF.isEmpty(item.nome)">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-
-                                    <h5 class="card-title">
-                                        <span>
-                                            <span class="text-secondary font-weight-bold">Codice
-                                            biglietto:&nbsp;</span><span
-                                            class="text-primary">{{item.riferimento}}&nbsp;</span>
-                                            </span>
-<br class="d-block d-xl-none">
-
-                                      <span class="float-xl-right">
-                                        <span class="text-secondary font-weight-bold">Data biglietto:&nbsp;</span><span
-                                            class="text-primary">{{share.commonF.dataToString(item.data)}}</span>
-                                        </span>
-
-
-
-                                    </h5>
-                                    <div class="row">
-                                        <div class="col-12 col-xl-6">
-                                            <div class="card-text">
-                                                <span
-                                                    class="text-secondary">Linea:&nbsp;</span>{{share.traduciPrivato(item.traduzioniNome,item.nome)}}
-
-                                            </div>
-                                            <div class="card-text">
-                                                <span class="text-secondary">Fascia:&nbsp;</span>{{item.idfasciaoraria}}
-
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-xl-6">
-                                            <div class="card-text">
-                                                <span
-                                                    class="text-secondary">da:&nbsp;</span>{{share.traduciPrivato(item.itinerari[0].traduzioniNome,item.itinerari[0].citta)}}&nbsp;-&nbsp;{{share.troncaTesto(item.itinerari[0].orario,5,false)}}
-                                                <br><small>{{item.itinerari[0].indirizzo}}</small>
-                                            </div>
-                                            <div class="card-text">
-                                                <span
-                                                    class="text-secondary">a:&nbsp;</span>{{share.traduciPrivato(item.itinerari[item.itinerari.length-1].traduzioniNome,item.itinerari[item.itinerari.length-1].citta)}}&nbsp;-&nbsp;{{share.troncaTesto(item.itinerari[item.itinerari.length-1].orario,5,false)}}
-                                                <br><small>{{item.itinerari[item.itinerari.length-1].indirizzo}}</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="w-100">
-                                <div class="form-group">
-
-                                    <div *ngIf="item.itinerari[0].bagagliOpzionali>0">
-                                        <span class="text-secondary">x</span>{{item.itinerari[0].bagagliOpzionali}}
-                                        &nbsp;-&nbsp;Bagagli aggiuntivi&nbsp;-&nbsp;
-                                        {{item.itinerari[0].costoBagaglioOpzionale}}<span class="text-secondary">
-                                            €</span>
-                                    </div>
-                                    <div *ngFor="let b of item.biglietti">
-                                        <span class="text-secondary">x</span>
-                                        {{b.numero}}
-                                        &nbsp;-&nbsp;
-                                        {{share.traduciPrivato(b.traduzioniNome,b.nome)}}
-                                        &nbsp;-&nbsp;
-                                        {{b.costo}}
-                                        <span class="text-secondary">€</span>
-                                    </div>
-                                </div>
-                                <hr class="w-100">
-                                <div class="row"  *ngIf="item.rimborsato == false">
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-group">
-                                            <div><span class="text-secondary">Nome:&nbsp;</span>{{item.dati[0].nome}}
-                                            </div>
-                                            <div><span
-                                                    class="text-secondary">Telefono:&nbsp;</span>{{item.dati[0].telefono}}
-                                            </div>
-                                            <div><span class="text-secondary">Email:&nbsp;</span>{{item.dati[0].email}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-group">
-                                            <div><span class="text-secondary">
-                                                    Data
-                                                    acquisto:&nbsp;</span>{{share.commonF.dataTimeToString(item.dati[0].data)}}
-                                            </div>
-                                            <div><span
-                                                    class="text-secondary">Pagamento:&nbsp;</span>{{item.dati[0].tipoPagamento}}
-                                            </div>
-                                            <div *ngIf="!share.commonF.isEmpty(item.dati[0].nomeUtente)"><span
-                                                    class="text-secondary">Reseller:&nbsp;</span>{{item.dati[0].nomeUtente}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-xl-6"*ngIf="item.rimborsato == true">
-                                <div class="form-group" >
-                                    <span class="text-danger font-weight-bold">Annullato</span>
-                                </div>
-
-                            </div>
-
-                            <div class="col-12 col-xl-6" *ngIf="!annullamento && item.rimborsato == false">
-                                <div class="form-group" >
-                                    <button class="btn btn-danger  float-left" (click)="annulla(item)">Annulla</button>
-                                </div>
-
-                            </div>
                         </div>
-                    </div>
-                    <div class="card-body" *ngIf="share.commonF.isEmpty(item.nome)">
-                        <div class="spinner-border text-secondary" role="status">
-                            <span class="sr-only">Loading...</span>
-                          </div>
-                    </div>
-                </div>
+                        <div *ngIf="!item.rimborsato">
+                            <button class="btn btn-danger btn-sm " (click)="annulla(item)"><i class="fa fa-delete  "></i>Annulla</button>
+                            
+
+                        </div>
+                       
+
+                    </td>  
+                  </tr>
+                 
+                </tbody>
+              </table>
             </div>
+           
 
         </div>
     </div>

@@ -129,7 +129,7 @@ export class commonFunctionModule {
     return dataSplittata[2] + "/" + dataSplittata[1] + "/" + dataSplittata[0] + " " + ora;
 
   }
-  public dataToString(data: string) {
+  public dataToString(data: string, separetore:string = '/') {
     var a = data.split("T");
     var ora = a[1].slice(0, 5);
     var dataDaSplittare = a[0];
@@ -137,7 +137,7 @@ export class commonFunctionModule {
     var dataSplittata = dataDaSplittare.split('-');
 
 
-    return dataSplittata[2] + "/" + dataSplittata[1] + "/" + dataSplittata[0] ;
+    return dataSplittata[2] + separetore + dataSplittata[1] +separetore + dataSplittata[0] ;
 
   }
   public convertData(data, giorniDaAggiungere = 0, formato = "it", separatore = "/") {
