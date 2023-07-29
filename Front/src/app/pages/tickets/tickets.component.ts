@@ -11,9 +11,7 @@ export class TicketsComponent implements OnInit {
 
 
   constructor(public share: SharedModule, public rem: RemService) { }
-  public searchText = "";
-  public limitTo = 9;
-  public maxScroll = 0;
+  public searchText: string = ""
   public data: any;
   public caricamento = true;
   public annullamento = false;
@@ -32,21 +30,8 @@ export class TicketsComponent implements OnInit {
     }
     return data;
   }
-  onScroll(): void {
-    if (this.bottomReached()) {
-
-      this.limitTo = this.limitTo + 10;
-    }
-  }
-  searchItems(x, limitTo, searchItems) {
-
-    if (this.share.commonF.isEmpty(searchItems)) {
-
-      return x.slice(0, limitTo);
-    }
-    return x;
-
-  }
+  
+  
    ngInitTicket() {
 
     for(let i = 0; i < this.data.length;i++)
@@ -72,17 +57,7 @@ export class TicketsComponent implements OnInit {
 
 
   }
-  bottomReached(): boolean {
-
-    this.maxScroll = window.screenY;
-    if (this.maxScroll + 100 > window.screenY) {
-      if (this.limitTo < this.data.length) {
-        return (window.innerHeight + window.scrollY + 100) >= document.body.offsetHeight;
-      }
-    }
-    return false;
-
-  }
+   
   ngOnInit(): void {
     this.caricaDati(this.dataSearch);
   }
@@ -165,11 +140,58 @@ export class TicketsComponent implements OnInit {
     this.caricamento = true;
     this.rem.tickets.get(giorno).subscribe(
       data => {
-        this.data = data;
+        this.data = [];
         console.log(data);
         this.caricamento = false;
         if (!this.share.catchEx(data["error"])) {
-          this.data = data["data"];
+          let temprarydata = data["data"] ;
+
+          temprarydata.forEach(element => {
+
+
+            
+             element["backup"] = JSON.parse(element["backup"]);
+             debugger
+             let indexBiglietto = element["backup"].elementi.findIndex(e => e.datiBiglietto.idlinea ==  element["idLinea"])
+             if(indexBiglietto > -1)
+             {
+
+
+              debugger
+              let dati = element["backup"]["elementi"][indexBiglietto];
+
+              element["data"] = this.share.commonF.dataToString(element.data,'-')
+              element["dataViaggio"] = this.share.commonF.dataToString(element.dataViaggio)
+              element["from"] =  dati["from"];
+              element["to"] = dati["to"];
+              element["prezzo"] = dati["prezzo"];
+              element["partenza"] = dati.datiBiglietto["partenza"].substring(0,5);
+              element["arrivo"] = dati.datiBiglietto["arrivo"].substring(0,5);
+              element["bagagli"] = dati.datiBiglietto["numeroBagagliOpzionali"];
+              element["idfascia"] = dati.datiBiglietto["guid"];
+              element["idlinea"] = dati.datiBiglietto["idlinea"];
+              let biglietti = "<ul>";
+              let posti = 0;
+
+
+              for(let i = 0; i < dati.datiBiglietto.biglietti.length; i++)
+              {
+                let x = dati.datiBiglietto.biglietti[i];
+                if(x.numero > 0)
+                {
+                  posti +=x.numero;
+                  biglietti +="<li>X"+x.numero +" " + x["traduzioniNome"][0]["it"] +" "+x.costo+"€</li>";
+                }
+
+              }
+             
+              element["posti"] = posti;
+               element["dettagli"] = biglietti +"</br>"; 
+
+             }
+             
+             this.data.push(element);
+          });
 
 
 
