@@ -137,7 +137,7 @@ namespace core.Controllers
                             var dataRiferimento = convertDate(row["data"].ToString());
 
                             q = "SELECT * FROM bigliettiacquistati LEFT JOIN biglietti ON biglietti.id = bigliettiacquistati.idbiglietto WHERE"
-                            + " riferimento = " + apic(riferimento) + " AND idfascia = " + apic(idFascia) + "AND idlinea = " + apic(idLinea) + "and data =" + apic(dataRiferimento); 
+                            + " riferimento = " + apic(riferimento) + " AND idfascia = " + apic(idFascia) + "AND idlinea = " + apic(idLinea) + "and data =" + apic(dataRiferimento);
                             response biglietti = esegui(q);
                             biglietti.data.Columns.Add("traduzioniNome", typeof(DataTable));
                             biglietti.data.Columns.Add("traduzioniDesc", typeof(DataTable));
@@ -180,17 +180,24 @@ namespace core.Controllers
                 if (isValidSession() && getRuolo() < 10 && !isEmpty(giorno))
                 {
 
+
+
                     string[] dataSearch = giorno.Split("-");
+                    var m = apic(dataSearch[1]);
+                    var y = apic(dataSearch[0]);
                     //string q = "Select Distinct(riferimento), [data] from intinerariAcquistati  order by [data] DESC";
                     //return esegui(q);
                     string q = "SELECT a.*,  lista.fasceAnnullate FROM acquisti a LEFT JOIN ( SELECT riferimento,   STRING_AGG(idlinea, ',') WITHIN GROUP (ORDER BY idlinea) AS 'fasceAnnullate'  FROM ( SELECT DISTINCT riferimento, idlinea FROM intinerariAcquistati where rimborsato = 1  AND MONTH([data]) = " + apic(dataSearch[1]) + "  AND YEAR([data]) =  " + apic(dataSearch[0]) + ") AS Subquery GROUP BY riferimento ) AS lista ON a.riferimento = lista.riferimento ORDER BY a.id DESC;";
                     //q = "Select *  from  acquisti where   MONTH([data]) = " + apic(dataSearch[1]) + "  AND YEAR([data]) =  " + apic(dataSearch[0]) + "  ORDER BY  id DESC;";
-                    q = "select acquisti.*,bigliettiAcquistati.rimborsato, bigliettiAcquistati.[data] as dataViaggio, bigliettiAcquistati.idLinea from bigliettiAcquistati left join acquisti on bigliettiAcquistati.riferimento = acquisti.riferimento where   MONTH(bigliettiAcquistati.data) =  " + apic(dataSearch[1]) + "    AND YEAR(bigliettiAcquistati.data) =  " + apic(dataSearch[0]) +  "  and acquisti.riferimento <> ' ' order by id desc";
+                    q = "select acquisti.*,bigliettiAcquistati.rimborsato, bigliettiAcquistati.[data] as dataViaggio, bigliettiAcquistati.idLinea from bigliettiAcquistati left join acquisti on bigliettiAcquistati.riferimento = acquisti.riferimento where   MONTH(bigliettiAcquistati.data) =  " + apic(dataSearch[1]) + "    AND YEAR(bigliettiAcquistati.data) =  " + apic(dataSearch[0]) + "  and acquisti.riferimento <> ' ' order by id desc";
 
+
+
+                    q = "select acquisti.*,bigliettiAcquistati.rimborsato,bigliettiAcquistati.id, bigliettiAcquistati.[data] as dataViaggio, bigliettiAcquistati.idLinea from bigliettiAcquistati left join acquisti on bigliettiAcquistati.riferimento = acquisti.riferimento where   MONTH(data) = "+m+" AND YEAR(data) = "+y+" AND bigliettiAcquistati.id IN (SELECT MAX(id) FROM bigliettiAcquistati WHERE MONTH(data) = "+m+" AND YEAR(data) = "+y+" GROUP BY riferimento, idLinea )  order by acquisti.id desc";
 
                     ris = esegui(q);
-                  
-                    
+
+
 
                 }
 
