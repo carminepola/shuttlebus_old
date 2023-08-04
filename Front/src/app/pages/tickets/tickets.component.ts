@@ -151,13 +151,14 @@ export class TicketsComponent implements OnInit {
 
             
              element["backup"] = JSON.parse(element["backup"]);
+              
+             let indexBiglietto = element["backup"].elementi.findIndex(e => e.datiBiglietto.idlinea ==  element["idLinea"] && e.datiBiglietto.guid == element["idFascia"]);
              debugger
-             let indexBiglietto = element["backup"].elementi.findIndex(e => e.datiBiglietto.idlinea ==  element["idLinea"])
              if(indexBiglietto > -1)
              {
 
 
-              debugger
+               
               let dati = element["backup"]["elementi"][indexBiglietto];
 
               element["data"] = this.share.commonF.dataToString(element.data,'-')
