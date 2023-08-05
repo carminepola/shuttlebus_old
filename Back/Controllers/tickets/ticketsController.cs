@@ -195,7 +195,7 @@ namespace core.Controllers
 
                     // q = "select acquisti.*,bigliettiAcquistati.rimborsato,bigliettiAcquistati.id, bigliettiAcquistati.[data] as dataViaggio, bigliettiAcquistati.idLinea from bigliettiAcquistati left join acquisti on bigliettiAcquistati.riferimento = acquisti.riferimento where   MONTH(bigliettiAcquistati.data) = "+m+" AND YEAR(bigliettiAcquistati.data) = "+y+" AND bigliettiAcquistati.id IN (SELECT MAX(id) FROM bigliettiAcquistati WHERE MONTH(data) = "+m+" AND YEAR(data) = "+y+" GROUP BY riferimento, idLinea )  order by acquisti.id desc";
 
-                    q = "Select acquisti.*,bigliettiAcquistati.rimborsato,bigliettiAcquistati.id, bigliettiAcquistati.idFascia, bigliettiAcquistati.[data] as dataViaggio, bigliettiAcquistati.idLinea from bigliettiAcquistati left join acquisti on bigliettiAcquistati.riferimento = acquisti.riferimento where   MONTH(bigliettiAcquistati.data) = " + m + " AND YEAR(bigliettiAcquistati.data) =  " + y + " AND bigliettiAcquistati.id IN (SELECT  id FROM bigliettiAcquistati WHERE MONTH(data) = " + m + " AND YEAR(data) = " + y + " ) order by acquisti.id desc";
+                    q = "Select acquisti.*,bigliettiAcquistati.rimborsato,bigliettiAcquistati.id, bigliettiAcquistati.idFascia, bigliettiAcquistati.[data] as dataViaggio, bigliettiAcquistati.idLinea from bigliettiAcquistati left join acquisti on bigliettiAcquistati.riferimento = acquisti.riferimento where   MONTH(bigliettiAcquistati.data) = " + m + " AND YEAR(bigliettiAcquistati.data) =  " + y + " AND bigliettiAcquistati.id IN (SELECT  id FROM bigliettiAcquistati WHERE MONTH(data) = " + m + " AND YEAR(data) = " + y + " GROUP BY riferimento, idLinea, idFascia  ) order by acquisti.id desc";
                     ris = esegui(q);
 
 
