@@ -33,7 +33,8 @@ compila_angular_front:
   image: node:16
   script:
     - "cd Front"
-    - "npm install -g @angular/cli" 
+   # - "npm install -g @angular/cli" 
+    - "npm install -g @angular/cli@9.1.14"
     - "npm install"
     - "ng build --prod"
   artifacts:
