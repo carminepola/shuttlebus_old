@@ -30,7 +30,7 @@ compila_dockerfile_back:
 
 compila_angular_front:
   stage: compila_angular_front
-  image: node:16
+  image: node:18
   script:
     - "cd Front"
     - "npm install -g @angular/cli" 
