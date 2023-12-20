@@ -25,7 +25,7 @@ compila_dockerfile_back:
   script:
     - "cd Back" 
     - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION_BACK ."
-    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p pintour"
+    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
     - "docker push registry.servernas.it/carminepola/pintour:$VERSION_BACK"
 
 compila_angular_front:
