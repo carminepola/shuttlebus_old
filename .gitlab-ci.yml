@@ -1,6 +1,6 @@
 variables:
-  VERSION_FRONT: "front_test"
-  VERSION_BACK: "back_test"
+  VERSION: "$CI_COMMIT_TAG-1.0.$CI_PIPELINE_IID"
+ 
 stages:
   - compila_angular_front
   - compila_dockerfile_front
@@ -24,9 +24,14 @@ compila_dockerfile_back:
   image: docker:dind
   script:
     - "cd Back" 
-    - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION_BACK ."
+    - "docker build -t back ."
+    - "docker tag backend registry.servernas.it/pintour/back:$VERSION"
+    - "docker tag backend registry.servernas.it/pintour/back:latest" 
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push registry.servernas.it/carminepola/pintour:$VERSION_BACK"
+    - "docker push registry.servernas.it/pintour/back:$VERSION_BACK"
+    - "docker push registry.servernas.it/pintour/back:latest"
+  only:
+    - tags
 
 compila_angular_front:
   stage: compila_angular_front
@@ -46,7 +51,13 @@ compila_dockerfile_front:
   image: docker:dind
   script:
     - "cd Front" 
-    - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION_FRONT ."
+    - "docker build -t back ."
+    - "docker tag frontend registry.servernas.it/pintour/front:$VERSION"
+    - "docker tag frontend registry.servernas.it/pintour/front:latest" 
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push registry.servernas.it/carminepola/pintour:$VERSION_FRONT"
+    - "docker push registry.servernas.it/pintour/front:$VERSION_BACK"
+    - "docker push registry.servernas.it/pintour/front:latest"
+  only:
+    - tags
+
 
