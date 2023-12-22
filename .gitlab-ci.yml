@@ -1,5 +1,5 @@
 variables:
-  VERSION: "latest"
+  VERSION_DOCKER: "latest"
  
 stages:
   - compila_angular_front
@@ -24,9 +24,9 @@ compila_dockerfile_back:
   image: docker:dind
   script:
     - "cd Back" 
-    - "docker build -t  registry.servernas.it/pintour/back:$VERSION ."
+    - "docker build -t  registry.servernas.it/pintour/back:$VERSION_DOCKER ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push registry.servernas.it/pintour/back:$VERSION"
+    - "docker push registry.servernas.it/pintour/back:$VERSION_DOCKER"
 
 compila_angular_front:
   stage: compila_angular_front
@@ -45,7 +45,7 @@ compila_dockerfile_front:
   image: docker:dind
   script:
     - "cd Front" 
-    - "docker build -t  registry.servernas.it/pintour/front:$VERSION ."
+    - "docker build -t  registry.servernas.it/pintour/front:$VERSION_DOCKER ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push registry.servernas.it/pintour/front:$VERSION"
+    - "docker push registry.servernas.it/pintour/front:$VERSION_DOCKER"
 
