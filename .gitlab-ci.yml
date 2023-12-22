@@ -3,8 +3,8 @@ variables:
   VERSION_LATEST: "$CI_COMMIT_REF_NAME-latest"
 stages:
   - compilazione_dotnet_back
-  - compila_dockerfile_back
   - compila_angular_front
+  - compila_dockerfile_back 
   - compila_dockerfile_front
 
 
@@ -25,26 +25,21 @@ compila_dockerfile_back:
   image: docker:dind
   script:
     - "cd Back" 
-    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-   
+    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD" 
     - "docker build -t back ."
+    #TAG Versione base esempio main-145
     - "docker tag back registry.servernas.it/pintour/back:$VERSION_DOCKER"
     - "docker push registry.servernas.it/pintour/back:$VERSION_DOCKER"
-    - |
-      if [ -n "$CI_COMMIT_TAG" ]; then
-         if [ "$CI_COMMIT_BRANCH" = "main" ]; then
-          docker tag back registry.servernas.it/pintour/back:stable
-          docker push registry.servernas.it/pintour/back:stable 
-        fi
-      fi
-
+    #TAG Versione latest esempio main-latest
     - "docker tag back registry.servernas.it/pintour/back:$VERSION_LATEST"  
     - "docker push registry.servernas.it/pintour/back:$VERSION_LATEST"
-    - "docker tag back registry.servernas.it/pintour/back:latest"  
-    - "docker push registry.servernas.it/pintour/back:latest"
-
- 
-
+    - |  
+          if [ -n "$CI_COMMIT_TAG" ]; then 
+            docker tag back registry.servernas.it/pintour/back:$CI_COMMIT_TAG
+            docker push registry.servernas.it/pintour/back:$CI_COMMIT_TAG 
+            docker tag back registry.servernas.it/pintour/back:latest
+            docker push registry.servernas.it/pintour/back:latest 
+          fi
 compila_angular_front:
   stage: compila_angular_front
   image: node:16
@@ -65,20 +60,18 @@ compila_dockerfile_front:
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
    
     - "docker build -t front ."
+
     - "docker tag front registry.servernas.it/pintour/front:$VERSION_DOCKER"
     - "docker push registry.servernas.it/pintour/front:$VERSION_DOCKER"
-    - |
-     if [ -n "$CI_COMMIT_TAG" ]; then
-         if [ "$CI_COMMIT_BRANCH" = "main" ]; then
-          docker tag back registry.servernas.it/pintour/back:stable
-          docker push registry.servernas.it/pintour/back:stable 
-        fi
-      fi
-
     - "docker tag front registry.servernas.it/pintour/front:$VERSION_LATEST"
     - "docker push registry.servernas.it/pintour/front:$VERSION_LATEST"
-    - "docker tag front registry.servernas.it/pintour/front:latest"
-    - "docker push registry.servernas.it/pintour/front:latest"
+    - |  
+          if [ -n "$CI_COMMIT_TAG" ]; then 
+            docker tag front registry.servernas.it/pintour/front:$CI_COMMIT_TAG
+            docker push registry.servernas.it/pintour/front:$CI_COMMIT_TAG 
+            docker tag front registry.servernas.it/pintour/front:latest
+            docker push registry.servernas.it/pintour/front:latest 
+          fi
 
 
- 
+  
