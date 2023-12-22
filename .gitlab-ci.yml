@@ -53,7 +53,7 @@ compila_dockerfile_front:
     - "cd Front" 
     - "docker build -t front ."
   #  - "docker tag front registry.servernas.it/pintour/front:$VERSION"
-    - "docker tag front registry.servernas.it/pintour/front:latest" 
+    - "docker build -t  registry.servernas.it/pintour/front:latest" 
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
    # - "docker push registry.servernas.it/pintour/front:$VERSION_BACK"
     - "docker push registry.servernas.it/pintour/front:latest"
