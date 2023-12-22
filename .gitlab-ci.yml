@@ -1,6 +1,6 @@
 variables:
-  VERSION: "$CI_COMMIT_TAG-1.0.$CI_PIPELINE_IID"
- 
+  #VERSION: "$CI_COMMIT_TAG-1.0.$CI_PIPELINE_IID" 
+  VERSION: "latest"
 stages:
   - compila_angular_front
   - compila_dockerfile_front
@@ -24,22 +24,19 @@ compila_dockerfile_back:
   image: docker:dind
   script:
     - "cd Back" 
-    - "docker build -t back ."
-    - "docker tag back registry.servernas.it/pintour/back:$VERSION"
-    - "docker tag back registry.servernas.it/pintour/back:latest" 
+    - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-   #- "docker push registry.servernas.it/pintour/back:$VERSION_BACK"
-    - "docker push registry.servernas.it/pintour/back:latest"
+    - "docker push registry.servernas.it/carminepola/pintour:$VERSION"
   only:
     - tags
+
 
 compila_angular_front:
   stage: compila_angular_front
   image: node:16
   script:
     - "cd Front"
-   # - "npm install -g @angular/cli" 
-    - "npm install -g @angular/cli@9.1.14"
+    - "npm install -g @angular/cli" 
     - "npm install"
     - "ng build --prod"
   artifacts:
@@ -51,12 +48,9 @@ compila_dockerfile_front:
   image: docker:dind
   script:
     - "cd Front" 
-    - "docker build -t front ."
-  #  - "docker tag front registry.servernas.it/pintour/front:$VERSION"
-    - "docker build -t  registry.servernas.it/pintour/front:latest" 
+    - "docker build -t  registry.servernas.it/pintour/front:$VERSION ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-   # - "docker push registry.servernas.it/pintour/front:$VERSION_BACK"
-    - "docker push registry.servernas.it/pintour/front:latest"
+    - "docker push registry.servernas.it/pintour/front:$VERSION"
   only:
     - tags
 
