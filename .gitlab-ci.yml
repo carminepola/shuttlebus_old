@@ -1,5 +1,5 @@
 variables:
-  VERSION: "$CI_COMMIT_TAG-1.0.$CI_PIPELINE_IID"
+  VERSION_DOCKER: "1.0.$CI_PIPELINE_IID"
  
 stages:
   - compila_angular_front
