@@ -1,10 +1,12 @@
 variables:
   VERSION_DOCKER: "$CI_COMMIT_REF_NAME-$CI_PIPELINE_IID"
+  VERSION_LATEST: "$CI_COMMIT_REF_NAME-latest"
 stages:
-  - compila_angular_front
-  - compila_dockerfile_front
   - compilazione_dotnet_back
   - compila_dockerfile_back
+  - compila_angular_front
+  - compila_dockerfile_front
+
 
 
 compilazione_dotnet_back:
@@ -28,11 +30,10 @@ compila_dockerfile_back:
     - "docker build -t back ."
     - "docker tag back registry.servernas.it/pintour/back:$VERSION_DOCKER"
     - "docker push registry.servernas.it/pintour/back:$VERSION_DOCKER"
-    - "docker tag back registry.servernas.it/pintour/back:latest"  
-    - "docker push registry.servernas.it/pintour/back:latest"
+    - "docker tag back registry.servernas.it/pintour/back:$VERSION_LATEST"  
+    - "docker push registry.servernas.it/pintour/back:$VERSION_LATEST"
 
-  only:
-    - tags
+ 
 
 compila_angular_front:
   stage: compila_angular_front
@@ -56,9 +57,7 @@ compila_dockerfile_front:
     - "docker build -t front ."
     - "docker tag front registry.servernas.it/pintour/front:$VERSION_DOCKER"
     - "docker push registry.servernas.it/pintour/front:$VERSION_DOCKER"
-    - "docker tag front registry.servernas.it/pintour/front:latest"
-    - "docker push registry.servernas.it/pintour/front:latest"
+    - "docker tag front registry.servernas.it/pintour/front:$VERSION_LATEST"
+    - "docker push registry.servernas.it/pintour/front:$VERSION_LATEST"
 
-  only:
-    - tags
-
+ 
