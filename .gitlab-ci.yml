@@ -1,42 +1,13 @@
 variables:
-#  VERSION_DOCKER: "latest"
-  VERSION_DOCKER: "$CI_COMMIT_TAG-1.0.$CI_PIPELINE_IID"
+  VERSION: "$CI_COMMIT_TAG-1.0.$CI_PIPELINE_IID"
+ 
 stages:
   - compila_angular_front
-  - compila_dockerfile_front
-  - compilazione_dotnet_back
-  - compila_dockerfile_back
-
-
-compilazione_dotnet_back:
-  stage: compilazione_dotnet_back
-  image: mcr.microsoft.com/dotnet/sdk:7.0.202
-  script:
-    - "cd Back"
-    - "dotnet restore"
-    - "dotnet build -c Release"
-  artifacts:
-    paths:
-      - Back/bin/
-
-compila_dockerfile_back:
-  stage: compila_dockerfile_back
-  image: docker:dind
-  script:
-    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "cd Back" 
-    - "docker build -t back ."
-    - "docker tag back registry.servernas.it/pintour/back:$VERSION_DOCKER"
-    - "docker push registry.servernas.it/pintour/back:$VERSION_DOCKER"
-    - "docker tag back registry.servernas.it/pintour/back:latest"  
-    - "docker push registry.servernas.it/pintour/back:latest"
-
-  only:
-    - tags
+ 
 
 compila_angular_front:
   stage: compila_angular_front
-  image: node:16
+  image: node:13
   script:
     - "cd Front"
     - "npm install -g @angular/cli@9.1.14"
@@ -45,19 +16,4 @@ compila_angular_front:
   artifacts:
     paths:
       - Front/dist/
-
-compila_dockerfile_front:
-  stage: compila_dockerfile_front
-  image: docker:dind
-  script:
-    - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "cd Front"  
-    - "docker build -t front ."
-    - "docker tag front registry.servernas.it/pintour/front:$VERSION_DOCKER"
-    - "docker push registry.servernas.it/pintour/front:$VERSION_DOCKER"
-    - "docker tag front registry.servernas.it/pintour/front:latest"
-    - "docker push registry.servernas.it/pintour/front:latest"
-
-  only:
-    - tags
-
+ 
