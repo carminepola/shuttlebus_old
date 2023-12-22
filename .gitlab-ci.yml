@@ -1,6 +1,6 @@
 variables:
-  VERSION_FRONT: "front_test"
-  VERSION_BACK: "back_test"
+  VERSION: "latest"
+ 
 stages:
   - compila_angular_front
   - compila_dockerfile_front
@@ -24,13 +24,13 @@ compila_dockerfile_back:
   image: docker:dind
   script:
     - "cd Back" 
-    - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION_BACK ."
+    - "docker build -t  registry.servernas.it/pintour/back:$VERSION ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push registry.servernas.it/carminepola/pintour:$VERSION_BACK"
+    - "docker push registry.servernas.it/pintour/back:$VERSION"
 
 compila_angular_front:
   stage: compila_angular_front
-  image: node:16
+  image: node:10
   script:
     - "cd Front"
     - "npm install -g @angular/cli@9.1.14"
@@ -45,7 +45,7 @@ compila_dockerfile_front:
   image: docker:dind
   script:
     - "cd Front" 
-    - "docker build -t  registry.servernas.it/carminepola/pintour:$VERSION_FRONT ."
+    - "docker build -t  registry.servernas.it/pintour/front:$VERSION ."
     - "docker login https://registry.servernas.it -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-    - "docker push registry.servernas.it/carminepola/pintour:$VERSION_FRONT"
+    - "docker push registry.servernas.it/pintour/front:$VERSION"
 
