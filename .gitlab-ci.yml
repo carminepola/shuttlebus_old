@@ -2,10 +2,11 @@ variables:
   #VERSION: "$CI_COMMIT_TAG-1.0.$CI_PIPELINE_IID" 
   VERSION: "latest"
 stages:
-  - compila_angular_front
-  - compila_dockerfile_front
   - compilazione_dotnet_back
   - compila_dockerfile_back
+  - compila_angular_front
+  - compila_dockerfile_front
+
 
 
 compilazione_dotnet_back:
@@ -36,7 +37,7 @@ compila_angular_front:
   image: node:16
   script:
     - "cd Front"
-    - "npm install -g @angular/cli" 
+    - "npm install -g @angular/cli@9.1.14"
     - "npm install"
     - "ng build --prod"
   artifacts:
