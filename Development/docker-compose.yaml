@@ -1,0 +1,13 @@
+version: '3'
+services:
+  myapp:
+    image: docker:latest
+    container_name: docker
+    ports:
+      - "2222:22"
+      - "4200:4200"  # Esponi la porta SSH del container sulla porta 2222 dell'host
+    volumes:
+      - /home/carminepola/Sorgenti/Pintour:/mnt/app  # Monta la directory del progetto nel container
+    stdin_open: true  # Per mantenere aperto lo stdin, utile per il debug
+    tty: true  
+    restart: always
