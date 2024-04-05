@@ -11,6 +11,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.Http;
 using System.Threading.Tasks;
+using RestSharp;
+using System.Text.Json;
 namespace core.Controllers
 {
     [ApiController]
@@ -373,8 +375,8 @@ namespace core.Controllers
         {
 
 #if DEBUG
-  if(email.destinatario == "ordini@pintourbus.com")
-            return 0;
+            if (email.destinatario == "ordini@pintourbus.com")
+                return 0;
 #endif
 
             if (isEmpty(tipo))
@@ -382,7 +384,7 @@ namespace core.Controllers
                 tipo = "NOREPLY";
             }
             response settings = leggisettingmail(tipo);
-            if (!IsDataTableEmpty(settings.data))
+            if (IsDataTableEmpty(settings.data))
             {
 
 
@@ -422,7 +424,7 @@ namespace core.Controllers
                 bool mandato = false;
                 try
                 {
-                  
+
                     esegui("insert into sendMail (destinatario,email,dataTime,errore,stato,guid,ticket) VALUES(" + apic(email.destinatario) + "," + apic(email.testo) + ",SYSDATETIME()," + apic("invio") + ",1," + apic(g.ToString()) + "," + apic(id) + ")");
 
                     log("Tentativo invio mail", " Codice: " + idMail + "Destinatario: " + email.destinatario + "\n" + "testo: " + email.testo, "mail");
@@ -453,6 +455,30 @@ namespace core.Controllers
 
 
 
+
+
+            }
+            else
+            {
+
+                string destinatario = email.destinatario;
+                string oggetto = email.oggetto;
+                string testo = email.testo;
+                Dictionary<string,string> body = new Dictionary<string, string>();
+
+                body.Add("to",destinatario);
+                body.Add("subject",oggetto);
+                body.Add("html",testo);
+
+                  
+                string jsonString = JsonSerializer.Serialize(body);
+
+                var client = new RestClient("http://mailserver:1801/api/v1/mail");
+                client.Timeout = -1;
+                var request = new RestRequest(Method.POST);
+                request.AddParameter("application/json", jsonString, ParameterType.RequestBody);
+                IRestResponse response = client.Execute(request);
+                Console.WriteLine(response.Content);
 
 
             }
@@ -683,12 +709,12 @@ namespace core.Controllers
 
                     sbloccaIp(getIp());
                     // sendMail(mailError, "NOREPLY", codiceBiglietto);
-                 
+
                     return 500;
                 }
 
-        
-               sbloccaIp(getIp());
+
+                sbloccaIp(getIp());
 
                 return 100;
 
@@ -696,7 +722,7 @@ namespace core.Controllers
             catch (Exception ex)
             {
 
-             
+
 
                 throw new Exception(ex.Message);
 
