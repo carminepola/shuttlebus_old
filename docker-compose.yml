@@ -1,5 +1,15 @@
 version: "3.8" 
 services: 
+ mail:
+    image: docker.servernas.it/mailserver:latest
+    environment:
+    - TZ=Europe/Rome
+    container_name: PintourMailServer
+    hostname: mailserver 
+#  ports:
+#  - 35003:5000
+    networks:
+    - pintournet
  back:
     image: docker.servernas.it/pintourbeckend:1.0.6
     environment:
