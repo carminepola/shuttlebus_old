@@ -384,7 +384,7 @@ namespace core.Controllers
                 tipo = "NOREPLY";
             }
             response settings = leggisettingmail(tipo);
-            if (IsDataTableEmpty(settings.data))
+            if (!IsDataTableEmpty(settings.data))
             {
 
 
