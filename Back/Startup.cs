@@ -46,12 +46,11 @@ namespace core
                 app.UseForwardedHeaders();
             }
             app.UseCors(
-                options => options.WithOrigins("http://localhost:4200","app://shuttlebus.pintourbus.com","*","localhost")
+                options => options.WithOrigins("http://localhost:4200", "localhost", "http://127.0.0.1:4200")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
 
             );
-            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

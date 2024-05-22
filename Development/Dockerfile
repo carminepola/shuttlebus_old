@@ -25,6 +25,6 @@ RUN echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config
 
 # Esporre la porta SSH
 EXPOSE 22
-EXPOSE 4200
+ 
 # Avvia il server SSH e il terminale bash al momento dell'avvio del container
 CMD ["/usr/sbin/sshd", "-D"]

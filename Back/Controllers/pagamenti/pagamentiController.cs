@@ -121,7 +121,7 @@ namespace core.Controllers
 
                 log("nuovo pagamento " + sessionePagamento, sessionePagamento + DateTime.Now.ToString("yyyyMMdd"), sessioneUtente);
 
-                response daEliminare = esegui("Select * from sessioniPagamenti where [usersession] = " + apic(sessioneUtente) + " and DATEDIFF(MINUTE,data,GetDate())<=300 and inCorso = 0 ");
+                response daEliminare = esegui("Select * from sessioniPagamenti where ([usersession] = " + apic(sessioneUtente) + " or DATEDIFF(MINUTE,data,GetDate())<=300) and inCorso = 0 ");
                 if (!IsDataTableEmpty(daEliminare.data))
                 {
                     for (var i = 0; i < daEliminare.data.Rows.Count; i++)
@@ -132,6 +132,15 @@ namespace core.Controllers
                             paypalController paypal = new paypalController();
                             log("eliminato " + daEliminare.data.Rows[i]["guid"].ToString(), daEliminare.data.Rows[i]["paypal"].ToString(), sessioneUtente + DateTime.Now.ToString("yyyyMMdd"));
                             paypal.delete(daEliminare.data.Rows[i]["guid"].ToString(), daEliminare.data.Rows[i]["paypal"].ToString());
+
+
+                        }
+                        if (!isEmpty(daEliminare.data.Rows[i]["stripe"].ToString()))
+                        {
+
+                            sellaController sella = new sellaController();
+                            log("eliminato " + daEliminare.data.Rows[i]["guid"].ToString(), daEliminare.data.Rows[i]["stripe"].ToString(), sessioneUtente + DateTime.Now.ToString("yyyyMMdd"));
+                            sella.Delete(daEliminare.data.Rows[i]["guid"].ToString());
 
 
                         }
@@ -172,6 +181,16 @@ namespace core.Controllers
                             {
                                 paypalToken = ppString[0];
                                 ris.data.Rows[i]["link"] = ppString[1];
+                            }
+                            break;
+                        case "stripe":
+                            sellaController ss = new sellaController();
+                            List<string> ssString = new List<string>();
+                            ssString = ss.get(data["nome"].ToString(), data["email"].ToString(), a, sessionePagamento, ticket);
+                            if (ssString.Count() > 0)
+                            {
+                                stripeToken = ssString[0];
+                                ris.data.Rows[i]["link"] = ssString[1];
                             }
                             break;
 

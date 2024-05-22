@@ -40,7 +40,19 @@ export class MetodiPagamentoComponent implements OnInit {
           window.open(url, "_self")
 
           break;
+        case "stripe":
+          var url = ""
+          debugger
+          for (let i = 0; i < this.ris.data.length && this.share.commonF.isEmpty(url); i++) {
+            if (this.ris.data[i]["chiave"] == metodo) {
+              url = this.ris.data[i]["link"];
+            }
+          }
+          window.open(url, "_self")
+
+          break;
       }
+
     }
     catch (ex) {
       console.error(ex.message);
@@ -67,12 +79,12 @@ export class MetodiPagamentoComponent implements OnInit {
     if (this.share.commonF.isEmpty(a.nome) || this.share.commonF.isEmpty(a.email)) {
       return this.share.go("checkout");
     }
- 
+
     debugger
     localStorage["sessionID"] = this.share.commonF.NewGuid();
     localStorage["userSession"] = this.share.commonF.isEmpty(localStorage["userSession"]) ? this.share.commonF.NewGuid() : localStorage["userSession"];
 
-    this.pageServices.get(localStorage["cart"],localStorage["sessionID"], localStorage["userSession"]).subscribe(
+    this.pageServices.get(localStorage["cart"], localStorage["sessionID"], localStorage["userSession"]).subscribe(
       data => {
 
         this.ris = data;

@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';  // 
 export class PagamentiService {
   posizione = "pagamenti"
   constructor(protected share: SharedModule, protected http: HttpClient) { }
-  get(cart,sessionID,userSession) {
+  get(cart, sessionID, userSession) {
     var a = JSON.parse(cart)
 
 
@@ -22,7 +22,7 @@ export class PagamentiService {
 
 
       };
-      return this.http.post(this.share.generaCall(this.posizione)+"?sessionePagamento="+sessionID+"&sessioneUtente="+userSession, a, httpOptions);
+      return this.http.post(this.share.generaCall(this.posizione) + "?sessionePagamento=" + sessionID + "&sessioneUtente=" + userSession, a, httpOptions);
     } catch (ex) {
       console.error(ex.message);
     }
@@ -51,6 +51,20 @@ export class PagamentiService {
         }),
       };
       return this.http.patch(this.share.generaCall("paypal") + "?id=" + id, "", httpOptions);
+    } catch (ex) {
+      console.error(ex.message);
+    }
+  }
+  stripe(id) {
+    try {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "token": ((sessionStorage["token"]) ? sessionStorage["token"] : ''),
+          "lng": ((localStorage["xi18n"]) ? localStorage["xi18n"] : '')
+        }),
+      };
+      return this.http.patch(this.share.generaCall("sella") + "?id=" + id, "", httpOptions);
     } catch (ex) {
       console.error(ex.message);
     }

@@ -1,13 +1,42 @@
 version: '3'
 services:
   myapp:
-    image: docker:latest
+    image: pintourdev:latest
     container_name: docker
+    privileged: true
+    networks:
+    - pintournet
     ports:
-      - "2222:22"
-      - "4200:4200"  # Esponi la porta SSH del container sulla porta 2222 dell'host
+      - "2222:22"  
     volumes:
-      - /home/carminepola/Sorgenti/Pintour:/mnt/app  # Monta la directory del progetto nel container
-    stdin_open: true  # Per mantenere aperto lo stdin, utile per il debug
+      - /home/carmine/Sorgenti/Pintour:/mnt/app  # Monta la directory del progetto nel container
+    stdin_open: true 
     tty: true  
     restart: always
+  db:
+    image: docker.io/mcr.microsoft.com/mssql/server
+    hostname: dbpintour
+    container_name: PintourDB
+    privileged: true
+    networks:
+    - pintournet
+    ports:
+    - 45001:1433
+    volumes:
+    - pintour-backup:/mnt/backup
+    - pintour-db:/var/opt/mssql/data/ 
+    environment:
+    - TZ=Europe/Rome
+    - ACCEPT_EULA=Y
+    - MSSQL_RPC_PORT=135
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - SA_PASSWORD=Svuhsbweuiybd37t3467g4j4hnrbd
+ 
+networks:
+  pintournet:
+    driver: bridge
+volumes:
+  pintour-backup:
+  pintour-db:
+ 
+ 

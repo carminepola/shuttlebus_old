@@ -23,15 +23,14 @@ export class CheckPaymentComponent implements OnInit {
 
     setTimeout(() => {
       this.pagamento();
-  
+
     }, 5000);
-      this.s.svuotaCarrello();
-    
+    this.s.svuotaCarrello();
+
   }
-  isLocalMail(){
-    
-    if(localStorage["mail"])
-    {
+  isLocalMail() {
+
+    if (localStorage["mail"]) {
       return localStorage["mail"];
     }
     return "";
@@ -48,8 +47,7 @@ export class CheckPaymentComponent implements OnInit {
             this.message = data["error"]["message"];
             localStorage["sessionID"] = this.s.commonF.NewGuid();
             let error = data["error"]["code"];
-            if(error.toString() === "0")
-            {
+            if (error.toString() === "0") {
               let user = JSON.parse(localStorage["datiUtente"]);
               localStorage["mail"] = user.email;
               this.visualizzaAcquisti = true;
@@ -59,7 +57,7 @@ export class CheckPaymentComponent implements OnInit {
         )
         break;
       case "paypal":
-        debugger
+
         var bigliettoSplit = this.biglietto.split("?");
         var biglietto = bigliettoSplit[0];
         this.rem.pagamenti.paypal(biglietto).subscribe(
@@ -68,26 +66,56 @@ export class CheckPaymentComponent implements OnInit {
             this.ris = data["data"];
             this.message = data["error"]["message"];
             let error = data["error"]["code"];
-            if(error.toString() === "0")
-            {
+            if (error.toString() === "0") {
               let user = JSON.parse(localStorage["datiUtente"]);
               localStorage["mail"] = user.email;
               this.visualizzaAcquisti = true;
             }
 
-            if(this.ris =="refresh")
-            {
+            if (this.ris == "refresh") {
               setTimeout(() => {
-            
-                this.ris =="";
+
+                this.ris == "";
                 this.pagamento();
-            
+
               }, 5000);
 
             }
-           
-           
- 
+
+
+
+          }
+        )
+        console.log(biglietto);
+        break;
+      case "stripe":
+
+        var bigliettoSplit = this.biglietto.split("?");
+        var biglietto = bigliettoSplit[0];
+        this.rem.pagamenti.stripe(biglietto).subscribe(
+          data => {
+            localStorage["sessionID"] = this.s.commonF.NewGuid();
+            this.ris = data["data"];
+            this.message = data["error"]["message"];
+            let error = data["error"]["code"];
+            if (error.toString() === "0") {
+              let user = JSON.parse(localStorage["datiUtente"]);
+              localStorage["mail"] = user.email;
+              this.visualizzaAcquisti = true;
+            }
+
+            if (this.ris == "refresh") {
+              setTimeout(() => {
+
+                this.ris == "";
+                this.pagamento();
+
+              }, 5000);
+
+            }
+
+
+
           }
         )
         console.log(biglietto);

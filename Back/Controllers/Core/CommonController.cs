@@ -726,7 +726,7 @@ namespace core.Controllers
 
 
         }
-        
+
         public string dateToString(DateTime date, string tipo, string divisore)
         {
             string a = date.ToString().Substring(0, 10);
