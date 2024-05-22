@@ -206,8 +206,10 @@ namespace core.Controllers
                         var url2 = "https://sandbox.gestpay.net/api/v1/payment/capture/";
                         var negozio = "GESPAY96559";
 #if RELEASE
-                                        url2 = "https://api.paypal.com/v2/checkout/orders/" 
-                                        negozio ="";
+                                        
+                                        url2 = "https://ecomms2s.sella.it/api/v1/payment/capture/" 
+                                        
+                                        negozio = "9108566";
 #endif
 
                         var client6 = new RestClient(url2);

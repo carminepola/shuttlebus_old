@@ -20,6 +20,7 @@ declare var $: any;
 })
 export class SharedModule {
   //Variabili
+
   /*Contine le informazioni della pagina corrente*/
   public disabledDates = [];
   public _isDevMod = false; //metti false in produzione
@@ -28,8 +29,8 @@ export class SharedModule {
   protected isNotLocal = false; //se l'api non si trova sullo stesso server
   protected isNotUrl = "https://shuttlebus.pintourbus.com/api/1.0/"; //url dell'api
   //protected devApi = "https://pintour.servernas.it/api/1.0/";
-  // protected devApi = "";
-  protected devApi = "http://localhost:5000/";
+  protected devApi = "";
+  //protected devApi = "http://localhost:5000/";
   //protected devApi = " https://shuttlebus.pintourbus.com/api/1.0/"
   protected positionImage = "public/";
   public regex = _regex;

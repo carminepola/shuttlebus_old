@@ -33,7 +33,7 @@ namespace core.Controllers
                 site = webSite+"/checkpayment/stripe/"+code;
                 cancel = webSite+"/checkpayment/stripe/000000";
                 webhook = webSite+"/webhook"
-                negozio = "GESPAY96559";
+                negozio = "9108566";
 #endif
 
 
