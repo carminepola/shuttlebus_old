@@ -27,7 +27,8 @@
         <div class="col-12">
             <!--nome linea-->
             <div class="form-group">
-                <h2 class="text-secondary">{{share.traduci('str_linea')}}: <span class="ml-2 text-primary">{{share.traduciPrivato(item.traduzioniNome,item.nome)}}</span></h2>
+                <h2 class="text-secondary">{{share.traduci('str_linea')}}: <span
+                        class="ml-2 text-primary">{{share.traduciPrivato(item.traduzioniNome,item.nome)}}</span></h2>
             </div>
         </div>
         <div class="col-12">
@@ -81,7 +82,8 @@
                 <div class="mr-xl-4">
                     <h2 class="text-secondary">{{share.traduci('str_bagagliOpzionali')}}:</h2>
                 </div>
-                <div class="pl-4 pl-xs-4 pl-sm-4 pl-md-4 pl-lg-4 pl-xl-0 border-top-0 border-bottom-0 border-right-0 border-ticket border-secondary">
+                <div
+                    class="pl-4 pl-xs-4 pl-sm-4 pl-md-4 pl-lg-4 pl-xl-0 border-top-0 border-bottom-0 border-right-0 border-ticket border-secondary">
                     <h2 class="text-primary">
                         <div><span class="text-secondary mr-2">X</span>{{item.datiBiglietto.numeroBagagliOpzionali}}
                         </div>
@@ -95,7 +97,8 @@
                 <div class="mr-xl-4">
                     <h2 class="text-secondary">{{share.traduci('str_biglietti')}}:</h2>
                 </div>
-                <div class="pl-4 pl-xs-4 pl-sm-4 pl-md-4 pl-lg-4 pl-xl-0 border-top-0 border-bottom-0 border-right-0 border-ticket border-secondary">
+                <div
+                    class="pl-4 pl-xs-4 pl-sm-4 pl-md-4 pl-lg-4 pl-xl-0 border-top-0 border-bottom-0 border-right-0 border-ticket border-secondary">
                     <div *ngFor="let b of item.datiBiglietto.biglietti">
                         <span *ngIf="b.numero >0" class="text-primary">
                             <h2>
@@ -110,7 +113,8 @@
         </div>
         <div class="col-12">
             <div class="form-group float-right">
-                <button class="btn btn-danger" (click)="share.deleteCarrello(item.guid,item.data)"><i class="mdi mdi-trash-can-outline mr-2"></i>{{share.traduci('str_elimina_dal_carrello')}}</button>
+                <button class="btn btn-danger" (click)="share.deleteCarrello(item.guid,item.data)"><i
+                        class="mdi mdi-trash-can-outline mr-2"></i>{{share.traduci('str_elimina_dal_carrello')}}</button>
             </div>
         </div>
         <hr class="w-100 pb-2">
@@ -135,18 +139,19 @@
         <div class="col-12 col-xl-3">
             <div class="form-group">
                 <label>{{share.traduci('str_nome_completo')}}</label>
-                <input required [(ngModel)]="nome" type="text" name="nome" maxlength="255" class="form-control" placeholder="{{share.traduci('str_nome_completo')}}">
+                <input required [(ngModel)]="nome" type="text" name="nome" maxlength="255" class="form-control"
+                    placeholder="{{share.traduci('str_nome_completo')}}">
             </div>
         </div>
         <div class="col-12 col-xl-3">
             <div class="form-group">
                 <label>{{share.traduci('str_prefisso')}}</label>
-                  
-                <!--<input required [(ngModel)]="prefisso" type="number" name="prefisso" maxlength="4" class="form-control"  placeholder="{{share.traduci('str_prefisso')}}">-->
-                <select  id="selectprefisso" required   name="prefisso" id="prefisso" class="form-control selectprefisso">
 
-                    <option value="" [innerHTML]=""  > {{share.traduci('str_prefisso')}} </option>
-                 
+                <!--<input required [(ngModel)]="prefisso" type="number" name="prefisso" maxlength="4" class="form-control"  placeholder="{{share.traduci('str_prefisso')}}">-->
+                <select id="selectprefisso" required name="prefisso" id="prefisso" class="form-control selectprefisso">
+
+                    <option value="" [innerHTML]=""> {{share.traduci('str_prefisso')}} </option>
+
                     <!-- Aggiungere qui tutti i prefissi telefonici desiderati -->
                 </select>
             </div>
@@ -154,20 +159,53 @@
         <div class="col-12 col-xl-3">
             <div class="form-group">
                 <label>{{share.traduci('str_telefono')}}</label>
-                <input required [(ngModel)]="telefono" type="number" name="telefono" maxlength="255" class="form-control" placeholder="{{share.traduci('str_telefono')}}">
+                <input required [(ngModel)]="telefono" type="number" name="telefono" maxlength="255"
+                    class="form-control" placeholder="{{share.traduci('str_telefono')}}">
             </div>
         </div>
 
         <div class="col-12 col-xl-3">
             <div class="form-group">
                 <label>{{share.traduci('str_email')}}</label>
-                <input required [(ngModel)]="email" type="email" name="email" minlength="3" maxlength="255" class="form-control" placeholder="{{share.traduci('str_email')}}">
+                <input required [(ngModel)]="email" type="email" name="email" minlength="3" maxlength="255"
+                    class="form-control" placeholder="{{share.traduci('str_email')}}">
             </div>
         </div>
         <div class="col-12   ">
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" required id="customCheck1" class="custom-control-input"><label for="customCheck1" class="custom-control-label pl-0"><a href="" data-toggle="modal" data-target="#exampleModal" [innerHTML]="share.traduci('str_accetta_termini_e_condizioni')"></a>
+                    <input type="checkbox" required id="customCheck1" class="custom-control-input"><label
+                        for="customCheck1" class="custom-control-label pl-0"><a href="" data-toggle="modal"
+                            data-target="#exampleModal"
+                            [innerHTML]="share.traduci('str_accetta_termini_e_condizioni')"></a>
+
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" required id="customCheck2" class="custom-control-input"><label
+                        for="customCheck2" class="custom-control-label pl-0"><span
+                            [innerHTML]="share.traduci('str_check_2')"></span>
+
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" required id="customCheck3" class="custom-control-input"><label
+                        for="customCheck3" class="custom-control-label pl-0"><span
+                            [innerHTML]="share.traduci('str_check_3')"></span>
+
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" required id="customCheck4" class="custom-control-input"><label
+                        for="customCheck4" class="custom-control-label pl-0"><span
+                            [innerHTML]="share.traduci('str_check_4')"></span>
+
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" required id="customCheck5" class="custom-control-input"><label
+                        for="customCheck5" class="custom-control-label pl-0"><span
+                            [innerHTML]="share.traduci('str_check_5')"></span>
 
                     </label>
                 </div>
@@ -202,11 +240,13 @@
 
     </form>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" [innerHTML]="share.traduci('str_termini_e_condizioni')"></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"
+                        [innerHTML]="share.traduci('str_termini_e_condizioni')"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -215,7 +255,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{share.traduci('str_chiudi')}}</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">{{share.traduci('str_chiudi')}}</button>
 
                 </div>
             </div>

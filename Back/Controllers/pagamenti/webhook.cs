@@ -204,17 +204,21 @@ namespace core.Controllers
                         sellaController p = new sellaController();
                         string token = p.getSellaToken();
                         var url2 = "https://sandbox.gestpay.net/api/v1/payment/capture/";
+                        var negozio = "GESPAY96559";
 #if RELEASE
                                         url2 = "https://api.paypal.com/v2/checkout/orders/" 
+                                        negozio ="";
 #endif
 
                         var client6 = new RestClient(url2);
                         client6.Timeout = -1;
                         var request6 = new RestRequest(Method.POST);
 
+
+                        var json2 = "{\"shopLogin\": \"" + negozio + "\",\"currency\": \"EUR\",\"amount\": \"" + ris.data.Rows[0]["prezzo"] + "\",\"paymentID\": \"" + id + "\"}";
                         request6.AddHeader("Content-Type", "application/json");
-                        request6.AddHeader("Authorization", "apikey " + token); var body = @"";
-                        request6.AddParameter("application/json", body, ParameterType.RequestBody);
+                        request6.AddHeader("Authorization", "apikey " + token);
+                        request6.AddParameter("application/json", json2, ParameterType.RequestBody);
                         IRestResponse response6 = client6.Execute(request6);
                         dynamic jsonObject = JsonConvert.DeserializeObject(response6.Content);
 

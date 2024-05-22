@@ -28,7 +28,7 @@ export class SharedModule {
   protected isNotLocal = false; //se l'api non si trova sullo stesso server
   protected isNotUrl = "https://shuttlebus.pintourbus.com/api/1.0/"; //url dell'api
   //protected devApi = "https://pintour.servernas.it/api/1.0/";
- // protected devApi = "";
+  // protected devApi = "";
   protected devApi = "http://localhost:5000/";
   //protected devApi = " https://shuttlebus.pintourbus.com/api/1.0/"
   protected positionImage = "public/";
@@ -69,7 +69,7 @@ export class SharedModule {
     altezzaContenuto: "",
   };
   //End variabili
-  public constructor(public commonF: commonFunctionModule, public notifiche: NotificationsModule, public alert: AlertsModule, public router: Router) {}
+  public constructor(public commonF: commonFunctionModule, public notifiche: NotificationsModule, public alert: AlertsModule, public router: Router) { }
   /**
    * Ritorna la lista di parametri in Data sulla pagina app-routing
    */
@@ -862,12 +862,12 @@ export class SharedModule {
     for (var i = 0; i < dat.length; i++) {
       debugger;
 
-       
-        enabledDates.push(new Date(dat[i]));
-        if (this.commonF.convertData(dat[i]) == this.commonF.convertData(this.dati.calendario.value)) {
-          trovato = true;
-        }
-     
+
+      enabledDates.push(new Date(dat[i]));
+      if (this.commonF.convertData(dat[i]) == this.commonF.convertData(this.dati.calendario.value)) {
+        trovato = true;
+      }
+
     }
 
     if (!trovato) {
