@@ -207,7 +207,7 @@ namespace core.Controllers
                         var negozio = "GESPAY96559";
 #if RELEASE
                                         
-                                        url2 = "https://ecomms2s.sella.it/api/v1/payment/capture/" 
+                                        url2 = "https://ecomms2s.sella.it/api/v1/payment/capture/"; 
                                         
                                         negozio = "9108566";
 #endif

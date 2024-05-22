@@ -32,7 +32,7 @@ namespace core.Controllers
                 url = "https://ecomms2s.sella.it/api/v1/payment/create/";
                 site = webSite+"/checkpayment/stripe/"+code;
                 cancel = webSite+"/checkpayment/stripe/000000";
-                webhook = webSite+"/webhook"
+                webhook = webSite+"/webhook";
                 negozio = "9108566";
 #endif
 
